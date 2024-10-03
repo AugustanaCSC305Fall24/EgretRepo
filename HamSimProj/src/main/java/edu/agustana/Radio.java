@@ -16,7 +16,7 @@ public class Radio {
     private static double tunningRF;
     private static boolean radioOn;
     private static double noiseAmplitud;
-    private static  Random randGen;
+    private static Random randGen;
     private static double soundAmplitud;
 
     private static final int SAMPLE_RATE = 44100;
