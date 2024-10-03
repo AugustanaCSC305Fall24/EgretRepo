@@ -1,4 +1,4 @@
-package edu.agustana;
+package edu.augustana;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
