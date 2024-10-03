@@ -1,4 +1,4 @@
-package edu.agustana;
+package edu.augustana;
 
 import java.io.IOException;
 
@@ -12,9 +12,8 @@ import javafx.scene.control.Slider;
 
 import javax.sound.sampled.LineUnavailableException;
 
-import static edu.agustana.Radio.*;
-
-
+import static edu.augustana.Radio.*;
+import static edu.augustana.CWHandler.*;
 
 public class PrimaryController {
 
@@ -63,8 +62,8 @@ public class PrimaryController {
         tuningFrequencySlider.setMax(7.035);
         frequencyDisplayLabel.setText(Double.toString(selectedFrequency));
 
-        tapSoundBtn.setOnMousePressed(event -> {playTone(Math.abs(getSelectedTunningFrequency - selectedFrequency) * 1000000);});
-        tapSoundBtn.setOnMouseReleased(event -> {stopTone();});
+        tapSoundBtn.setOnMousePressed(event -> {playTone(Math.abs(getSelectedTunningFrequency - selectedFrequency) * 1000000); startTimer();});
+        tapSoundBtn.setOnMouseReleased(event -> {stopTone(); stopTimer();});
 
         frequencySlider.valueProperty().addListener(new ChangeListener<Number>() {
             @Override

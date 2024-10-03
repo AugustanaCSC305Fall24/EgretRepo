@@ -1,4 +1,4 @@
-package edu.agustana;
+package edu.augustana;
 
 import java.util.HashMap;
 import java.util.Map;
