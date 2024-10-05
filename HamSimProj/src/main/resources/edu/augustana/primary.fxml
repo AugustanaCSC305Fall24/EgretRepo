@@ -157,6 +157,7 @@
                         <Button fx:id="playMorseBtn" mnemonicParsing="false" text="Play in Morse" />
                      </children>
                   </VBox>
+                  <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="223.0" text="Received MorseCode in Text" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                </children>
             </GridPane>
          </top>

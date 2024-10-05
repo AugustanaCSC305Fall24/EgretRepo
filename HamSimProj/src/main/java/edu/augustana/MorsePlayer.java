@@ -21,7 +21,7 @@ public class MorsePlayer {
 
         new Thread(() -> {
 
-        int beatLength = 50;
+        int beatLength = 40;
         double variation = 0.3;
         char[] morse = morseString.toCharArray();
 
@@ -48,7 +48,7 @@ public class MorsePlayer {
                 stopTone(); stopTimer();
             }else{
                 try {
-                    Thread.sleep((beatLength * 3) + randGen2.nextInt( (int) (beatLength * variation)));
+                    Thread.sleep((beatLength * 7) + randGen2.nextInt( (int) (beatLength * variation)));
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }

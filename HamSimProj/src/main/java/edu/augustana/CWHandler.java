@@ -56,6 +56,8 @@ public class CWHandler {
 
         if(timeSinceReleased > dotDuration * 3){
             cwArray.add("/");
+        } else if (timeSinceReleased > dotDuration * 7) {
+            cwArray.add("//");
         }
     }
 
@@ -94,6 +96,10 @@ public class CWHandler {
 //        System.out.println("Auto-detected WPM: " + wpm);
 //        System.out.println("Dot duration (ns): " + dotDuration);
 //        System.out.println("Dash duration (ns): " + dashDuration);
+    }
+
+    public static ArrayList<String> getCwArray(){
+        return cwArray;
     }
 
 

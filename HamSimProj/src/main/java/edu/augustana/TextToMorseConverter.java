@@ -1,5 +1,7 @@
 package edu.augustana;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -49,6 +51,41 @@ public class TextToMorseConverter {
         morseCodeMap.put(' ', "/"); // Space separator in Morse code
     }
 
+
+    private static final HashMap<String, String> morseToTextMap = new HashMap<>();
+
+    // Static block to initialize the Morse Code mappings
+    static {
+        morseToTextMap.put(".-", "A");
+        morseToTextMap.put("-...", "B");
+        morseToTextMap.put("-.-.", "C");
+        morseToTextMap.put("-..", "D");
+        morseToTextMap.put(".", "E");
+        morseToTextMap.put("..-.", "F");
+        morseToTextMap.put("--.", "G");
+        morseToTextMap.put("....", "H");
+        morseToTextMap.put("..", "I");
+        morseToTextMap.put(".---", "J");
+        morseToTextMap.put("-.-", "K");
+        morseToTextMap.put(".-..", "L");
+        morseToTextMap.put("--", "M");
+        morseToTextMap.put("-.", "N");
+        morseToTextMap.put("---", "O");
+        morseToTextMap.put(".--.", "P");
+        morseToTextMap.put("--.-", "Q");
+        morseToTextMap.put(".-.", "R");
+        morseToTextMap.put("...", "S");
+        morseToTextMap.put("-", "T");
+        morseToTextMap.put("..-", "U");
+        morseToTextMap.put("...-", "V");
+        morseToTextMap.put(".--", "W");
+        morseToTextMap.put("-..-", "X");
+        morseToTextMap.put("-.--", "Y");
+        morseToTextMap.put("--..", "Z");
+        morseToTextMap.put("/", " "); // Space between words
+    }
+
+
     // Method to convert text to Morse code
     public static String textToMorse(String text) {
         StringBuilder morseCode = new StringBuilder();
@@ -64,6 +101,46 @@ public class TextToMorseConverter {
         }
 
         return morseCode.toString().trim();
+    }
+
+    public static String morseToText(ArrayList<String> morseList) {
+        ArrayList<String>  dividedMorseList = new ArrayList<String>();
+        StringBuilder finalMorseString = new StringBuilder();
+        for (String morseChar : morseList) {
+            finalMorseString.append(morseChar);
+        }
+
+        String[] morseCodeWordsArray = finalMorseString.toString().split("//");
+
+        String[] morseCodeArray = Arrays.toString(morseCodeWordsArray).split("/");
+
+
+        StringBuilder result = new StringBuilder();
+        StringBuilder currentLetter = new StringBuilder();
+
+        for (String morseCode : morseCodeArray) {
+            morseCode = morseCode.trim();
+
+            // Get the corresponding letter from the map
+            String letter = morseToTextMap.get(morseCode);
+
+            // If the Morse code is valid, append the letter
+            if (letter != null) {
+                result.append(letter);
+            } else {
+                result.append("?");  // For invalid Morse code
+            }
+        }
+
+        // Handle the last letter if not followed by a slash
+//        if (currentLetter.length() > 0) {
+//            String letter = morseToTextMap.get(currentLetter.toString());
+//            if (letter != null) {
+//                result.append(letter);
+//            }
+//        }
+
+        return result.toString();
     }
 
 }

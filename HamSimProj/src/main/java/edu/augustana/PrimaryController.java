@@ -18,6 +18,7 @@ import static edu.augustana.MorsePlayer.playMorseString;
 import static edu.augustana.MorseTester.morseTester;
 import static edu.augustana.Radio.*;
 import static edu.augustana.CWHandler.*;
+import static edu.augustana.TextToMorseConverter.morseToText;
 import static edu.augustana.TextToMorseConverter.textToMorse;
 
 public class PrimaryController {
@@ -72,7 +73,7 @@ public class PrimaryController {
         tuningFrequencySlider.setMax(7.035);
         frequencyDisplayLabel.setText(Double.toString(selectedFrequency));
 
-        tapSoundBtn.setOnMousePressed(event -> {playTone(Math.abs(getSelectedTunningFrequency - selectedFrequency) * 1000000); startTimer();});
+        tapSoundBtn.setOnMousePressed(event -> {playTone(Math.abs(getSelectedTunningFrequency - selectedFrequency) * 1000000); startTimer(); System.out.println(morseToText(getCwArray()));});
         tapSoundBtn.setOnMouseReleased(event -> {stopTone(); stopTimer();});
         playMorseBtn.setOnAction(event -> {
             try {
