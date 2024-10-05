@@ -8,6 +8,10 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+import static edu.augustana.CWHandler.startTimer;
+import static edu.augustana.CWHandler.stopTimer;
+import static edu.augustana.Radio.*;
+
 /**
  * JavaFX App
  */
@@ -36,5 +40,7 @@ public class App extends Application {
         System.out.println("Now using 10m band");
         launch();
     }
+
+
 
 }

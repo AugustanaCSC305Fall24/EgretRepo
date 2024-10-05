@@ -12,6 +12,8 @@ import javafx.scene.control.Slider;
 
 import javax.sound.sampled.LineUnavailableException;
 
+
+import static edu.augustana.MorseTester.morseTester;
 import static edu.augustana.Radio.*;
 import static edu.augustana.CWHandler.*;
 
@@ -117,10 +119,11 @@ public class PrimaryController {
 
 
     @FXML
-    private void playContinuous() throws LineUnavailableException {
+    private void playContinuous() throws LineUnavailableException, InterruptedException {
         initializeRadio();
         setTunningRF(getSelectedTunningFrequency);
         setSelectedRF(selectedFrequency);
+//        morseTester();
 
     }
 

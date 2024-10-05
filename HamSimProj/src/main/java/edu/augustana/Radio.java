@@ -127,6 +127,14 @@ public class Radio {
 
     }
 
+    public static double getSelectedOutFrequency(){
+        return selectedRF;
+    }
+
+    public static double getSelectedTuneFreq(){
+        return tunningRF;
+    }
+
 
 
     private static void playNoise(){
