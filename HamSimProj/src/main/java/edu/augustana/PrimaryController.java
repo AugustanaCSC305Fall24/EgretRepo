@@ -9,13 +9,16 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.scene.control.TextField;
 
 import javax.sound.sampled.LineUnavailableException;
 
 
+import static edu.augustana.MorsePlayer.playMorseString;
 import static edu.augustana.MorseTester.morseTester;
 import static edu.augustana.Radio.*;
 import static edu.augustana.CWHandler.*;
+import static edu.augustana.TextToMorseConverter.textToMorse;
 
 public class PrimaryController {
 
@@ -46,6 +49,11 @@ public class PrimaryController {
     @FXML
     private Slider tuningFrequencySlider;
 
+    @FXML private TextField inputTextfield;
+
+    @FXML
+    private Button playMorseBtn;
+
 
 
     @FXML
@@ -66,6 +74,14 @@ public class PrimaryController {
 
         tapSoundBtn.setOnMousePressed(event -> {playTone(Math.abs(getSelectedTunningFrequency - selectedFrequency) * 1000000); startTimer();});
         tapSoundBtn.setOnMouseReleased(event -> {stopTone(); stopTimer();});
+        playMorseBtn.setOnAction(event -> {
+            try {
+                playMorseString(textToMorse(inputTextfield.getText()));
+
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        });
 
         frequencySlider.valueProperty().addListener(new ChangeListener<Number>() {
             @Override

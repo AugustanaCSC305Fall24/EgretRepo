@@ -66,11 +66,4 @@ public class TextToMorseConverter {
         return morseCode.toString().trim();
     }
 
-    // Main method for testing
-    public static void main(String[] args) {
-        String text = "HELLO WORLD";
-        String morse = textToMorse(text);
-        System.out.println("Text: " + text);
-        System.out.println("Morse Code: " + morse);
-    }
 }

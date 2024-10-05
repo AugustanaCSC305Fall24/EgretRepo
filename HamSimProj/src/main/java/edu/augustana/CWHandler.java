@@ -7,6 +7,7 @@ public class CWHandler {
     private static ArrayList<String> cwArray = new ArrayList<String>();
     private static ArrayList<Long> cwBufferArray = new ArrayList<Long>();
     private static long startTime;
+    private static long releasedStartTime;
     private static long totalTimePressed = 0;
     private static int pressCount = 0;
 
@@ -20,6 +21,7 @@ public class CWHandler {
      * Starts the timer when the key is pressed
      */
     public static void startTimer() {
+        spaceTimerStop();
         startTime = System.nanoTime();
     }
 
@@ -36,7 +38,29 @@ public class CWHandler {
 
         // Convert the time pressed to Morse code (dot or dash)
         convertToCW(timePressed);
+
+        spaceTimerStart();
+
+
     }
+
+
+    public static void spaceTimerStart(){
+        releasedStartTime = System.nanoTime();
+
+    }
+
+    public static void spaceTimerStop() {
+
+        long timeSinceReleased = System.nanoTime() - releasedStartTime;
+
+        if(timeSinceReleased > dotDuration * 3){
+            cwArray.add("/");
+        }
+    }
+
+
+
 
     /**
      * Dynamically calculates WPM based on user's input speed
@@ -53,6 +77,10 @@ public class CWHandler {
         setDynamicDurations(wpm);
     }
 
+    public static void printOutArray(){
+        System.out.println(cwArray);
+    }
+
     /**
      * Sets dynamic Morse timings based on the WPM
      */
@@ -63,10 +91,11 @@ public class CWHandler {
         letterSpaceDuration = 3 * dotDuration;  // Letter space is 3 dots
         wordSpaceDuration = 7 * dotDuration;    // Word space is 7 dots
 
-        System.out.println("Auto-detected WPM: " + wpm);
-        System.out.println("Dot duration (ns): " + dotDuration);
-        System.out.println("Dash duration (ns): " + dashDuration);
+//        System.out.println("Auto-detected WPM: " + wpm);
+//        System.out.println("Dot duration (ns): " + dotDuration);
+//        System.out.println("Dash duration (ns): " + dashDuration);
     }
+
 
     /**
      * Converts the time pressed into Morse code symbols (dot, dash) based on the dynamic WPM
@@ -81,13 +110,14 @@ public class CWHandler {
         } else if (timePressed < dashDuration) {
             cwCharacter = "-"; // Dash
         } else {
-            cwCharacter = "_"; // Handle for invalid long press (optional)
+            cwCharacter = "-"; // Handle for invalid long press (optional)
         }
 
         cwArray.add(cwCharacter);
         cwBufferArray.add(timePressed / 1000); // Store in microseconds for logging
-        System.out.println("CW: " + cwArray);
-        System.out.println("Time in microseconds: " + cwBufferArray);
+
+        printOutArray();
+
     }
 
 

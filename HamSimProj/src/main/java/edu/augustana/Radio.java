@@ -59,7 +59,7 @@ public class Radio {
 
         isPlaying = true;
         new Thread(() -> {
-            System.out.println("Thread");
+
             double angle = 0;
 
 
@@ -140,7 +140,7 @@ public class Radio {
     private static void playNoise(){
 
         new Thread(() -> {
-            System.out.println("Thread2");
+
             double angle = 0;
 
 
