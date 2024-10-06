@@ -116,7 +116,6 @@ public class TextToMorseConverter {
 
 
         StringBuilder result = new StringBuilder();
-        StringBuilder currentLetter = new StringBuilder();
 
         for (String morseCode : morseCodeArray) {
             morseCode = morseCode.trim();
@@ -131,14 +130,6 @@ public class TextToMorseConverter {
                 result.append("?");  // For invalid Morse code
             }
         }
-
-        // Handle the last letter if not followed by a slash
-//        if (currentLetter.length() > 0) {
-//            String letter = morseToTextMap.get(currentLetter.toString());
-//            if (letter != null) {
-//                result.append(letter);
-//            }
-//        }
 
         return result.toString();
     }
