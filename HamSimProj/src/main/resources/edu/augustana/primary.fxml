@@ -42,7 +42,7 @@
                            <children>
                               <Slider fx:id="gainSlider" max="1.0" orientation="VERTICAL" showTickLabels="true" showTickMarks="true" />
                               <Slider fx:id="noiseSlider" max="1.0" orientation="VERTICAL" showTickLabels="true" showTickMarks="true" />
-                              <Slider orientation="VERTICAL" showTickLabels="true" showTickMarks="true" />
+                              <Slider fx:id="filterSlider" orientation="VERTICAL" showTickLabels="true" showTickMarks="true" />
                               <Slider fx:id="tuningFrequencySlider" orientation="VERTICAL" showTickLabels="true" showTickMarks="true" />
                               <Slider fx:id="frequencySlider" layoutX="50.0" layoutY="10.0" orientation="VERTICAL" showTickLabels="true" showTickMarks="true" />
                            </children>

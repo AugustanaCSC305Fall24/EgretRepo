@@ -27,6 +27,7 @@ public class Radio {
     private static byte[] buffer = new byte[BUFFER_SIZE2];
     private static byte[] buffer2 = new byte[BUFFER_SIZE2];
     private static boolean isRadioOn;
+    private static int filterVal;
 
 
 
@@ -36,6 +37,8 @@ public class Radio {
         noiseAmplitud = 0.0;
         randGen = new Random();
         soundAmplitud = 1;
+        filterVal = 0;
+
 
         format = new AudioFormat(SAMPLE_RATE, 8, 1, true, false);
         line = AudioSystem.getSourceDataLine(format);
@@ -60,6 +63,8 @@ public class Radio {
         isPlaying = true;
         new Thread(() -> {
 
+            BiquadLowPassFilter8Bit biquadFilter = new BiquadLowPassFilter8Bit(44100, 200);  // 500 Hz cutoff, 44.1 kHz sample rate
+
             double angle = 0;
 
 
@@ -75,9 +80,11 @@ public class Radio {
                     // Clip and normalize the sample to fit into 8-bit range [-128, 127]
                     sineSample = Math.max(-1.0, Math.min(1.0, sineSample));  // Clip sample to [-1.0, 1.0]
 
+                    double filteredSample = biquadFilter.processSample(sineSample);
+
 
                     // Scale sample to 8-bit range [-128 to 127]
-                    byte sample = (byte) (sineSample * 127);
+                    byte sample = (byte) (filteredSample * 127);
                     buffer[i] = sample;  // Write sample to buffer
 
                     angle += angleIncrement;
@@ -85,6 +92,7 @@ public class Radio {
                         angle -= 2.0 * Math.PI;
                     }
                 }
+
                 line.write(buffer, 0, buffer.length);
             }
         }).start();
@@ -141,6 +149,8 @@ public class Radio {
 
         new Thread(() -> {
 
+            BiquadLowPassFilter8Bit biquadFilter = new BiquadLowPassFilter8Bit(44100, 200);
+
             double angle = 0;
 
 
@@ -154,11 +164,12 @@ public class Radio {
 
                     // Clip and normalize the sample to fit into 8-bit range [-128, 127]
                     sineSample = Math.max(-1.0, Math.min(1.0, sineSample));  // Clip sample to [-1.0, 1.0]
-                    //System.out.println(sineSample);
-                    //for (int j = 0; j <  sineSample)
+
+
+                    double filteredSample = biquadFilter.processSample(sineSample);
 
                     // Scale sample to 8-bit range [-128 to 127]
-                    byte sample = (byte) (sineSample * 127);
+                    byte sample = (byte) (filteredSample * 127);
                     buffer2[i] = sample;  // Write sample to buffer
 
                     angle += angleIncrement;
@@ -166,7 +177,10 @@ public class Radio {
                         angle -= 2.0 * Math.PI;
                     }
                 }
+
+
                 line2.write(buffer2, 0, buffer2.length);
+
             }
         }).start();
     }
@@ -174,6 +188,62 @@ public class Radio {
     private void stopNoise(){
         line2.flush();
     }
+
+    // Convert byte[] to double[] (assuming 8-bit PCM)
+    public static double[] byteArrayToDoubleArray(byte[] audioBytes) {
+        double[] audioSamples = new double[audioBytes.length];
+
+        for (int i = 0; i < audioBytes.length; i++) {
+            // Convert 8-bit unsigned byte (0 to 255) to a normalized range (-1.0 to 1.0)
+            int unsignedByte = audioBytes[i] & 0xFF;  // Treat byte as unsigned
+            audioSamples[i] = (unsignedByte - 128) / 128.0;  // Normalize to -1.0 to 1.0
+        }
+
+        return audioSamples;
+    }
+
+    // Convert double[] back to byte[] (8-bit PCM)
+    public static byte[] doubleArrayToByteArray(double[] audioSamples) {
+        byte[] audioBytes = new byte[audioSamples.length];
+
+        for (int i = 0; i < audioSamples.length; i++) {
+            // De-normalize from range (-1.0 to 1.0) back to 8-bit PCM (0 to 255)
+            int sample = (int) ((audioSamples[i] * 128) + 128);
+            sample = Math.max(0, Math.min(255, sample));  // Clamp between 0 and 255
+            audioBytes[i] = (byte) sample;
+        }
+
+        return audioBytes;
+    }
+
+    //Low-pass filter
+    public static double[] applyLowPassFilter(double[] samples, int filterSize) {
+        double[] filteredSamples = new double[samples.length];
+
+        for (int i = 0; i < samples.length; i++) {
+            double sum = 0.0;
+            int count = 0;
+
+            for (int j = i - filterSize; j <= i + filterSize; j++) {
+                if (j >= 0 && j < samples.length) {
+                    sum += samples[j];
+                    count++;
+                }
+            }
+
+            filteredSamples[i] = sum / count;
+        }
+
+        return filteredSamples;
+    }
+
+    public static void changeFilterValue(int newFilterVal){
+        System.out.println("Changed filter value");
+        filterVal = newFilterVal;
+    }
+
+
+
 
 
 

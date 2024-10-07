@@ -55,6 +55,9 @@ public class PrimaryController {
     @FXML
     private Button playMorseBtn;
 
+    @FXML
+    private Slider filterSlider;
+
 
 
     @FXML
@@ -71,6 +74,10 @@ public class PrimaryController {
         frequencySlider.setMax(7.035);
         tuningFrequencySlider.setMin(7.000);   // Minimum value
         tuningFrequencySlider.setMax(7.035);
+        filterSlider.setMin(50);
+        filterSlider.setMax(255);
+        filterSlider.setValue(0);
+
         frequencyDisplayLabel.setText(Double.toString(selectedFrequency));
 
         tapSoundBtn.setOnMousePressed(event -> {playTone(Math.abs(getSelectedTunningFrequency - selectedFrequency) * 1000000); startTimer(); System.out.println(morseToText(getCwArray()));});
@@ -97,7 +104,6 @@ public class PrimaryController {
             }
         });
 
-
         noiseSlider.valueProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
@@ -105,6 +111,14 @@ public class PrimaryController {
                 updateNoiseGain(newValue.doubleValue());
 
 
+            }
+        });
+
+        filterSlider.valueProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+
+                changeFilterValue(newValue.intValue());
             }
         });
 
