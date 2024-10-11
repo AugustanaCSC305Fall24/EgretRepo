@@ -11,8 +11,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="388.0" prefWidth="613.0" style="-fx-background-color: gray;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="388.0" prefWidth="613.0" style="-fx-background-color: gray;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.TrainingScreenController">
    <children>
       <HBox prefHeight="396.0" prefWidth="613.0" style="-fx-background-color: #353538;">
          <children>
@@ -27,20 +26,16 @@
                <HBox.margin>
                   <Insets />
                </HBox.margin>
+               <right>
+                  <Button fx:id="openFirstScreen" mnemonicParsing="false" onAction="#openFirstScreen" text="Open First Screen" BorderPane.alignment="CENTER" />
+               </right>
             </BorderPane>
-            <TabPane prefHeight="378.0" prefWidth="280.0" tabClosingPolicy="UNAVAILABLE">
+            <TabPane fx:id="tabPane" prefHeight="378.0" prefWidth="280.0" tabClosingPolicy="UNAVAILABLE">
               <tabs>
-                <Tab text="Training">
-                  <content>
-                    <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="347.0" prefWidth="287.0" style="-fx-background-color: gray;">
-                           <children>
-                              <Button layoutX="95.0" layoutY="93.0" mnemonicParsing="false" text="New Training" />
-                              <Button layoutX="85.0" layoutY="147.0" mnemonicParsing="false" text="Resume Training" />
-                              <Button layoutX="113.0" layoutY="202.0" mnemonicParsing="false" text="Config" />
-                           </children>
-                        </AnchorPane>
-                  </content>
-                </Tab>
+                <Tab fx:id="trainingTab" text="Training">
+                     <content>
+                        <AnchorPane fx:id="tabAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="347.0" prefWidth="287.0" style="-fx-background-color: gray;" />
+                     </content></Tab>
               </tabs>
             </TabPane>
          </children>
