@@ -4,19 +4,23 @@ public class BiquadLowPassFilter8Bit {
 
     // Biquad filter coefficients
     private double a0, a1, a2, b1, b2;
+    private double cutoffFreqFilter;
+    private double sampleRate;
 
     // Filter state variables (previous inputs and outputs)
     private double prevInput1 = 0.0, prevInput2 = 0.0;
     private double prevOutput1 = 0.0, prevOutput2 = 0.0;
 
     // Constructor to initialize the filter with sample rate and cutoff frequency
-    public BiquadLowPassFilter8Bit(double sampleRate, double cutoffFreq) {
-        calculateCoefficients(sampleRate, cutoffFreq);
+    public BiquadLowPassFilter8Bit(double newSampleRate, double cutoffFreq) {
+        cutoffFreqFilter = cutoffFreq;
+        sampleRate = newSampleRate;
+        calculateCoefficients();
     }
 
     // Method to calculate the filter coefficients based on sample rate and cutoff frequency
-    private void calculateCoefficients(double sampleRate, double cutoffFreq) {
-        double omega = 2.0 * Math.PI * cutoffFreq / sampleRate;
+    private void calculateCoefficients() {
+        double omega = 2.0 * Math.PI * cutoffFreqFilter / sampleRate;
         double alpha = Math.sin(omega) / (2.0 * 0.707);  // Q factor of 0.707 for Butterworth filter
 
         double cosOmega = Math.cos(omega);
@@ -39,8 +43,8 @@ public class BiquadLowPassFilter8Bit {
     // Apply the filter to a single sample
     public double processSample(double inputSample) {
         // Calculate the filtered output sample using the biquad filter equation
-        double outputSample = a0 * inputSample + a1 * prevInput1 + a2 * prevInput2
-                - b1 * prevOutput1 - b2 * prevOutput2;
+        calculateCoefficients();
+        double outputSample = a0 * inputSample + a1 * prevInput1 + a2 * prevInput2 - b1 * prevOutput1 - b2 * prevOutput2;
 
         // Update previous inputs and outputs for the next sample
         prevInput2 = prevInput1;
@@ -50,5 +54,10 @@ public class BiquadLowPassFilter8Bit {
 
         return outputSample;
     }
+
+    public void setFilterValue(double new_cutoffFreqFilter){
+        cutoffFreqFilter = new_cutoffFreqFilter;
+    }
+
 }
 
