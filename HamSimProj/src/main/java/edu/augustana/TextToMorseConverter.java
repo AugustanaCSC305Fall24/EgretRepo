@@ -48,7 +48,7 @@ public class TextToMorseConverter {
         morseCodeMap.put('8', "---..");
         morseCodeMap.put('9', "----.");
         morseCodeMap.put('0', "-----");
-        morseCodeMap.put(' ', "/"); // Space separator in Morse code
+        morseCodeMap.put(' ', "*"); // Space separator in Morse code
     }
 
 
@@ -110,9 +110,8 @@ public class TextToMorseConverter {
             finalMorseString.append(morseChar);
         }
 
-        String[] morseCodeWordsArray = finalMorseString.toString().split("//");
 
-        String[] morseCodeArray = Arrays.toString(morseCodeWordsArray).split("/");
+        String[] morseCodeArray = finalMorseString.toString().split("/");
 
 
         StringBuilder result = new StringBuilder();
@@ -127,7 +126,7 @@ public class TextToMorseConverter {
             if (letter != null) {
                 result.append(letter);
             } else {
-                result.append("?");  // For invalid Morse code
+                result.append(" ");  // For invalid Morse code
             }
         }
 

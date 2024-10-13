@@ -54,10 +54,15 @@ public class CWHandler {
 
         long timeSinceReleased = System.nanoTime() - releasedStartTime;
 
-        if(timeSinceReleased > dotDuration * 3){
+        if(timeSinceReleased > dotDuration * 7 - 1 ){
+        
             cwArray.add("/");
-        } else if (timeSinceReleased > dotDuration * 7) {
-            cwArray.add("//");
+            cwArray.add("*");
+            cwArray.add("/");
+
+
+        } else if (timeSinceReleased > dotDuration * 3) {
+            cwArray.add("/");
         }
     }
 
