@@ -5,6 +5,9 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
+
+import static java.lang.Double.valueOf;
 
 public class Radio {
 
@@ -19,6 +22,7 @@ public class Radio {
     private static Random randGen;
     private static double soundAmplitud;
 
+
     private static final int SAMPLE_RATE = 44100;
     private static final int BUFFER_SIZE = 256;
     private static final int BUFFER_SIZE2 = 4096;
@@ -30,16 +34,20 @@ public class Radio {
     private static int filterVal;
     private static BiquadLowPassFilter8Bit biquadFilter;
     private static BiquadLowPassFilter8Bit biquadFilter2;
+    private static int lowerNoiseFreqBoundary = 250;
+    private static int upperNoiseFreqBoundary = 550;
+
 
 
 
     public static void initializeRadio() throws LineUnavailableException{
 
         isRadioOn = true;
+
         noiseAmplitud = 0.0;
         randGen = new Random();
         soundAmplitud = 1;
-        filterVal = 800;
+        filterVal = 6379;
         biquadFilter = new BiquadLowPassFilter8Bit(SAMPLE_RATE, filterVal);
         biquadFilter2 = new BiquadLowPassFilter8Bit(SAMPLE_RATE, filterVal);
 
@@ -68,35 +76,14 @@ public class Radio {
         new Thread(() -> {
 
 
-            double angle = 0;
-
+            double[] angles = new double[10];
+            angles[0] = 0;
 
             while (isPlaying) {// Only play while isPlaying is true
 
-                double angleIncrement = angleIncrement = 2.0 * Math.PI * frequency / format.getSampleRate();
+                playSound(angles, 0, BUFFER_SIZE2, biquadFilter, buffer, line, frequency);
 
 
-                for (int i = 0; i < BUFFER_SIZE2; i++) {
-
-                    double sineSample = soundAmplitud * (Math.sin(angle) +  (generateGaussianNoise(noiseAmplitud, randGen)));
-
-                    // Clip and normalize the sample to fit into 8-bit range [-128, 127]
-                    sineSample = Math.max(-1.0, Math.min(1.0, sineSample));  // Clip sample to [-1.0, 1.0]
-
-                    double filteredSample = biquadFilter.processSample(sineSample);
-
-
-                    // Scale sample to 8-bit range [-128 to 127]
-                    byte sample = (byte) (sineSample * 127);
-                    buffer[i] = sample;  // Write sample to buffer
-
-                    angle += angleIncrement;
-                    if (angle > 2.0 * Math.PI) {
-                        angle -= 2.0 * Math.PI;
-                    }
-                }
-
-                line.write(buffer, 0, buffer.length);
             }
         }).start();
     }
@@ -104,6 +91,7 @@ public class Radio {
     // Method to stop the tone
     static void stopTone() {
         isPlaying = false;
+
         line.flush();  // Clear the buffer to stop sound
     }
 
@@ -153,35 +141,16 @@ public class Radio {
         new Thread(() -> {
 
 
-            double angle = 0;
+            double[] angles = new double[10];
+            angles[0] = 0;
 
 
             while (isRadioOn) {
 
-                double angleIncrement  = 2.0 * Math.PI * (randGen.nextInt(700) / format.getSampleRate());
+                int frequency = randGen.nextInt(upperNoiseFreqBoundary - lowerNoiseFreqBoundary) + lowerNoiseFreqBoundary;
 
-                // Only play while isPlaying is true
-                for (int i = 0; i < BUFFER_SIZE2; i++) {
-                    double sineSample = (Math.sin(0) + generateGaussianNoise(0.1, randGen)) * noiseAmplitud;
+                playSound(angles, 0, BUFFER_SIZE2, biquadFilter2, buffer2, line2, 0);
 
-                    // Clip and normalize the sample to fit into 8-bit range [-128, 127]
-                    sineSample = Math.max(-1.0, Math.min(1.0, sineSample));  // Clip sample to [-1.0, 1.0]
-
-
-                    double filteredSample = biquadFilter2.processSample(sineSample);
-
-                    // Scale sample to 8-bit range [-128 to 127]
-                    byte sample = (byte) (filteredSample * 127);
-                    buffer2[i] = sample;  // Write sample to buffer
-
-                    angle += angleIncrement;
-                    if (angle > 2.0 * Math.PI) {
-                        angle -= 2.0 * Math.PI;
-                    }
-                }
-
-
-                line2.write(buffer2, 0, buffer2.length);
 
             }
         }).start();
@@ -193,8 +162,37 @@ public class Radio {
 
 
     public static void changeFilterValue(int newFilterVal){
-        System.out.println("Changed filter value");
+
         biquadFilter2.setFilterValue(newFilterVal);
+        biquadFilter.setFilterValue(newFilterVal);
+    }
+
+    static void playSound(double[] angles, int angleIndex, int bufferSize, BiquadLowPassFilter8Bit filter, byte[] buffer,  SourceDataLine line, double frequency){
+        double angleIncrement  = 2.0 * Math.PI * frequency / format.getSampleRate();
+
+        // Only play while isPlaying is true
+        for (int i = 0; i < bufferSize; i++) {
+            double sineSample = ( soundAmplitud * ((Math.sin(angles[angleIndex])) + generateGaussianNoise(noiseAmplitud , randGen)));
+
+            // Clip and normalize the sample to fit into 8-bit range [-128, 127]
+            sineSample = Math.max(-1.0, Math.min(1.0, sineSample));  // Clip sample to [-1.0, 1.0]
+
+
+            double filteredSample = filter.processSample(sineSample);
+
+            // Scale sample to 8-bit range [-128 to 127]
+            byte sample = (byte) (filteredSample * 127);
+            buffer[i] = sample;  // Write sample to buffer
+
+            angles[angleIndex] += angleIncrement;
+            if (angles[angleIndex] > 2.0 * Math.PI) {
+                angles[angleIndex] -= 2.0 * Math.PI;
+            }
+        }
+
+        line.write(buffer, 0, buffer.length);
+
+
     }
 
 

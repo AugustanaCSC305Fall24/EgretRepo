@@ -75,8 +75,12 @@ public class PrimaryController {
         tuningFrequencySlider.setMin(7.000);   // Minimum value
         tuningFrequencySlider.setMax(7.035);
         filterSlider.setMin(40);
-        filterSlider.setMax(800);
+        filterSlider.setMax(6379);
         filterSlider.setValue(800);
+        noiseSlider.setMin(0);
+        noiseSlider.setMax(4);
+
+
 
         frequencyDisplayLabel.setText(Double.toString(selectedFrequency));
 
