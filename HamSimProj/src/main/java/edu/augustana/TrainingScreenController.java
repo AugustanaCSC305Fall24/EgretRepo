@@ -6,6 +6,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 
 
 import java.io.IOException;
@@ -18,22 +20,12 @@ public class TrainingScreenController {
 
 
     @FXML
-    private AnchorPane tabAnchorPane;
+    private HBox mainHbox;
 
     @FXML
-    private Button configButton;
+    private BorderPane trainingBorderPane;
 
-    @FXML
-    private Button newTrainingButton;
 
-    @FXML
-    private Button resumeTrainingButton;
-
-    @FXML
-    private TabPane tabPane;
-
-    @FXML
-    private Tab trainingTab;
 
 
 
@@ -41,13 +33,22 @@ public class TrainingScreenController {
 
     @FXML
     public void initialize() throws IOException {
-       tabAnchorPane = (AnchorPane) loadFXML("TrainingScreen1.fxml");
+
+        try {
+            // Load TrainingScreen1.fxml
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("TrainingScreen1.fxml"));
+            TabPane trainingTabPane = loader.load();
+
+            // Remove the old TabPane and add the new one
+            mainHbox.getChildren().add(trainingTabPane);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    @FXML
-    private void switchToTrainingScreen() throws IOException {
 
-    }
 
     private static Parent loadFXML(String fxml) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));

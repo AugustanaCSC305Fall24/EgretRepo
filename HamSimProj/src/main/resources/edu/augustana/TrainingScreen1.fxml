@@ -1,12 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="tabAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="347.0" prefWidth="287.0" style="-fx-background-color: gray;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <Button fx:id="newTrainingButton" layoutX="95.0" layoutY="93.0" mnemonicParsing="false" text="New Training" />
-      <Button fx:id="resumeTrainingButton" layoutX="85.0" layoutY="147.0" mnemonicParsing="false" text="Resume Training" />
-      <Button fx:id="configButton" layoutX="113.0" layoutY="202.0" mnemonicParsing="false" text="Config" />
-   </children>
-</AnchorPane>
+
+<TabPane fx:id="TrainingScreen1TabPane" xmlns:fx="http://javafx.com/fxml" fx:controller="edu.augustana.TrainingScreen1Controller">
+   <tabs>
+      <Tab text="Training" fx:id="trainingScreen1Tab">
+         <content>
+            <AnchorPane fx:id="tabAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="347.0" prefWidth="287.0" style="-fx-background-color: gray;">
+               <children>
+                  <Button fx:id="newTrainingButton" layoutX="95.0" layoutY="93.0" mnemonicParsing="false" onAction="#switchToTrainingScreen" text="New Training" />
+                  <Button fx:id="resumeTrainingButton" layoutX="85.0" layoutY="147.0" mnemonicParsing="false" text="Resume Training" />
+                  <Button fx:id="configButton" layoutX="113.0" layoutY="202.0" mnemonicParsing="false" text="Config" />
+               </children>
+            </AnchorPane>
+         </content>
+      </Tab>
+   </tabs>
+</TabPane>

@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="633.0" prefWidth="503.0" tabClosingPolicy="UNAVAILABLE" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/22">
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="633.0" prefWidth="503.0" tabClosingPolicy="UNAVAILABLE"  fx:id="trainingScreenDemoTab" xmlns:fx="http://javafx.com/fxml" fx:controller="edu.augustana.TrainingScreen1Controller">
   <tabs>
     <Tab text="Untitled Tab 1">
       <content>
