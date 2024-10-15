@@ -28,19 +28,25 @@ public class TrainingScreen1Controller {
     @FXML
     private TabPane TrainingScreen1TabPane;
 
+    private TrainingScreenController trainingScreenController;
+
 
     public void initialize() throws IOException {
 
-        newTrainingButton.setOnAction(e -> {
-            try {
-                switchToTrainingScreen();
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
-        });
+//        newTrainingButton.setOnAction(e -> {
+//            try {
+//                switchToTrainingScreen();
+//            } catch (IOException ex) {
+//                throw new RuntimeException(ex);
+//            }
+//        });
 
 
 
+    }
+
+    public void setTrainingScreenController(TrainingScreenController controller) {
+        this.trainingScreenController = controller;
     }
 
 
@@ -52,8 +58,7 @@ public class TrainingScreen1Controller {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("TrainingScreen2.fxml"));
             TabPane demoTabPane = loader.load();
             System.out.println("Pressed BTN");
-//            TrainingScreen1TabPane.getParent().getChildren().clear();
-//            TrainingScreen1TabPane.getParent().getChildren().add(demoTabPane);
+            trainingScreenController.addToMainHbox(demoTabPane);
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -1,13 +1,16 @@
 package edu.augustana;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.image.ImageView;
 
 
 import java.io.IOException;
@@ -25,6 +28,14 @@ public class TrainingScreenController {
     @FXML
     private BorderPane trainingBorderPane;
 
+    @FXML
+    private TabPane traininScreenTabPane;
+
+    @FXML
+    private ImageView radioImage;
+
+
+
 
 
 
@@ -39,8 +50,20 @@ public class TrainingScreenController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("TrainingScreen1.fxml"));
             TabPane trainingTabPane = loader.load();
 
+            TrainingScreen1Controller otherController = loader.getController();
+
+            // Inject this controller (Controller1) into the second controller (OtherController)
+            otherController.setTrainingScreenController(this);
+
+
             // Remove the old TabPane and add the new one
+            traininScreenTabPane = trainingTabPane;
             mainHbox.getChildren().add(trainingTabPane);
+
+            Image radioPic = new Image("file:C:\\Users\\camio\\HamSimProject\\HamSim\\EgretRepo\\HamSimProj\\src\\main\\resources\\assets\\Radio1.png");
+//            radioImage.setScaleX(3);
+//            radioImage.setScaleX(3);
+            radioImage.setImage(radioPic);
 
 
         } catch (Exception e) {
@@ -53,6 +76,12 @@ public class TrainingScreenController {
     private static Parent loadFXML(String fxml) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
         return fxmlLoader.load();
+    }
+
+    public void addToMainHbox(Node node){
+        mainHbox.getChildren().remove(traininScreenTabPane);
+        mainHbox.getChildren().add(node);
+        traininScreenTabPane = (TabPane) node;
     }
 
 
