@@ -1,11 +1,14 @@
 package edu.augustana;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
 
@@ -79,6 +82,9 @@ public class TrainingScreen2Controller {
 
     @FXML
     private Slider volumeSlider;
+
+    @FXML
+    private Button backToMainButton;
 
 
     @FXML
@@ -221,5 +227,22 @@ public class TrainingScreen2Controller {
 //        morseTester();
 
     }
+
+    @FXML
+    private void switchToMainScreen() {
+        try {
+            // Load the TrainingScreen.fxml (or whichever FXML represents the main screen)
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("TrainingScreen.fxml"));
+            Parent mainScreenParent = loader.load();
+
+            // Get the current scene and replace the root node with the new one
+            backToMainButton.getScene().setRoot(mainScreenParent);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
 }
