@@ -50,6 +50,8 @@ public class trainingScreen2Controller {
     @FXML
     private Slider filterSlider;
 
+
+
     @FXML
     private Slider noiseSlider;
 
@@ -129,6 +131,8 @@ public class trainingScreen2Controller {
                 throw new RuntimeException(e);
             }
         });
+
+
 
         tuneOutSlider.valueProperty().addListener(new ChangeListener<Number>() {
             @Override
