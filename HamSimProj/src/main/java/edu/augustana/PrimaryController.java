@@ -26,6 +26,9 @@ public class PrimaryController {
     private double selectedFrequency;
     private double getSelectedTunningFrequency;
 
+
+
+
     @FXML
     private Label frequencyDisplayLabel;
 
@@ -45,7 +48,7 @@ public class PrimaryController {
     private Button tapSoundBtn;
 
     @FXML
-    private Label tuneFrequency;
+    private Label tuneFrequencyLabel;
 
     @FXML
     private Slider tuningFrequencySlider;
@@ -141,7 +144,7 @@ public class PrimaryController {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 // Update the label with the new slider value
-                tuneFrequency.setText(Double.toString(newValue.doubleValue()));
+                tuneFrequencyLabel.setText(Double.toString(newValue.doubleValue()));
                 getSelectedTunningFrequency = newValue.doubleValue();
                 setTunningRF(getSelectedTunningFrequency);
 
