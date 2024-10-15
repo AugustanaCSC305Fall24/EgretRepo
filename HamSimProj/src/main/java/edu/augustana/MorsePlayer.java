@@ -10,6 +10,7 @@ import static edu.augustana.Radio.stopTone;
 public class MorsePlayer {
 
     private static Random randGen2;
+    private static int beatLength;
 
 
 
@@ -62,6 +63,10 @@ public class MorsePlayer {
 
         }).start();
 
+    }
+
+    public void setBeatLength(int newValue){
+            beatLength = newValue;
     }
 
 
