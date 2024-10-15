@@ -22,7 +22,6 @@ public class MorsePlayer {
 
         new Thread(() -> {
 
-        int beatLength = 40;
         double variation = 0.3;
         char[] morse = morseString.toCharArray();
 
@@ -65,8 +64,9 @@ public class MorsePlayer {
 
     }
 
-    public void setBeatLength(int newValue){
-            beatLength = newValue;
+    public static void setBeatLength(int newValue){
+        //System.out.println(newValue);
+        beatLength = newValue;
     }
 
 

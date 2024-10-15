@@ -13,6 +13,7 @@ import javax.sound.sampled.LineUnavailableException;
 
 import static edu.augustana.CWHandler.*;
 import static edu.augustana.MorsePlayer.playMorseString;
+import static edu.augustana.MorsePlayer.setBeatLength;
 import static edu.augustana.Radio.*;
 import static edu.augustana.Radio.setSelectedRF;
 import static edu.augustana.TextToMorseConverter.morseToText;
@@ -125,6 +126,7 @@ public class TrainingScreen2Controller {
         tapSoundButton.setOnMouseReleased(event -> {stopTone(); stopTimer();});
         sendButton.setOnAction(event -> {
             try {
+                setBeatLength( (int) playbackSpeedSlider.getValue());
                 playMorseString(textToMorse(cwTextBox.getText()));
 
             } catch (InterruptedException e) {
