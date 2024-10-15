@@ -3,11 +3,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
-import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.image.ImageView;
@@ -29,7 +26,7 @@ public class TrainingScreenController {
     private BorderPane trainingBorderPane;
 
     @FXML
-    private TabPane traininScreenTabPane;
+    private TabPane trainingScreenTabPane;
 
     @FXML
     private ImageView radioImage;
@@ -57,7 +54,7 @@ public class TrainingScreenController {
 
 
             // Remove the old TabPane and add the new one
-            traininScreenTabPane = trainingTabPane;
+            trainingScreenTabPane = trainingTabPane;
             mainHbox.getChildren().add(trainingTabPane);
 
             Image radioPic = new Image("file:C:\\Users\\camio\\HamSimProject\\HamSim\\EgretRepo\\HamSimProj\\src\\main\\resources\\assets\\Radio1.png");
@@ -79,9 +76,9 @@ public class TrainingScreenController {
     }
 
     public void addToMainHbox(Node node){
-        mainHbox.getChildren().remove(traininScreenTabPane);
+        mainHbox.getChildren().remove(trainingScreenTabPane);
         mainHbox.getChildren().add(node);
-        traininScreenTabPane = (TabPane) node;
+        trainingScreenTabPane = (TabPane) node;
     }
 
 

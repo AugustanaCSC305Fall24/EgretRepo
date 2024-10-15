@@ -1,7 +1,6 @@
 package edu.augustana;
 
 import java.net.URL;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 import javafx.beans.value.ChangeListener;
@@ -20,7 +19,7 @@ import static edu.augustana.TextToMorseConverter.morseToText;
 import static edu.augustana.TextToMorseConverter.textToMorse;
 
 
-public class trainingScreen2Controller {
+public class TrainingScreen2Controller {
 
     private double selectedFrequency;
     private double getSelectedTunningFrequency;
@@ -50,7 +49,8 @@ public class trainingScreen2Controller {
     @FXML
     private Slider filterSlider;
 
-
+    @FXML
+    private Slider playbackSpeedSlider;
 
     @FXML
     private Slider noiseSlider;
