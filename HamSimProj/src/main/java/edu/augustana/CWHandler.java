@@ -16,11 +16,13 @@ public class CWHandler {
     private static long dashDuration;
     private static long letterSpaceDuration;
     private static long wordSpaceDuration;
+    private static double marginOfError;
 
     /**
      * Starts the timer when the key is pressed
      */
     public static void startTimer() {
+        marginOfError = 0.2;
         spaceTimerStop();
         startTime = System.nanoTime();
     }
@@ -112,13 +114,16 @@ public class CWHandler {
      * Converts the time pressed into Morse code symbols (dot, dash) based on the dynamic WPM
      * @param timePressed the time that the key was pressed for
      */
+    //THIS IS WHERE THE MARGIN OF ERROR SHOULD BE ADDED TO ACCOUNT FOR HUMAN ERROR IN TYPING CW
+
+
     public static void convertToCW(long timePressed) {
         String cwCharacter = "";
 
         // Differentiate between dot and dash based on the dynamically adjusted WPM timing
-        if (timePressed < dotDuration) {
+        if (timePressed < dotDuration + (dotDuration * marginOfError)) {
             cwCharacter = "."; // Dot
-        } else if (timePressed < dashDuration) {
+        } else if (timePressed < dashDuration + (dashDuration * marginOfError)) {
             cwCharacter = "-"; // Dash
         } else {
             cwCharacter = "-"; // Handle for invalid long press (optional)
@@ -129,6 +134,10 @@ public class CWHandler {
 
         printOutArray();
 
+    }
+
+    public static void setErrorMargin(double newMargin){
+        marginOfError = newMargin;
     }
 
 
