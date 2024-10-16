@@ -7,9 +7,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<TabPane fx:id="TrainingScreen1TabPane" minHeight="720.0" minWidth="425.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/22" fx:controller="edu.augustana.TrainingScreen1Controller">
+<TabPane fx:id="TrainingScreen1TabPane" minHeight="720.0" minWidth="425.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.TrainingScreen1Controller">
    <tabs>
-      <Tab fx:id="trainingScreen1Tab" text="Training">
+      <Tab fx:id="trainingScreen1Tab" closable="false" text="Training">
          <content>
             <AnchorPane fx:id="tabAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="691.0" prefWidth="429.0" style="-fx-background-color: gray;">
                <children>
@@ -20,7 +20,7 @@
                      <effect>
                         <DropShadow />
                      </effect></Button>
-                  <Button fx:id="resumeTrainingButton" layoutX="103.0" layoutY="176.0" mnemonicParsing="false" prefHeight="83.0" prefWidth="222.0" text="Resume Training">
+                  <Button fx:id="resumeTrainingButton" layoutX="103.0" layoutY="189.0" mnemonicParsing="false" prefHeight="83.0" prefWidth="222.0" text="Resume Training">
                      <font>
                         <Font size="24.0" />
                      </font>

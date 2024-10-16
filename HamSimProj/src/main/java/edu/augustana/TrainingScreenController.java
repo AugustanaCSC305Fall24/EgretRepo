@@ -18,7 +18,6 @@ import java.io.IOException;
 public class TrainingScreenController {
 
 
-
     @FXML
     private HBox mainHbox;
 
@@ -26,17 +25,10 @@ public class TrainingScreenController {
     private BorderPane trainingBorderPane;
 
     @FXML
-    private TabPane trainingScreenTabPane;
+    public TabPane trainingScreenTabPane;
 
     @FXML
     private ImageView radioImage;
-
-
-
-
-
-
-
 
 
     @FXML
@@ -67,7 +59,6 @@ public class TrainingScreenController {
             e.printStackTrace();
         }
     }
-
 
 
     private static Parent loadFXML(String fxml) throws IOException {

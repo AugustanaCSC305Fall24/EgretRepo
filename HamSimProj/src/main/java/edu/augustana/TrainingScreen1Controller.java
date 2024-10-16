@@ -28,6 +28,7 @@ public class TrainingScreen1Controller {
     @FXML
     private TabPane TrainingScreen1TabPane;
 
+
     private TrainingScreenController trainingScreenController;
 
 
@@ -42,13 +43,11 @@ public class TrainingScreen1Controller {
 //        });
 
 
-
     }
 
     public void setTrainingScreenController(TrainingScreenController controller) {
         this.trainingScreenController = controller;
     }
-
 
     @FXML
     private void switchToTrainingScreen() throws IOException {
