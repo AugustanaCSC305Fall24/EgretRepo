@@ -17,6 +17,11 @@ public class HamRadioWebSocketClient {
         System.out.println("Connected to WebSocket server.");
     }
 
+    @OnClose
+    public void onClose(Session session, CloseReason closeReason) {
+        System.out.println("WebSocket closed: " + closeReason);
+    }
+
     // When a message is received
     @OnMessage
     public void onMessage(String message) {
@@ -25,11 +30,15 @@ public class HamRadioWebSocketClient {
 
     // Send a message to the WebSocket
     public void sendMessage(String message) throws Exception {
-        session.getBasicRemote().sendText(message);
+        if (session != null && session.isOpen()) {
+            session.getBasicRemote().sendText(message);
+        } else {
+            System.out.println("No open WebSocket session to send message.");
+        }
     }
 
     // Method to connect to the WebSocket server using Tyrus explicitly
-    public void connectWebSocket() throws Exception {
+    public void connectWebSocket(String serverId) throws Exception {
         ClientManager client = ClientManager.createClient();
 
         // Create a default ClientEndpointConfig
@@ -38,8 +47,20 @@ public class HamRadioWebSocketClient {
                 .decoders(Collections.emptyList())  // Add your decoders here if any
                 .build();
 
-
-        URI uri = URI.create("ws://127.0.0.1:8000/ws");
+        // Pass the serverId as part of the WebSocket URI
+        URI uri = URI.create("ws://127.0.0.1:8000/ws/" + serverId);
         client.connectToServer(this, uri);
     }
+
+
+    // Method to disconnect from the WebSocket server
+    public void disconnectWebSocket() throws Exception {
+        if (session != null && session.isOpen()) {
+            session.close(new CloseReason(CloseReason.CloseCodes.NORMAL_CLOSURE, "Client disconnect"));
+            System.out.println("Disconnected from WebSocket server.");
+        } else {
+            System.out.println("No open WebSocket session to close.");
+        }
+    }
+
 }
