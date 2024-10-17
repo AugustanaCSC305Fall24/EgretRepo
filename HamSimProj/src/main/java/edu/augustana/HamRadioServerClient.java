@@ -16,7 +16,7 @@ public class HamRadioServerClient {
         connection.setRequestProperty("Content-Type", "application/json");
         connection.setDoOutput(true);
 
-        // You can send additional data if needed
+     
         OutputStream os = connection.getOutputStream();
         os.write("{}".getBytes()); // Empty JSON body
         os.flush();
