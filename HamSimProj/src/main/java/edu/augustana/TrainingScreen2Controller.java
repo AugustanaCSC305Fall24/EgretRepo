@@ -87,6 +87,57 @@ public class TrainingScreen2Controller {
     private Button backToMainButton;
 
 
+    //All FXML stuff for the listening training tab. Will have to
+    //delete a lot of this because it is repeated, and also we are
+    //going to get rid of a lot of the radio in this tab.
+    @FXML
+    private Button backToMainButton1;
+
+    @FXML
+    private TextField botCallSignTextField;
+
+    @FXML
+    private TextField botMessageTextField;
+
+    @FXML
+    private ListView<?> enteredGuessesListView;
+
+    @FXML
+    private Slider filterSlider1;
+
+    @FXML
+    private Label frequencyDisplayLabel1;
+
+    @FXML
+    private Slider noiseSlider1;
+
+    @FXML
+    private Slider numBotsSlider;
+
+    @FXML
+    private Slider playbackSpeedSlider1;
+
+    @FXML
+    private Button startSimButton;
+
+    @FXML
+    private Button submitGuessButton;
+
+    @FXML
+    private Label tuneFrequencyLabel1;
+
+    @FXML
+    private Slider tuneInSlider1;
+
+    @FXML
+    private Slider tuneOutSlider1;
+
+    @FXML
+    private Button turnOnRadioButton1;
+
+    @FXML
+    private Slider volumeSlider1;
+
     @FXML
     void initialize() {
         assert cwTextBox != null : "fx:id=\"cwTextBox\" was not injected: check your FXML file 'TrainingScreen2.fxml'.";
@@ -196,6 +247,13 @@ public class TrainingScreen2Controller {
                 //onSliderValueChanged(newValue.doubleValue());
             }
         });
+
+
+
+        //Initializing the listening training tab. Need to add code here. Need to at least initialize the tune in slider
+        startSimButton.setOnAction(evt -> HandleListeningSim.startSim());
+        submitGuessButton.setOnAction(evt -> HandleListeningSim.checkGuess());
+
 
     }
 
