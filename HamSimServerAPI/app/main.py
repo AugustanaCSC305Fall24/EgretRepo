@@ -35,23 +35,25 @@ async def get_server_conditions(server_id: str):
 
 # WebSocket endpoint for a specific server
 @app.websocket("/ws/{server_id}")
+@app.websocket("/ws/{server_id}")
 async def websocket_endpoint(websocket: WebSocket, server_id: str):
     if server_id not in servers:
-        await websocket.close(code=1008)  # Invalid server ID
-        raise HTTPException(status_code=404, detail="Server not found")
+        await websocket.close(code=1008)
+        return
     
     await websocket.accept()
-    servers[server_id]["clients"].append(websocket)  # Add client to the specific server's client list
+    servers[server_id]["clients"].append(websocket)
+    print(f"Client connected to server {server_id}")
     
     try:
         while True:
             data = await websocket.receive_text()
-            # Broadcast the received message to all clients in the same server
+            print(f"Received message: {data}")  # Log received messages
             for client in servers[server_id]["clients"]:
-                if client != websocket:
-                    await client.send_text(data)
+                await client.send_text(data)
     except WebSocketDisconnect:
         servers[server_id]["clients"].remove(websocket)
+
 
 
 # Optional: Endpoint to list all active servers
