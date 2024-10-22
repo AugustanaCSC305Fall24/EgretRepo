@@ -112,13 +112,16 @@ public class TrainingScreen2Controller {
     private Slider noiseSlider1;
 
     @FXML
-    private Slider numBotsSlider;
+    private static Slider numBotsSlider;
 
     @FXML
     private Slider playbackSpeedSlider1;
 
     @FXML
     private Button startSimButton;
+
+    @FXML
+    private Button stopSimButton;
 
     @FXML
     private Button submitGuessButton;
@@ -251,8 +254,15 @@ public class TrainingScreen2Controller {
 
 
         //Initializing the listening training tab. Need to add code here. Need to at least initialize the tune in slider
-        startSimButton.setOnAction(evt -> HandleListeningSim.startSim());
+        startSimButton.setOnAction(evt -> {
+            try {
+                HandleListeningSim.startSim();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        });
         submitGuessButton.setOnAction(evt -> HandleListeningSim.checkGuess());
+        stopSimButton.setOnAction(evt -> HandleListeningSim.stopSim());
 
 
     }
@@ -301,6 +311,9 @@ public class TrainingScreen2Controller {
         }
     }
 
+    public static int getNumBots() {
+        return (int) numBotsSlider.getValue();
+    }
 
 
 }

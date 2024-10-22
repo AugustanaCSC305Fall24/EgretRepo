@@ -5,24 +5,28 @@ import java.util.Random;
 public class TrainingListeningBot {
 
     private double outputFrequency;
-    //private final String botPhrase;
-    //private final String callSign;
+    private final String botPhrase;
+    private final String callSign;
     private final int band;
 
 
-    public static final String[] botPhraseArray = {}; //Add the phrases to this list
-    public static final String[] botCallSignArray = {}; //Add list of call signs
+    public static final String[] botPhraseArray = {"Hello", "Hello2"}; //Add the phrases to this list
+    public static final String[] botCallSignArray = {"HHTO", "PTOY"}; //Add list of call signs
     private static final Random randomGen = new Random();
 
 
-    public TrainingListeningBot(int band) {
+    public TrainingListeningBot(int band) throws InterruptedException {
         this.band = 10; //temporary. Setting the band to 10
-        //this.botPhrase = botPhraseArray[randomGen.nextInt(0, botPhraseArray.length)];
-        //this.callSign = botCallSignArray[randomGen.nextInt(0, botCallSignArray.length)];
+        this.botPhrase = TextToMorseConverter.textToMorse(botPhraseArray[randomGen.nextInt(botPhraseArray.length)]); //Morse string of their phrase
+        this.callSign = TextToMorseConverter.textToMorse(botCallSignArray[randomGen.nextInt(botCallSignArray.length)]); //Morse string of their callSign
+
 
         if (band == 10) { //need to add more if else statements to account for each band option
-            //this.outputFrequency = randomGen.nextDouble(28.000, 29.700);
+            int integerFrequency = randomGen.nextInt(1701) + 28000; //This is because I was getting errors for trying to get a random value between two values, so I made it an integer and am getting a random integer in the range and then adding the lower bound to it
+            this.outputFrequency = (double) integerFrequency / 1000;
         }
+
+        playContinuousMessage();
 
     }
 
@@ -30,17 +34,17 @@ public class TrainingListeningBot {
      * Accessor method for botPhrase
      * @return botPhrase
      */
-//    public String getBotPhrase() {
-//        return botPhrase;
-//    }
+    public String getBotPhrase() {
+        return botPhrase;
+    }
 
     /**
      * Accessor method for callSign
      * @return callSign
      */
-//    public String getCallSign() {
-//        return callSign;
-//    }
+    public String getCallSign() {
+        return callSign;
+    }
 
     /**
      * Accessor method for outputFrequency
@@ -48,5 +52,15 @@ public class TrainingListeningBot {
      */
     public double getOutputFrequency() {
         return outputFrequency;
+    }
+
+    private void playContinuousMessage() throws InterruptedException {
+
+        while (HandleListeningSim.getSimActive()) {
+            MorsePlayer.playBotMorseString(callSign, outputFrequency);
+            Thread.sleep(100000000); //Need to adjust this to wait the right amount of time
+            MorsePlayer.playBotMorseString(botPhrase, outputFrequency);
+            Thread.sleep(1000000000); //Need to adjust this too. Needs to be long enough to wait for the entire message to play before starting the while loop again
+        }
     }
 }

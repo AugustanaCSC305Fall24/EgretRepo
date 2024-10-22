@@ -301,12 +301,10 @@
                         <ToolBar prefHeight="74.0" prefWidth="502.0">
                            <items>
                               <Button fx:id="startSimButton" mnemonicParsing="false" text="Start Simulation" />
+                              <Button fx:id="stopSimButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="110.0" text="Stop Simulation" />
                               <Button fx:id="turnOnRadioButton1" mnemonicParsing="false" text="Turn On Radio" />
-                              <Pane prefHeight="42.0" prefWidth="135.0">
-                                 <children>
-                                    <Button fx:id="backToMainButton1" layoutX="115.0" layoutY="8.0" mnemonicParsing="false" onAction="#switchToMainScreen" prefHeight="22.0" prefWidth="77.0" text="Back" />
-                                 </children>
-                              </Pane>
+                              <Pane prefHeight="42.0" prefWidth="70.0" />
+                              <Button fx:id="backToMainButton1" mnemonicParsing="false" onAction="#switchToMainScreen" prefHeight="22.0" prefWidth="77.0" text="Back" />
                            </items>
                         </ToolBar>
                      </children>
