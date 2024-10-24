@@ -8,15 +8,16 @@ public class HamRadioClientMain {
     public static void main(String[] args) {
         try {
             // Create the server and set conditions
-            HamRadioServerClient serverClient = new HamRadioServerClient();
-            serverClient.createServer("serv1", 0.5f, 1.0f); // noiseLevel = 0.5, signalStrength = 1.0
+//            HamRadioServerClient serverClient = new HamRadioServerClient();
+//            serverClient.createServer("serv1", 0.5f, 1.0f); // noiseLevel = 0.5, signalStrength = 1.0
 
             // Connect to WebSocket and send/receive messages
             HamRadioWebSocketClient webSocketClient = new HamRadioWebSocketClient();
             webSocketClient.connectWebSocket("serv1");
 
-            //Retrieve and display the server conditions
-            serverClient.getServerConditions("serv1");
+
+            // Retrieve and display the server conditions
+//            serverClient.getServerConditions("serv1");
 
             // Initialize scanner to capture user input
             Scanner scanner = new Scanner(System.in);

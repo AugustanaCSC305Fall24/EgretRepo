@@ -37,12 +37,19 @@ public class Radio {
     private static int lowerNoiseFreqBoundary = 250;
     private static int upperNoiseFreqBoundary = 550;
 
+    private static int simTime;
+    private static double cwToneFreq;
+    private static int band;
+
 
 
 
     public static void initializeRadio() throws LineUnavailableException{
 
         isRadioOn = true;
+        simTime = 1200;
+        cwToneFreq = 800;
+        band = 10;
 
         noiseAmplitud = 0.0;
         randGen = new Random();
@@ -130,9 +137,38 @@ public class Radio {
         return selectedRF;
     }
 
+
+    //NOTE DELETE THIS AFTER REFACTORING VAIRABLE NAMES
     public static double getSelectedTuneFreq(){
         return tunningRF;
     }
+
+    public static double getCwToneFreq(){
+        return cwToneFreq;
+    }
+
+    public static void setCwToneFreq(double newCwToneFreq){
+        cwToneFreq =  newCwToneFreq;
+    }
+
+    public static int getBand(){
+        return band;
+    }
+
+    public static void setBand(int newBand){
+        band = newBand;
+    }
+
+
+    public static int getTime(){
+        return simTime;
+    }
+
+    public static void setTime(int newTime){
+        simTime = newTime;
+    }
+
+
 
 
 
