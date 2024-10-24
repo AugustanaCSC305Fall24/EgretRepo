@@ -15,7 +15,7 @@ public class HamRadioClientMain {
             HamRadioWebSocketClient webSocketClient = new HamRadioWebSocketClient();
             webSocketClient.connectWebSocket("serv1");
 
-            // Retrieve and display the server conditions
+            //Retrieve and display the server conditions
             serverClient.getServerConditions("serv1");
 
             // Initialize scanner to capture user input
