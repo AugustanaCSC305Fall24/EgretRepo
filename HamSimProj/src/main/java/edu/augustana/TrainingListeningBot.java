@@ -20,14 +20,13 @@ public class TrainingListeningBot {
         this.band = 10; //temporary. Setting the band to 10
         this.botPhrase = TextToMorseConverter.textToMorse(botPhraseArray[randomGen.nextInt(botPhraseArray.length)]); //Morse string of their phrase
         this.callSign = TextToMorseConverter.textToMorse(botCallSignArray[randomGen.nextInt(botCallSignArray.length)]); //Morse string of their callSign
-        this.playSound = true;
+        this.playSound = false;
 
         if (band == 10) { //need to add more if else statements to account for each band option
             int integerFrequency = randomGen.nextInt(1701) + 28000; //This is because I was getting errors for trying to get a random value between two values, so I made it an integer and am getting a random integer in the range and then adding the lower bound to it
             this.outputFrequency = (double) integerFrequency / 1000;
         }
 
-        playContinuousMessage();
 
     }
 
