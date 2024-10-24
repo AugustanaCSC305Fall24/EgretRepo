@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
 
 import javax.sound.sampled.LineUnavailableException;
@@ -316,4 +317,12 @@ public class TrainingScreen2Controller {
     }
 
 
+    public void handleKeyPress(KeyEvent keyEvent) throws InterruptedException {
+        CWHandler.startPaddleTimer();
+    }
+
+    public void handleKeyRelease(KeyEvent keyEvent) throws InterruptedException {
+        CWHandler.stopPaddleTimer();
+        CWHandler.handlePaddle(keyEvent);
+    }
 }
