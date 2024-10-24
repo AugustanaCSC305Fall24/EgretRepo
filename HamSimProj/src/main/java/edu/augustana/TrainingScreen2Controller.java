@@ -94,10 +94,10 @@ public class TrainingScreen2Controller {
     private Button backToMainButton1;
 
     @FXML
-    private TextField botCallSignTextField;
+    private static TextField botCallSignTextField;
 
     @FXML
-    private TextField botMessageTextField;
+    private static TextField botMessageTextField;
 
     @FXML
     private ListView<?> enteredGuessesListView;
@@ -311,8 +311,19 @@ public class TrainingScreen2Controller {
         }
     }
 
+
+    //All Methods that are for the listening training screen
+
     public static int getNumBots() {
         return (int) numBotsSlider.getValue();
+    }
+
+    public static String getGuessedCallSign() {
+        return botCallSignTextField.getText();
+    }
+
+    public static String getGuessedMessage() {
+        return botCallSignTextField.getText();
     }
 
 

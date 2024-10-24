@@ -23,10 +23,42 @@ public class HandleListeningSim {
     //Takes the value from the two text boxes and check to see if they match the bot they are listening to
     public static void checkGuess() {
 
+
+        String guessedCallSign = TrainingScreen2Controller.getGuessedCallSign().trim().toUpperCase();
+        String guessedMessage = TrainingScreen2Controller.getGuessedMessage().trim().toUpperCase();
+        boolean guessedCorrectly = false; //Make this variable so that you can check if you have to add the guess as red text into the listview
+
+        for (TrainingListeningBot bot : botList) {
+            if (bot.getCallSign().equals(guessedCallSign)) {
+                if (bot.getBotPhrase().equals(guessedMessage)) {
+
+                    //need to add a counter of how many you get right here and put it on screen
+                    //Also can put the message into the list view with green text and update the counter
+                    bot.stopSound();
+                    botList.remove(bot);
+                    guessedCorrectly = true;
+
+                }
+
+            }
+        }
+
+        if (!guessedCorrectly) {
+            //Add guess as red into the listview
+        }
+
+        //Clear the data in both guessing text boxes
+
+
+
     }
 
     public static void stopSim() {
         simActive = false;
+        for (TrainingListeningBot bot : botList) {
+            bot.stopSound();
+        }
+        botList.clear();
     }
 
     public static boolean getSimActive() {
