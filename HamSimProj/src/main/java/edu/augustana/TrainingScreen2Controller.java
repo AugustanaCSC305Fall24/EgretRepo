@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
 import javax.sound.sampled.LineUnavailableException;
@@ -100,7 +101,10 @@ public class TrainingScreen2Controller {
     private static TextField botMessageTextField;
 
     @FXML
-    private ListView<?> enteredGuessesListView;
+    private static ScrollPane enteredGuessesScrollPane;
+
+    @FXML
+    private static VBox guessedMessagesVBox;
 
     @FXML
     private Slider filterSlider1;
@@ -323,8 +327,18 @@ public class TrainingScreen2Controller {
     }
 
     public static String getGuessedMessage() {
-        return botCallSignTextField.getText();
+        return botMessageTextField.getText();
     }
 
+    public static VBox getGuessedMessagesVBox() {
+        return guessedMessagesVBox;
+    }
 
+    public static TextField getBotCallSignTextField() {
+        return botCallSignTextField;
+    }
+
+    public static TextField getBotMessageTextField() {
+        return botMessageTextField;
+    }
 }

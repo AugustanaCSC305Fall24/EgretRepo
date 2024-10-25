@@ -5,7 +5,7 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.control.Control;
 import javafx.scene.control.Skin;
 
-import static com.sun.javafx.css.StyleClassSet.getStyleClass;
+//import static com.sun.javafx.css.StyleClassSet.getStyleClass;
 
 public class KnobControl extends Control {
     private DoubleProperty value = new SimpleDoubleProperty(0);

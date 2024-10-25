@@ -1,6 +1,13 @@
 package edu.augustana;
 
 
+import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+
+
 import java.util.ArrayList;
 
 public class HandleListeningSim {
@@ -44,12 +51,28 @@ public class HandleListeningSim {
             }
         }
 
+        String fullGuess = "(" + guessedCallSign + ") " + guessedMessage;
+        VBox guessedMessagesVBox = TrainingScreen2Controller.getGuessedMessagesVBox();
+        Label label = new Label(fullGuess); //Created a label to add to the VBox. I saw this was how it was done on the Chatter code
+        label.setWrapText(true);
+        label.setFont(Font.font("System", FontWeight.NORMAL, 11)); //Maybe need to play around with this to get a font we like
+
         if (!guessedCorrectly) {
             //Add guess as red into the listview
+            label.setTextFill(Color.RED);
+
+        } else { //Guessed correctly
+            label.setTextFill(Color.GREEN);
+
         }
 
-        //Clear the data in both guessing text boxes
+        guessedMessagesVBox.getChildren().add(label); //May have to put this statement into each if else because it might not change the color
+        //Maybe need to add a condition for the first message because it might
+        //not be able to call getChildren on a null vbox. So I might have to instantiate it in the trainingscreen2controller
+        //to have a message in it already
 
+        TrainingScreen2Controller.getBotCallSignTextField().clear();
+        TrainingScreen2Controller.getBotMessageTextField().clear();
 
 
     }
@@ -60,6 +83,10 @@ public class HandleListeningSim {
             bot.stopSound();
         }
         botList.clear();
+
+        TrainingScreen2Controller.getGuessedMessagesVBox().getChildren().clear(); //Clearing the messages log vbox
+
+        //Need to make the back button call this method as well, but I haven't instantiated that yet
     }
 
     public static boolean getSimActive() {
