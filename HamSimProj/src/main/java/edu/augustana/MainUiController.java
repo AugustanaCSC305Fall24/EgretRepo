@@ -2,30 +2,56 @@ package edu.augustana;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.Slider;
+import javafx.scene.control.*;
 import javafx.scene.control.skin.SliderSkin;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.control.Label;
+
 import java.text.DecimalFormat;
+import javafx.beans.value.ChangeListener;
+
+import javax.sound.sampled.LineUnavailableException;
+
+import static edu.augustana.Radio.setTunningRF;
+import static java.lang.Math.max;
+import static java.lang.Math.min;
 
 public class MainUiController {
-
-    @FXML
-    private ResourceBundle resources;
 
     @FXML
     private Label displayLabel;
 
     @FXML
-    private URL location;
+    private Tab enviromentTab;
+
+    @FXML
+    private Button filterBtn;
 
     @FXML
     private Slider freqSlider;
+
+    @FXML
+    private Button joinBtn;
+
+    @FXML
+    private VBox knobBox00;
+
+    @FXML
+    private VBox knobBox01;
+
+    @FXML
+    private VBox knobBox10;
+
+    @FXML
+    private VBox knobBox11;
+
+    @FXML
+    private GridPane knobGridPane;
 
     @FXML
     private HBox mainHbox;
@@ -40,22 +66,13 @@ public class MainUiController {
     private ImageView radioImage;
 
     @FXML
-    private Slider tuneSlider;
+    private ChoiceBox<?> scenarioChoiceBox;
 
     @FXML
-    private GridPane knobGridPane;
+    private Button servInfoBtn;
 
     @FXML
-    private VBox knobBox00;
-
-    @FXML
-    private VBox knobBox01;
-
-    @FXML
-    private VBox knobBox10;
-
-    @FXML
-    private VBox knobBox11;
+    private HBox serverhbox;
 
     KnobControl volumeKnob;
     KnobControl filterKnob;
@@ -82,16 +99,19 @@ public class MainUiController {
         knobBox11.getChildren().add(toneKnob);
 
 
+
+
         volumeKnob.valueProperty().addListener((observable, oldValue, newValue) -> {
             System.out.println("Volume value changed: " + newValue);
             Radio.updateGain(newValue.doubleValue());
-//            updateDisplayText(Radio.getTime(), Radio.getSelectedTuneFreq(), Radio.getCwToneFreq(), Radio.getBand());
+            Radio.updateNoiseGain((newValue.doubleValue()/100) * 4);
+
         });
 
         filterKnob.valueProperty().addListener((observable, oldValue, newValue) -> {
             System.out.println("Filter value changed: " + newValue);
-//            Radio.changeFilterValue(newValue.intValue());
-//            updateDisplayText(Radio.getTime(), Radio.getSelectedTuneFreq(), Radio.getCwToneFreq(), Radio.getBand());
+            Radio.changeFilterValue((int)(max(0.01,newValue.doubleValue())/100)*6379);
+
         });
 
         bandKnob.valueProperty().addListener((observable, oldValue, newValue) -> {
@@ -106,6 +126,24 @@ public class MainUiController {
             double angle = (newValue.doubleValue() / 100)*360;
             Radio.setCwToneFreq((angle/360) * 800);
             updateDisplayText(Radio.getTime(), Radio.getSelectedTuneFreq(), Radio.getCwToneFreq(), Radio.getBand());
+        });
+
+        powerBtn.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (newValue) {
+                    try {
+                        System.out.println("Radio Initialized");
+                        Radio.initializeRadio();
+
+                    } catch (LineUnavailableException e) {
+                        throw new RuntimeException(e);
+                    }
+                    System.out.println("RadioButton is selected (toggled on)");
+                } else {
+                    System.out.println("RadioButton is deselected (toggled off)");
+                }
+            }
         });
 
     }
