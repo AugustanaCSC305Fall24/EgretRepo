@@ -9,6 +9,7 @@ import javafx.scene.control.Skin;
 
 public class KnobControl extends Control {
     private DoubleProperty value = new SimpleDoubleProperty(0);
+    public final KnobControlSkin skin = new KnobControlSkin(this);
 
     public KnobControl() {
         getStyleClass().add("knob-control");
@@ -18,7 +19,8 @@ public class KnobControl extends Control {
         return value.get();
     }
 
-    public void setValue(double value) {
+    public void setValue(double value){
+
         this.value.set(value);
     }
 
@@ -28,6 +30,6 @@ public class KnobControl extends Control {
 
     @Override
     protected Skin<?> createDefaultSkin() {
-        return new KnobControlSkin(this);
+        return skin;
     }
 }

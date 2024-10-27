@@ -99,20 +99,58 @@ public class MainUiController {
         knobBox11.getChildren().add(toneKnob);
 
 
+        freqSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+           int band = Radio.getBand();
+
+           switch (band){
+               case 10:
+                   Radio.setTunningRF(((newValue.doubleValue()/100)*1.7) + 28);
+                   break;
+
+               case 17:
+                   Radio.setTunningRF(((newValue.doubleValue()/100)*(18.168 - 18.068) + 18.068));
+                   break;
+
+               case 20:
+                   Radio.setTunningRF(((newValue.doubleValue()/100)*(14.350 - 14.000) + 14.000));
+                   break;
+
+               case 30:
+                   Radio.setTunningRF(((newValue.doubleValue()/100)*(10.15 - 10.1) + 10.1));
+                   break;
+
+               case 40:
+                   Radio.setTunningRF(((newValue.doubleValue()/100)*(7.300 - 7.000) + 7.000));
+                   break;
+
+               case 80:
+                   Radio.setTunningRF(((newValue.doubleValue()/100)*(4.0 - 3.5) + 3.5));
+                   break;
+           }
+
+            updateDisplayText(Radio.getTime(), Radio.getSelectedTuneFreq(), Radio.getCwToneFreq(), band);
+
+        });
 
 
         volumeKnob.valueProperty().addListener((observable, oldValue, newValue) -> {
             System.out.println("Volume value changed: " + newValue);
-            Radio.updateGain(newValue.doubleValue());
+            Radio.updateGain(((newValue.doubleValue()/100) * 4));
             Radio.updateNoiseGain((newValue.doubleValue()/100) * 4);
 
         });
 
+
         filterKnob.valueProperty().addListener((observable, oldValue, newValue) -> {
-            System.out.println("Filter value changed: " + newValue);
-            Radio.changeFilterValue((int)(max(0.01,newValue.doubleValue())/100)*6379);
+            int val = (int)((newValue.doubleValue()/100)*6379);
+            System.out.println("Filter value changed: " + val + 10);
+
+
+
+            Radio.changeFilterValue(val + 10);
 
         });
+
 
         bandKnob.valueProperty().addListener((observable, oldValue, newValue) -> {
             System.out.println("Band value changed: " + newValue);
@@ -121,11 +159,18 @@ public class MainUiController {
             updateDisplayText(Radio.getTime(), Radio.getSelectedTuneFreq(), Radio.getCwToneFreq(), chooseBand(angle));
         });
 
+
         toneKnob.valueProperty().addListener((observable, oldValue, newValue) -> {
             System.out.println("Tone value changed: " + newValue);
-            double angle = (newValue.doubleValue() / 100)*360;
-            Radio.setCwToneFreq((angle/360) * 800);
+
+            double newFreq = (((newValue.doubleValue() / 100)*400) + 400);
+
+            if(newFreq < 400)newFreq = 400;
+
+            Radio.setCwToneFreq(newFreq);
+
             updateDisplayText(Radio.getTime(), Radio.getSelectedTuneFreq(), Radio.getCwToneFreq(), Radio.getBand());
+
         });
 
         powerBtn.selectedProperty().addListener(new ChangeListener<Boolean>() {
@@ -135,8 +180,11 @@ public class MainUiController {
                     try {
                         System.out.println("Radio Initialized");
                         Radio.initializeRadio();
+                        updateKnobValues();
 
                     } catch (LineUnavailableException e) {
+                        throw new RuntimeException(e);
+                    } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
                     System.out.println("RadioButton is selected (toggled on)");
@@ -146,7 +194,22 @@ public class MainUiController {
             }
         });
 
+
+
     }
+
+
+    private void updateKnobValues() throws InterruptedException {
+        toneKnob.setValue(((Radio.getCwToneFreq()-400)/400)*100);
+        toneKnob.skin.rotateToPosition((int)((Radio.getCwToneFreq()-400)/400)*100);
+        bandKnob.skin.rotateToPosition(100);
+        bandKnob.setValue(100);
+        filterKnob.setValue(((Radio.getFilterValue()/6379)*100));
+        filterKnob.skin.rotateToPosition((int)  ((Radio.getFilterValue()/6379)*100));
+        volumeKnob.setValue((Radio.getSoundAmplitud()/4)*100);
+
+    }
+
 
     void updateDisplayText(int time, double rFrequency, double tFrequency, int band){
 
@@ -157,24 +220,20 @@ public class MainUiController {
     }
 
     int chooseBand(double angle){
-        if(angle > 180){
+        if(angle >= 270){
             return 10;
-        } else if (angle > 150) {
+        } else if (angle > 225) {
             return 17;
-        } else if (angle > 120) {
+        } else if (angle > 180) {
             return 20;
         }else if(angle > 90){
             return 30;
-        }else if(angle > 60){
+        }else if(angle > 45){
             return 40;
-        }else if(angle > 30){
-            return 40;
+        }else if(angle >= 0){
+            return 80;
         }else{
-            if(angle > 220){
-                return 10;
-            }else{
-                return 40;
-            }
+            return 0;
         }
 
     }
