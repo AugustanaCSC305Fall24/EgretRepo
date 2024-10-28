@@ -252,8 +252,8 @@ public class MainUiController {
     }
 
     public void handleKeyPress(KeyEvent keyEvent) throws InterruptedException {
-
-        PaddleHandler.startPaddleTimer();
+        System.out.println("key press");
+       // PaddleHandler.startPaddleTimer();
         if (keyEvent.getCode() == KeyCode.J) {
             new Thread(() -> {
                 PaddleHandler.playContinuousDot();
@@ -267,7 +267,7 @@ public class MainUiController {
     }
 
     public void handleKeyRelease(KeyEvent keyEvent) throws InterruptedException {
-
+        System.out.println("key release");
         PaddleHandler.stopPaddlePress();
     }
 

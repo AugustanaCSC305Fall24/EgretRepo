@@ -29,6 +29,7 @@ public class PaddleHandler {
 
     public static void playContinuousDot() {
         if (!dotPaddlePressed) {
+           // System.out.println("tone and dot loop start");
             stopSpaceTimer();
             dotPaddlePressed = true;
 
@@ -46,6 +47,7 @@ public class PaddleHandler {
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
+              //  System.out.println("tone and dot loop end");
             }
         }
     }
@@ -73,7 +75,7 @@ public class PaddleHandler {
     }
 
     public static void stopPaddlePress() {
-       // System.out.println("yes");
+      // System.out.println("Key re");
         dotPaddlePressed = false;
         dashPaddlePressed = false;
         startSpaceTimer();
@@ -103,10 +105,10 @@ public class PaddleHandler {
         String cw = "";
         if (keyEvent.getCode() == KeyCode.J) {
             cw = dot.repeat((int) ((stopTimePaddle + dotDurationPaddle) / (dotDurationPaddle * 2)));
-            System.out.println(cw);
+           // System.out.println(cw);
         } else if (keyEvent.getCode() == KeyCode.K) {
             cw = dash.repeat((int) ((stopTimePaddle + dashDurationPaddle) / (dashDurationPaddle + dotDurationPaddle)));
-            System.out.println(cw);
+           // System.out.println(cw);
         }
         CWHandler.addToArray(cw);
     }
