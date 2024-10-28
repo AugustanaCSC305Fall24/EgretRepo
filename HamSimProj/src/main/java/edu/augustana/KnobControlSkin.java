@@ -5,12 +5,36 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.transform.Rotate;
 
+import java.net.URI;
+
 public class KnobControlSkin extends SkinBase<KnobControl> {
     private ImageView knobImageView;
     private Rotate rotate;
+    private double lastAngle;
+    private boolean dragging;
+
+
+
+    public void rotateToPosition(int newPos) {
+//        int angle = 0;
+//        long tempTime = System.currentTimeMillis();
+//        while(angle < (newPos/100)*225){
+//            if((System.currentTimeMillis() - tempTime)> 16){
+//                tempTime = System.currentTimeMillis();
+//                rotate.setAngle((rotate.getAngle() + 1));
+//                angle++;
+//            }
+//
+//        }
+    }
+
+
+
+
 
     public KnobControlSkin(KnobControl control) {
         super(control);
+
 
         // Load the knob image
         Image knobImage = new Image(getClass().getResourceAsStream("/assets/knob.png"));
@@ -24,19 +48,14 @@ public class KnobControlSkin extends SkinBase<KnobControl> {
         rotate = new Rotate(0, knobImageView.getFitWidth() / 2, knobImageView.getFitHeight() / 2);
         knobImageView.getTransforms().add(rotate);
 
-        // Add interaction (rotation)
-        addRotationBehavior();
+        // Initialize rotation transformation
+        rotate = new Rotate(0, knobImageView.getFitWidth() / 2, knobImageView.getFitHeight() / 2);
+        knobImageView.getTransforms().add(rotate);
 
-        // Add the knob image to the skin
-        getChildren().add(knobImageView);
-    }
-
-    private double lastAngle = 0; // To store the last angle
-    private boolean dragging = false; // To indicate if we are dragging
-
-    private void addRotationBehavior() {
         double centerX = knobImageView.getFitWidth() / 2;
         double centerY = knobImageView.getFitHeight() / 2;
+        double maxRotationAngle = 225; // Set maximum rotation limit
+        double minRotationAngle = 0;   // Set minimum rotation limit
 
         knobImageView.setOnMousePressed(event -> {
             dragging = true;
@@ -45,16 +64,25 @@ public class KnobControlSkin extends SkinBase<KnobControl> {
 
         knobImageView.setOnMouseDragged(event -> {
             if (dragging) {
+
+
                 double currentAngle = Math.toDegrees(Math.atan2(event.getY() - centerY, event.getX() - centerX));
+                System.out.println("Current Angle = " + currentAngle);
                 double deltaAngle = currentAngle - lastAngle;
                 rotate.setAngle((rotate.getAngle() + deltaAngle + 360) % 360); // Normalize to 0-360
                 lastAngle = currentAngle;
 
                 // Optionally update the control's value property based on the rotation
                 double normalizedValue = (rotate.getAngle() / 360) * 100; // Example normalization
+
                 getSkinnable().setValue(normalizedValue);
+
+
+
             }
         });
+
+
 
         knobImageView.setOnMouseReleased(event -> {
             dragging = false;
@@ -64,23 +92,28 @@ public class KnobControlSkin extends SkinBase<KnobControl> {
             dragging = false;
         });
 
-        // Add mouse wheel event handling
+        // Handle mouse wheel rotation with clamping
         knobImageView.setOnScroll(event -> {
-            // Determine the amount of scroll
             double deltaY = event.getDeltaY();
+            double angleChange = deltaY > 0 ? 10 : -10;
 
-            // Rotate the knob based on the scroll amount
-            double angleChange = deltaY > 0 ? 10 : -10; // Adjust the rotation speed (10 degrees per scroll)
+            // Calculate the new angle with clamping
+            double newAngle = rotate.getAngle() + angleChange;
+            newAngle = Math.max(minRotationAngle, Math.min(newAngle, maxRotationAngle)); // Clamp between 0 and 225
 
-            // Update the rotation
-            rotate.setAngle((rotate.getAngle() + angleChange + 360) % 360); // Normalize to 0-360
+            rotate.setAngle(newAngle);
 
-            // Update the control's value property based on the rotation
-            double normalizedValue = (rotate.getAngle() / 360) * 100; // Example normalization
+            // Normalize to max angle of 225 degrees for 100% value
+            double normalizedValue = (rotate.getAngle() / maxRotationAngle) * 100;
+
             getSkinnable().setValue(normalizedValue);
 
-            // Consume the event to prevent further handling
+
             event.consume();
         });
+
+        getChildren().add(knobImageView); // Add knobImageView to the skin's children
     }
+
+
 }

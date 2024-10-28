@@ -1,32 +1,156 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="720.0" minWidth="1280.0" prefHeight="388.0" prefWidth="613.0" style="-fx-background-color: gray;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.TrainingScreenController">
+
+<VBox xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.TrainingScreenController">
    <children>
-      <HBox fx:id="mainHbox" prefHeight="680.0" prefWidth="1280.0" style="-fx-background-color: #353538;">
-         <children>
-            <BorderPane fx:id="trainingBorderPane" prefHeight="670.0" prefWidth="819.0" style="-fx-background-color: #353538;">
-               <center>
-                  <ImageView fx:id="radioImage" fitHeight="561.0" fitWidth="344.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
-                     <image>
-                        <Image url="@../../assets/Radio1.png" />
-                     </image>
-                  </ImageView>
-               </center>
-               <HBox.margin>
-                  <Insets />
-               </HBox.margin>
-            </BorderPane>
-         </children>
-         <padding>
-            <Insets bottom="5.0" right="5.0" top="5.0" />
-         </padding>
-      </HBox>
+      <TabPane fx:id="trainingScreenDemoTab" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="391.0" prefWidth="503.0" style="-fx-background-color: #CDDEE8;" tabClosingPolicy="UNAVAILABLE">
+         <tabs>
+            <Tab text="Listening">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <VBox prefHeight="654.0" prefWidth="502.0">
+                           <children>
+                              <VBox prefHeight="652.0" prefWidth="502.0">
+                                 <children>
+                                    <ScrollPane fx:id="enteredGuessesScrollPane" prefHeight="210.0" prefWidth="483.0">
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                       <content>
+                                          <VBox fx:id="guessedMessagesVBox" prefHeight="200.0" prefWidth="186.0" />
+                                       </content>
+                                       <VBox.margin>
+                                          <Insets left="10.0" right="10.0" top="10.0" />
+                                       </VBox.margin>
+                                    </ScrollPane>
+                                    <HBox prefHeight="126.0" prefWidth="502.0">
+                                       <children>
+                                          <VBox prefHeight="119.0" prefWidth="246.0">
+                                             <children>
+                                                <Label text="Beat Length">
+                                                   <padding>
+                                                      <Insets left="70.0" top="10.0" />
+                                                   </padding>
+                                                </Label>
+                                                <Slider fx:id="playbackSpeedSlider1" min="20.0" prefHeight="25.0" prefWidth="206.0">
+                                                   <padding>
+                                                      <Insets left="10.0" top="10.0" />
+                                                   </padding>
+                                                   <VBox.margin>
+                                                      <Insets right="35.0" />
+                                                   </VBox.margin>
+                                                </Slider>
+                                                <VBox prefHeight="58.0" prefWidth="246.0">
+                                                   <children>
+                                                      <Label prefHeight="18.0" prefWidth="214.0" text="How many Bots?">
+                                                         <opaqueInsets>
+                                                            <Insets />
+                                                         </opaqueInsets>
+                                                         <padding>
+                                                            <Insets left="85.0" />
+                                                         </padding>
+                                                      </Label>
+                                                      <Slider fx:id="numBotsSlider" majorTickUnit="1.0" max="5.0" minorTickCount="0" showTickLabels="true" showTickMarks="true" snapToTicks="true">
+                                                         <padding>
+                                                            <Insets left="10.0" />
+                                                         </padding>
+                                                      </Slider>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets top="10.0" />
+                                                   </padding>
+                                                </VBox>
+                                             </children>
+                                          </VBox>
+                                          <VBox>
+                                             <HBox.margin>
+                                                <Insets left="62.0" />
+                                             </HBox.margin>
+                                             <children>
+                                                <Label text="Enter Bot Call Sign:">
+                                                   <padding>
+                                                      <Insets bottom="5.0" />
+                                                   </padding>
+                                                </Label>
+                                                <TextField fx:id="botCallSignTextField" prefHeight="31.0" prefWidth="173.0" />
+                                                <Label text="Enter Bot Message:">
+                                                   <padding>
+                                                      <Insets bottom="5.0" />
+                                                   </padding>
+                                                   <VBox.margin>
+                                                      <Insets top="3.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                                <HBox />
+                                                <TextField fx:id="botMessageTextField" prefHeight="31.0" prefWidth="173.0" />
+                                                <Button fx:id="submitGuessButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="59.0" text="Submit">
+                                                   <VBox.margin>
+                                                      <Insets bottom="10.0" top="10.0" />
+                                                   </VBox.margin>
+                                                </Button>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+         </tabs>
+      </TabPane>
+      <TabPane prefHeight="330.0" prefWidth="503.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Instructions">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <HBox prefHeight="292.0" prefWidth="503.0" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+            <Tab text="Cheat Sheet">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="334.0" prefWidth="503.0">
+                     <children>
+                        <TextArea layoutX="4.0" layoutY="4.0" prefHeight="311.0" prefWidth="494.0" text="A   •-&#9;N   -•&#9;0   -----&#10;B   -•••&#9;O   ---&#9;1   •----&#10;C   -•-•&#9;P   •--•&#9;2   ••---&#10;D   -••&#9;Q   --•-&#9;3   •••--&#10;E   •&#9;        R   •-•&#9;4   ••••-&#10;F   ••-•&#9;S   •••&#9;5   •••••&#10;G   --•&#9;T   -&#9;        6   -••••&#10;H   ••••&#9;U   ••-&#9;7   --•••&#10;I   ••&#9;        V   •••-&#9;8   ---••&#10;J   •---&#9;W   •--&#9;9   ----•&#10;K   -•-&#9;X   -••-&#9;&#10;L   •-••&#9;Y   -•--&#9;&#10;M   --&#9;Z   --••&#9;&#10;">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </TextArea>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+      <ToolBar prefHeight="65.0" prefWidth="503.0">
+         <items>
+            <Button fx:id="startSimButton" mnemonicParsing="false" text="Start Simulation" />
+            <Button fx:id="stopSimButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="110.0" text="Stop Simulation" />
+            <Pane prefHeight="66.0" prefWidth="168.0" />
+         </items>
+      </ToolBar>
    </children>
 </VBox>

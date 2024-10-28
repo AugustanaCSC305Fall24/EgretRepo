@@ -1,77 +1,92 @@
 package edu.augustana;
+
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.control.TabPane;
-import javafx.scene.image.Image;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.image.ImageView;
-
-
-import java.io.IOException;
-
-
+import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
 
 
 public class TrainingScreenController {
 
+    @FXML
+    private Button backToMainButton;
+
+
+    //All FXML stuff for the listening training tab. Will have to
+    //delete a lot of this because it is repeated, and also we are
+    //going to get rid of a lot of the radio in this tab.
+    @FXML
+    private Button backToMainButton1;
 
     @FXML
-    private HBox mainHbox;
+    private static TextField botCallSignTextField;
 
     @FXML
-    private BorderPane trainingBorderPane;
+    private static TextField botMessageTextField;
 
     @FXML
-    public TabPane trainingScreenTabPane;
+    private static ScrollPane enteredGuessesScrollPane;
 
     @FXML
-    private ImageView radioImage;
+    private static VBox guessedMessagesVBox;
 
 
     @FXML
-    public void initialize() throws IOException {
-
-        try {
-            // Load TrainingScreen1.fxml
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("TrainingScreen1.fxml"));
-            TabPane trainingTabPane = loader.load();
-
-            TrainingScreen1Controller otherController = loader.getController();
-
-            // Inject this controller (Controller1) into the second controller (OtherController)
-            otherController.setTrainingScreenController(this);
+    private static Slider numBotsSlider;
 
 
-            // Remove the old TabPane and add the new one
-            trainingScreenTabPane = trainingTabPane;
-            mainHbox.getChildren().add(trainingTabPane);
+    @FXML
+    private Button startSimButton;
 
-            Image radioPic = new Image("file:C:\\Users\\camio\\HamSimProject\\HamSim\\EgretRepo\\HamSimProj\\src\\main\\resources\\assets\\Radio1.png");
-//            radioImage.setScaleX(3);
-//            radioImage.setScaleX(3);
-            radioImage.setImage(radioPic);
+    @FXML
+    private Button stopSimButton;
+
+    @FXML
+    private Button submitGuessButton;
 
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    @FXML
+    void initialize() {
+
+        //Initializing the listening training tab. Need to add code here. Need to at least initialize the tune in slider
+        startSimButton.setOnAction(evt -> {
+            try {
+                HandleListeningSim.startSim();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        submitGuessButton.setOnAction(evt -> HandleListeningSim.checkGuess());
+        stopSimButton.setOnAction(evt -> HandleListeningSim.stopSim());
+
+
     }
 
 
-    private static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
-        return fxmlLoader.load();
+
+
+    //All Methods that are for the listening training screen
+
+    public static int getNumBots() {
+        return (int) numBotsSlider.getValue();
     }
 
-    public void addToMainHbox(Node node){
-        mainHbox.getChildren().remove(trainingScreenTabPane);
-        mainHbox.getChildren().add(node);
-        trainingScreenTabPane = (TabPane) node;
+    public static String getGuessedCallSign() {
+        return botCallSignTextField.getText();
     }
 
+    public static String getGuessedMessage() {
+        return botMessageTextField.getText();
+    }
 
+    public static VBox getGuessedMessagesVBox() {
+        return guessedMessagesVBox;
+    }
 
+    public static TextField getBotCallSignTextField() {
+        return botCallSignTextField;
+    }
+
+    public static TextField getBotMessageTextField() {
+        return botMessageTextField;
+    }
 }

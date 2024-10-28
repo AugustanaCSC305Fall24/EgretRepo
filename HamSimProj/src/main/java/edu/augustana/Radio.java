@@ -17,10 +17,12 @@ public class Radio {
 
     private static double selectedRF;
     private static double tunningRF;
-    private static boolean radioOn;
     private static double noiseAmplitud;
     private static Random randGen;
     private static double soundAmplitud;
+    public static final int MAX_CWTONE_FREQ = 800;
+    public static final int MIN_CWTONE_FREQ = 400;
+
 
 
     private static final int SAMPLE_RATE = 44100;
@@ -48,13 +50,13 @@ public class Radio {
 
         isRadioOn = true;
         simTime = 1200;
-        cwToneFreq = 800;
+        cwToneFreq = 400;
         band = 10;
 
         noiseAmplitud = 0.0;
         randGen = new Random();
-        soundAmplitud = 1;
-        filterVal = 6379;
+        soundAmplitud = 0;
+        filterVal = 10;
         biquadFilter = new BiquadLowPassFilter8Bit(SAMPLE_RATE, filterVal);
         biquadFilter2 = new BiquadLowPassFilter8Bit(SAMPLE_RATE, filterVal);
 
@@ -126,6 +128,21 @@ public class Radio {
         soundAmplitud = newAmplitud;
 
     }
+
+    public static double getSoundAmplitud(){
+        return soundAmplitud;
+    }
+
+    public static double getFilterValue(){
+        return filterVal;
+    }
+
+    public static boolean isRadioOn(){
+        return isRadioOn;
+    }
+
+
+
 
     public static void updateNoiseGain(double newAmplitud){
 
