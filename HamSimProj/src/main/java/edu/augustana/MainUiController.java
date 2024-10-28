@@ -1,10 +1,12 @@
 package edu.augustana;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.control.skin.SliderSkin;
 import javafx.scene.image.ImageView;
@@ -87,7 +89,7 @@ public class MainUiController {
 
 
     @FXML
-    void initialize() {
+    void initialize() throws IOException {
         assert mainHbox != null : "fx:id=\"mainHbox\" was not injected: check your FXML file 'mainUI.fxml'.";
         assert radioImage != null : "fx:id=\"radioImage\" was not injected: check your FXML file 'mainUI.fxml'.";
 
@@ -195,6 +197,15 @@ public class MainUiController {
                 }
             }
         });
+
+
+
+        //Loading the other fxml in the HBOX. Starting with the trainingscreen for now. Maybe make this a method so that we can have DRY coding. Just pass in the string for the fxml name
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("TrainingScreen.fxml"));
+        VBox trainingVbox = loader.load();
+
+        mainHbox.getChildren().add(trainingVbox);
 
 
 
