@@ -19,7 +19,7 @@ public class HandleListeningSim {
     //Creates the bots and adds them to the list, and then makes them call the method in MorsePlayer to have them continuously play their sound
     public static void startSim() throws InterruptedException {
 
-        int numBots = TrainingScreen2Controller.getNumBots();
+        int numBots = TrainingScreenController.getNumBots();
         simActive = true;
 
         for (int i = 0; i < numBots; i++) {
@@ -32,8 +32,8 @@ public class HandleListeningSim {
     public static void checkGuess() {
 
 
-        String guessedCallSign = TrainingScreen2Controller.getGuessedCallSign().trim().toUpperCase();
-        String guessedMessage = TrainingScreen2Controller.getGuessedMessage().trim().toUpperCase();
+        String guessedCallSign = TrainingScreenController.getGuessedCallSign().trim().toUpperCase();
+        String guessedMessage = TrainingScreenController.getGuessedMessage().trim().toUpperCase();
         boolean guessedCorrectly = false; //Make this variable so that you can check if you have to add the guess as red text into the listview
 
         for (TrainingListeningBot bot : botList) {
@@ -52,7 +52,7 @@ public class HandleListeningSim {
         }
 
         String fullGuess = "(" + guessedCallSign + ") " + guessedMessage;
-        VBox guessedMessagesVBox = TrainingScreen2Controller.getGuessedMessagesVBox();
+        VBox guessedMessagesVBox = TrainingScreenController.getGuessedMessagesVBox();
         Label label = new Label(fullGuess); //Created a label to add to the VBox. I saw this was how it was done on the Chatter code
         label.setWrapText(true);
         label.setFont(Font.font("System", FontWeight.NORMAL, 11)); //Maybe need to play around with this to get a font we like
@@ -71,8 +71,8 @@ public class HandleListeningSim {
         //not be able to call getChildren on a null vbox. So I might have to instantiate it in the trainingscreen2controller
         //to have a message in it already
 
-        TrainingScreen2Controller.getBotCallSignTextField().clear();
-        TrainingScreen2Controller.getBotMessageTextField().clear();
+        TrainingScreenController.getBotCallSignTextField().clear();
+        TrainingScreenController.getBotMessageTextField().clear();
 
 
     }
@@ -84,7 +84,7 @@ public class HandleListeningSim {
         }
         botList.clear();
 
-        TrainingScreen2Controller.getGuessedMessagesVBox().getChildren().clear(); //Clearing the messages log vbox
+        TrainingScreenController.getGuessedMessagesVBox().getChildren().clear(); //Clearing the messages log vbox
 
         //Need to make the back button call this method as well, but I haven't instantiated that yet
     }
