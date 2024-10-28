@@ -16,20 +16,19 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<VBox xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.TrainingScreenController">
+<VBox prefHeight="678.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.TrainingScreenController">
    <children>
-      <TabPane fx:id="trainingScreenDemoTab" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="391.0" prefWidth="503.0" style="-fx-background-color: #CDDEE8;" tabClosingPolicy="UNAVAILABLE">
+      <TabPane fx:id="trainingScreenDemoTab" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="391.0" prefWidth="399.0" style="-fx-background-color: #CDDEE8;" tabClosingPolicy="UNAVAILABLE">
          <tabs>
             <Tab text="Listening">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <VBox prefHeight="654.0" prefWidth="502.0">
+                        <VBox maxWidth="-Infinity" prefHeight="654.0" prefWidth="400.0">
                            <children>
-                              <VBox prefHeight="652.0" prefWidth="502.0">
+                              <VBox maxWidth="-Infinity" prefHeight="650.0" prefWidth="400.0">
                                  <children>
-                                    <ScrollPane fx:id="enteredGuessesScrollPane" prefHeight="210.0" prefWidth="483.0">
+                                    <ScrollPane fx:id="enteredGuessesScrollPane" maxWidth="-Infinity" prefHeight="210.0" prefWidth="379.0">
                                        <opaqueInsets>
                                           <Insets />
                                        </opaqueInsets>
@@ -40,9 +39,9 @@
                                           <Insets left="10.0" right="10.0" top="10.0" />
                                        </VBox.margin>
                                     </ScrollPane>
-                                    <HBox prefHeight="126.0" prefWidth="502.0">
+                                    <HBox maxWidth="-Infinity" prefHeight="146.0" prefWidth="400.0">
                                        <children>
-                                          <VBox prefHeight="119.0" prefWidth="246.0">
+                                          <VBox prefHeight="146.0" prefWidth="193.0">
                                              <children>
                                                 <Label text="Beat Length">
                                                    <padding>
@@ -79,7 +78,7 @@
                                                 </VBox>
                                              </children>
                                           </VBox>
-                                          <VBox>
+                                          <VBox prefHeight="146.0" prefWidth="132.0">
                                              <HBox.margin>
                                                 <Insets left="62.0" />
                                              </HBox.margin>
@@ -119,7 +118,7 @@
             </Tab>
          </tabs>
       </TabPane>
-      <TabPane prefHeight="330.0" prefWidth="503.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane maxWidth="-Infinity" prefHeight="330.0" prefWidth="400.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="Instructions">
             <content>
@@ -134,7 +133,7 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="334.0" prefWidth="503.0">
                      <children>
-                        <TextArea layoutX="4.0" layoutY="4.0" prefHeight="311.0" prefWidth="494.0" text="A   •-&#9;N   -•&#9;0   -----&#10;B   -•••&#9;O   ---&#9;1   •----&#10;C   -•-•&#9;P   •--•&#9;2   ••---&#10;D   -••&#9;Q   --•-&#9;3   •••--&#10;E   •&#9;        R   •-•&#9;4   ••••-&#10;F   ••-•&#9;S   •••&#9;5   •••••&#10;G   --•&#9;T   -&#9;        6   -••••&#10;H   ••••&#9;U   ••-&#9;7   --•••&#10;I   ••&#9;        V   •••-&#9;8   ---••&#10;J   •---&#9;W   •--&#9;9   ----•&#10;K   -•-&#9;X   -••-&#9;&#10;L   •-••&#9;Y   -•--&#9;&#10;M   --&#9;Z   --••&#9;&#10;">
+                        <TextArea layoutX="4.0" layoutY="4.0" prefHeight="182.0" prefWidth="390.0" text="A   •-&#9;N   -•&#9;0   -----&#10;B   -•••&#9;O   ---&#9;1   •----&#10;C   -•-•&#9;P   •--•&#9;2   ••---&#10;D   -••&#9;Q   --•-&#9;3   •••--&#10;E   •&#9;        R   •-•&#9;4   ••••-&#10;F   ••-•&#9;S   •••&#9;5   •••••&#10;G   --•&#9;T   -&#9;        6   -••••&#10;H   ••••&#9;U   ••-&#9;7   --•••&#10;I   ••&#9;        V   •••-&#9;8   ---••&#10;J   •---&#9;W   •--&#9;9   ----•&#10;K   -•-&#9;X   -••-&#9;&#10;L   •-••&#9;Y   -•--&#9;&#10;M   --&#9;Z   --••&#9;&#10;">
                            <font>
                               <Font size="15.0" />
                            </font>
@@ -145,7 +144,7 @@
             </Tab>
         </tabs>
       </TabPane>
-      <ToolBar prefHeight="65.0" prefWidth="503.0">
+      <ToolBar prefHeight="76.0" prefWidth="374.0">
          <items>
             <Button fx:id="startSimButton" mnemonicParsing="false" text="Start Simulation" />
             <Button fx:id="stopSimButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="110.0" text="Stop Simulation" />

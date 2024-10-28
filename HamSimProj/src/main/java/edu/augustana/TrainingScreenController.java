@@ -7,6 +7,9 @@ import javafx.scene.layout.VBox;
 
 public class TrainingScreenController {
 
+    private static int numBots;
+
+
     @FXML
     private Button backToMainButton;
 
@@ -59,6 +62,11 @@ public class TrainingScreenController {
         stopSimButton.setOnAction(evt -> HandleListeningSim.stopSim());
 
 
+        numBotsSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+            numBots = newValue.intValue();
+        });
+
+
     }
 
 
@@ -67,7 +75,7 @@ public class TrainingScreenController {
     //All Methods that are for the listening training screen
 
     public static int getNumBots() {
-        return (int) numBotsSlider.getValue();
+        return numBots;
     }
 
     public static String getGuessedCallSign() {
