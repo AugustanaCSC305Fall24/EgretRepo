@@ -10,6 +10,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.control.skin.SliderSkin;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -247,6 +249,26 @@ public class MainUiController {
             return 0;
         }
 
+    }
+
+    public void handleKeyPress(KeyEvent keyEvent) throws InterruptedException {
+        System.out.println("key press");
+       // PaddleHandler.startPaddleTimer();
+        if (keyEvent.getCode() == KeyCode.J) {
+            new Thread(() -> {
+                PaddleHandler.playContinuousDot();
+            }).start();
+
+        } else if (keyEvent.getCode() == KeyCode.K) {
+            new Thread(() ->{
+                PaddleHandler.playContinuousDash();
+            }).start();
+        }
+    }
+
+    public void handleKeyRelease(KeyEvent keyEvent) throws InterruptedException {
+        System.out.println("key release");
+        PaddleHandler.stopPaddlePress();
     }
 
 

@@ -1,6 +1,10 @@
 package edu.augustana;
 
+import javafx.scene.input.KeyCode;
+
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 public class CWHandler {
 
@@ -135,6 +139,11 @@ public class CWHandler {
         printOutArray();
 
     }
+
+    public static void addToArray(String toBeAdded) {
+        cwArray.add(toBeAdded);
+    }
+
 
     public static void setErrorMargin(double newMargin){
         marginOfError = newMargin;

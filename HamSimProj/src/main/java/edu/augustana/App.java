@@ -25,7 +25,6 @@ public class App extends Application {
         scene = new Scene(loadFXML("TrainingScreen"), 1280, 720);
         stage.setScene(scene);
         stage.show();
-
     }
 
     static void setRoot(String fxml) throws IOException {
