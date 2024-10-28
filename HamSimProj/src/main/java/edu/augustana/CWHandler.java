@@ -140,64 +140,13 @@ public class CWHandler {
 
     }
 
+    public static void addToArray(String toBeAdded) {
+        cwArray.add(toBeAdded);
+    }
+
+
     public static void setErrorMargin(double newMargin){
         marginOfError = newMargin;
-    }
-
-    //------------------------------------------------------------------------------------------------------------------
-    private static Boolean loopControl = true;
-    private static long dotDurationPaddle = 1200;
-    private static long dashDurationPaddle = dotDurationPaddle * 3;
-
-    private static long startTimePaddle;
-    private static long stopTimePaddle;
-
-    public static void handlePaddle(javafx.scene.input.KeyEvent keyEvent) throws InterruptedException {
-        String dot = ".";
-        String dash = "-";
-        if (keyEvent.getCode() == KeyCode.J) {
-            System.out.println(stopTimePaddle);
-            System.out.println(stopTimePaddle / (dotDurationPaddle * 2));
-            System.out.println(stopTimePaddle + " / " + "(" + dotDurationPaddle + " *  2 = " + (stopTimePaddle / (dotDurationPaddle * 2)));
-            //String cw = dot.repeat((int) (stopTimePaddle / (dotDurationPaddle * 2)));
-            //System.out.println(cw);
-        } else if (keyEvent.getCode() == KeyCode.K) {
-            System.out.println(stopTimePaddle);
-            System.out.println(stopTimePaddle / (dashDurationPaddle + dotDurationPaddle));
-        }
-    }
-
-    private static void addDot() throws InterruptedException {
-        String morse = "";
-        while (loopControl) {
-            morse += ".";
-            Thread.sleep(dotDurationPaddle * 2);
-        }
-        System.out.println(morse);
-        loopControl = true;
-    }
-
-    private static void addDash() throws InterruptedException {
-        String morse = ";";
-        while (loopControl) {
-            morse += "-";
-            Thread.sleep(dashDurationPaddle + dotDurationPaddle);
-        }
-        System.out.println(morse);
-        loopControl = true;
-    }
-
-    public static void endLoop() {
-        loopControl = false;
-    }
-
-    public static void startPaddleTimer() {
-        startTimePaddle = System.nanoTime();
-    }
-
-    public static void stopPaddleTimer() {
-        Long now = System.nanoTime();
-        stopTimePaddle = TimeUnit.NANOSECONDS.toMillis(now - startTimePaddle);
     }
 
 

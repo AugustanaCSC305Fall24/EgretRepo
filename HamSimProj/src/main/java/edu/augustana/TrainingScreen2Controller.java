@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
 
@@ -329,11 +330,25 @@ public class TrainingScreen2Controller {
 
 
     public void handleKeyPress(KeyEvent keyEvent) throws InterruptedException {
-        CWHandler.startPaddleTimer();
+
+        PaddleHandler.startPaddleTimer();
+        if (keyEvent.getCode() == KeyCode.J) {
+            new Thread(() -> {
+                PaddleHandler.playContinuousDot();
+            }).start();
+
+        } else if (keyEvent.getCode() == KeyCode.K) {
+            new Thread(() ->{
+                PaddleHandler.playContinuousDash();
+            }).start();
+        }
     }
 
     public void handleKeyRelease(KeyEvent keyEvent) throws InterruptedException {
-        CWHandler.stopPaddleTimer();
-        CWHandler.handlePaddle(keyEvent);
+       // System.out.println("key released");
+
+        //PaddleHandler.stopPaddleTimer();
+        //PaddleHandler.handlePaddle(keyEvent);
+        PaddleHandler.stopPaddlePress();
     }
 }
