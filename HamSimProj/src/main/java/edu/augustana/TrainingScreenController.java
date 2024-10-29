@@ -65,8 +65,6 @@ public class TrainingScreenController {
         numBotsSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
             numBots = newValue.intValue();
         });
-
-
     }
 
 
@@ -76,6 +74,7 @@ public class TrainingScreenController {
 
     public static int getNumBots() {
         return numBots;
+
     }
 
     public static String getGuessedCallSign() {
