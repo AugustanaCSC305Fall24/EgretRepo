@@ -7,8 +7,6 @@ import javafx.scene.layout.VBox;
 
 public class TrainingScreenController {
 
-    private static int numBots;
-
 
     @FXML
     private Button backToMainButton;
@@ -21,20 +19,20 @@ public class TrainingScreenController {
     private Button backToMainButton1;
 
     @FXML
-    private static TextField botCallSignTextField;
+    private TextField botCallSignTextField;
 
     @FXML
-    private static TextField botMessageTextField;
+    private TextField botMessageTextField;
 
     @FXML
-    private static ScrollPane enteredGuessesScrollPane;
+    private ScrollPane enteredGuessesScrollPane;
 
     @FXML
-    private static VBox guessedMessagesVBox;
+    private VBox guessedMessagesVBox;
 
 
     @FXML
-    private static Slider numBotsSlider;
+    private Slider numBotsSlider;
 
 
     @FXML
@@ -46,6 +44,9 @@ public class TrainingScreenController {
     @FXML
     private Button submitGuessButton;
 
+    @FXML
+    private Slider playbackSpeedSlider;
+
 
     @FXML
     void initialize() {
@@ -53,18 +54,27 @@ public class TrainingScreenController {
         //Initializing the listening training tab. Need to add code here. Need to at least initialize the tune in slider
         startSimButton.setOnAction(evt -> {
             try {
-                HandleListeningSim.startSim();
+                MorsePlayer.setBeatLength( (int) playbackSpeedSlider.getValue());
+                HandleListeningSim.startSim(numBotsSlider.getValue(), playbackSpeedSlider.getValue());
+
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
         });
-        submitGuessButton.setOnAction(evt -> HandleListeningSim.checkGuess());
-        stopSimButton.setOnAction(evt -> HandleListeningSim.stopSim());
+        submitGuessButton.setOnAction(evt -> {HandleListeningSim.checkGuess(botCallSignTextField.getText(), botMessageTextField.getText(), guessedMessagesVBox);
+            botCallSignTextField.clear();
+            botMessageTextField.clear();});
+
+
+        stopSimButton.setOnAction(evt -> HandleListeningSim.stopSim(guessedMessagesVBox));
 
 
         numBotsSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
-            numBots = newValue.intValue();
+//            numBots = newValue.intValue();
         });
+
+
+
     }
 
 
@@ -72,28 +82,28 @@ public class TrainingScreenController {
 
     //All Methods that are for the listening training screen
 
-    public static int getNumBots() {
-        return numBots;
-
-    }
-
-    public static String getGuessedCallSign() {
-        return botCallSignTextField.getText();
-    }
-
-    public static String getGuessedMessage() {
-        return botMessageTextField.getText();
-    }
-
-    public static VBox getGuessedMessagesVBox() {
-        return guessedMessagesVBox;
-    }
-
-    public static TextField getBotCallSignTextField() {
-        return botCallSignTextField;
-    }
-
-    public static TextField getBotMessageTextField() {
-        return botMessageTextField;
-    }
+//    public static int getNumBots() {
+//        return numBots;
+//
+//    }
+//
+//    public static String getGuessedCallSign() {
+//        return botCallSignTextField.getText();
+//    }
+//
+//    public static String getGuessedMessage() {
+//        return botMessageTextField.getText();
+//    }
+//
+//    public static VBox getGuessedMessagesVBox() {
+//        return guessedMessagesVBox;
+//    }
+//
+//    public static TextField getBotCallSignTextField() {
+//        return botCallSignTextField;
+//    }
+//
+//    public static TextField getBotMessageTextField() {
+//        return botMessageTextField;
+//    }
 }

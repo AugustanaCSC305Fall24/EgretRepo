@@ -17,9 +17,9 @@ public class HandleListeningSim {
 
 
     //Creates the bots and adds them to the list, and then makes them call the method in MorsePlayer to have them continuously play their sound
-    public static void startSim() throws InterruptedException {
+    public static void startSim(double numBots, double playbackSpeed) throws InterruptedException {
 
-        int numBots = TrainingScreenController.getNumBots();
+        numBots = (int) numBots;
         simActive = true;
 
         for (int i = 0; i < numBots; i++) {
@@ -29,11 +29,11 @@ public class HandleListeningSim {
     }
 
     //Takes the value from the two text boxes and check to see if they match the bot they are listening to
-    public static void checkGuess() {
+    public static void checkGuess(String guessedCallSign, String guessedMessage, VBox guessedMessagesVBox) {
 
+        guessedCallSign = guessedCallSign.trim().toUpperCase();
+        guessedMessage = guessedMessage.trim().toUpperCase();
 
-        String guessedCallSign = TrainingScreenController.getGuessedCallSign().trim().toUpperCase();
-        String guessedMessage = TrainingScreenController.getGuessedMessage().trim().toUpperCase();
         boolean guessedCorrectly = false; //Make this variable so that you can check if you have to add the guess as red text into the listview
 
         for (TrainingListeningBot bot : botList) {
@@ -51,8 +51,8 @@ public class HandleListeningSim {
             }
         }
 
+        //Will have to change this to a listview. So all of this code will have to change potentially
         String fullGuess = "(" + guessedCallSign + ") " + guessedMessage;
-        VBox guessedMessagesVBox = TrainingScreenController.getGuessedMessagesVBox();
         Label label = new Label(fullGuess); //Created a label to add to the VBox. I saw this was how it was done on the Chatter code
         label.setWrapText(true);
         label.setFont(Font.font("System", FontWeight.NORMAL, 11)); //Maybe need to play around with this to get a font we like
@@ -71,20 +71,17 @@ public class HandleListeningSim {
         //not be able to call getChildren on a null vbox. So I might have to instantiate it in the trainingscreen2controller
         //to have a message in it already
 
-        TrainingScreenController.getBotCallSignTextField().clear();
-        TrainingScreenController.getBotMessageTextField().clear();
-
 
     }
 
-    public static void stopSim() {
+    public static void stopSim(VBox guessedMessagesVBox) {
         simActive = false;
         for (TrainingListeningBot bot : botList) {
             bot.stopSound();
         }
         botList.clear();
 
-        TrainingScreenController.getGuessedMessagesVBox().getChildren().clear(); //Clearing the messages log vbox
+        guessedMessagesVBox.getChildren().clear(); //Clearing the messages log vbox
 
         //Need to make the back button call this method as well, but I haven't instantiated that yet
     }

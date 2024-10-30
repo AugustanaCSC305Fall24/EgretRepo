@@ -65,6 +65,8 @@ public class TrainingListeningBot {
 
     private void playContinuousMessage() throws InterruptedException {
 
+        //Can probably have this just play the whole message, but when I do I need to add more space between the call sign
+        //and the message. So just append an * between the two I think.
         while (playSound) {
             MorsePlayer.playBotMorseString(callSign, outputFrequency);
             Thread.sleep(100000000); //Need to adjust this to wait the right amount of time
