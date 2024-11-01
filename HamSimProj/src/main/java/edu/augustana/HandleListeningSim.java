@@ -34,11 +34,18 @@ public class HandleListeningSim {
         guessedCallSign = guessedCallSign.trim().toUpperCase();
         guessedMessage = guessedMessage.trim().toUpperCase();
 
+        //testing
+        System.out.println("Guess: " + guessedCallSign + " " + guessedMessage);
+
         boolean guessedCorrectly = false; //Make this variable so that you can check if you have to add the guess as red text into the listview
 
         for (TrainingListeningBot bot : botList) {
-            if (bot.getCallSign().equals(guessedCallSign)) {
-                if (bot.getBotPhrase().equals(guessedMessage)) {
+
+            //testing
+            System.out.println("bot: " +  bot.getTextCallSign() + " " + bot.getTextBotPhrase());
+
+            if (bot.getTextCallSign().toUpperCase().equals(guessedCallSign)) {
+                if (bot.getTextBotPhrase().toUpperCase().equals(guessedMessage)) {
 
                     //need to add a counter of how many you get right here and put it on screen
                     //Also can put the message into the list view with green text and update the counter
