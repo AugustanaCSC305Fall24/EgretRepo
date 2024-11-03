@@ -4,6 +4,7 @@ module edu.augustana {
     requires javafx.controls;
     requires javax.websocket.api;
     requires tyrus.client;
+    requires java.sql;
 
 
     opens edu.augustana to javafx.fxml;
