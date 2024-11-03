@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,6 +19,7 @@ import javafx.scene.layout.VBox;
 
 import java.text.DecimalFormat;
 import javafx.beans.value.ChangeListener;
+import javafx.stage.Stage;
 
 import javax.sound.sampled.LineUnavailableException;
 
@@ -78,6 +80,15 @@ public class MainUiController {
     @FXML
     private HBox serverhbox;
 
+    @FXML
+    private Button closeButton;
+
+    @FXML
+    private Button fullScreenButton;
+
+    @FXML
+    private Button minimizeButton;
+
     KnobControl volumeKnob;
     KnobControl filterKnob;
     KnobControl bandKnob;
@@ -101,6 +112,10 @@ public class MainUiController {
         knobBox01.getChildren().add(bandKnob);
         toneKnob = new KnobControl();
         knobBox11.getChildren().add(toneKnob);
+
+        closeButton.setOnAction(evt -> Platform.exit());
+        minimizeButton.setOnAction(evt -> App.windowStage.setIconified(true));
+        fullScreenButton.setOnAction(evt -> handleFullScreenButtonPress(App.windowStage));
 
 
         freqSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
@@ -252,7 +267,7 @@ public class MainUiController {
     }
 
     public void handleKeyPress(KeyEvent keyEvent) throws InterruptedException {
-        System.out.println("key press");
+        //System.out.println("key press");
        // PaddleHandler.startPaddleTimer();
         if (keyEvent.getCode() == KeyCode.J) {
             new Thread(() -> {
@@ -267,9 +282,14 @@ public class MainUiController {
     }
 
     public void handleKeyRelease(KeyEvent keyEvent) throws InterruptedException {
-        System.out.println("key release");
+        //System.out.println("key release");
         PaddleHandler.stopPaddlePress();
     }
+
+    private void handleFullScreenButtonPress(Stage stage) {
+        stage.setFullScreen(!stage.isFullScreen());
+    }
+
 
 
 }
