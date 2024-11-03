@@ -1,5 +1,8 @@
 package edu.augustana;
 
+import java.sql.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 public class TrainingListeningBot {
@@ -15,26 +18,30 @@ public class TrainingListeningBot {
     private final int band;
 
 
-    public static final String[] botPhraseArray = {"Hello", "Hello2"}; //Add the phrases to this list
-    public static final String[] botCallSignArray = {"1", "2"}; //Add list of call signs
+    public static ArrayList<String> botPhraseArray = new ArrayList<>(Arrays.asList("Hello", "SOS", "Pizza is good", "You are cool", "Good Morning", "Good Afternoon", "Good night", "Weather is good", "My CW is bad", "Help me", "The wilderness needs to be explored")); //Add the phrases to this list
+    public static ArrayList<String> botCallSignArray = new ArrayList<>(Arrays.asList("K8X", "K5AA", "B2AA", "N2ASD", "K8ABC", "KB9VBR", "A22A", "K7LQ", "N6Y", "W3TRO", "W8IA", "N9NA")); //Add list of call signs
+    public static ArrayList<String> usedBotPhrases = new ArrayList<>();
+    public static ArrayList<String> usedCallSigns = new ArrayList<>();
+
     private static final Random randomGen = new Random();
 
 
     public TrainingListeningBot(int band) throws InterruptedException {
         this.band = 10; //temporary. Setting the band to 10
 
-        //will have to remove the selection from the list so that two bots don't have the same stuff
-        String selection = botPhraseArray[randomGen.nextInt(botPhraseArray.length)];
+        String selection = botPhraseArray.get(randomGen.nextInt(botPhraseArray.size()));
+        botPhraseArray.remove(selection);
+        usedBotPhrases.add(selection); //This is so that we can add them back into the array once we stop the sim
         this.textBotPhrase = selection;
         this.morseBotPhrase = TextToMorseConverter.textToMorse(selection); //Morse string of their phrase
 
-        //remove selection from the list here
 
-        selection = botCallSignArray[randomGen.nextInt(botCallSignArray.length)];
+        selection = botCallSignArray.get(randomGen.nextInt(botCallSignArray.size()));
+        botCallSignArray.remove(selection);
+        usedCallSigns.add(selection);
         this.textCallSign = selection;
         this.morseCallSign = TextToMorseConverter.textToMorse(selection); //Morse string of their callSign
 
-        //remove selection from the list here
 
         this.playSound = false;
 
@@ -66,6 +73,8 @@ public class TrainingListeningBot {
      */
     public double getOutputFrequency() {
         return outputFrequency;
+
+        //this method can be used if we want to add a hint button
     }
 
     public void playSound() throws InterruptedException {
@@ -82,25 +91,34 @@ public class TrainingListeningBot {
         //Can probably have this just play the whole message, but when I do I need to add more space between the call sign
         //and the message. So just append an * between the two I think.
 
-        new Thread(() -> {
+        new Thread(() -> { //Need to continuously check "playSound" throughout this loop, and then break out of it if it is false
             while (playSound) {
                 try {
                     MorsePlayer.playBotMorseString(morseCallSign, outputFrequency);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
+
+                if (!playSound) {break;} //This is so that we can stop the sound sooner, rather than waiting till the end
+
                 try {
-                    Thread.sleep(4000); //Need to adjust this to wait the right amount of time. Needs to change to match the beat length etc.
+                    Thread.sleep(morseCallSign.length() * 500L); //This gets the amount of characters played, and then waits a certain amount of time. Currently, we are waiting half a second for every character. This may need to be shorter
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
+
+                if (!playSound) {break;}
+
                 try {
                     MorsePlayer.playBotMorseString(morseBotPhrase, outputFrequency);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
+
+                if (!playSound) {break;}
+
                 try {
-                    Thread.sleep(4000); //Need to adjust this too. Needs to be long enough to wait for the entire message to play before starting the while loop again
+                    Thread.sleep(morseBotPhrase.length() * 500L); //Same thing as other sleep
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
