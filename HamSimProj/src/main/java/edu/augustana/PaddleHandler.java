@@ -10,7 +10,7 @@ import static edu.augustana.Radio.*;
 import static edu.augustana.Radio.stopTone;
 
 public class PaddleHandler {
-    private static int wordsPerMinute = 10;
+    private static int wordsPerMinute = 18;
     private static long dotDurationPaddle = 1200000000L / 20;
     private static long dashDurationPaddle = dotDurationPaddle * 3;
     private static boolean dotPaddlePressed;
@@ -63,6 +63,8 @@ public class PaddleHandler {
                     throw new RuntimeException(e);
                 }
             }
+            CWHandler.addToArray(cwString.toString());
+           // either add straight to array and not use string builder,
         }
     }
 
@@ -85,6 +87,14 @@ public class PaddleHandler {
         } else if (timeSinceReleased > ((dotDurationPaddle * 3) + ((dotDurationPaddle * 3) * 0.2)) * multiplier) {
             cwString.append("/");
         }
+    }
+
+    public static void setWordsPerMinute(Integer wpm) {
+        wordsPerMinute = wpm;
+    }
+
+    public static int getWordsPerMinute() {
+        return wordsPerMinute;
     }
 
 

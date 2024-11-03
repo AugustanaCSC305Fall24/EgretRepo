@@ -89,11 +89,22 @@ public class MainUiController {
     @FXML
     private Button minimizeButton;
 
+    @FXML
+    private Button configButton;
+
+    @FXML
+    private Button serverButton;
+
+    @FXML
+    private Button trainingButton;
+
+
+
     KnobControl volumeKnob;
     KnobControl filterKnob;
     KnobControl bandKnob;
     KnobControl toneKnob;
-
+    private Boolean firstLoad = true;
 
 
 
@@ -101,6 +112,7 @@ public class MainUiController {
 
     @FXML
     void initialize() throws IOException {
+
         assert mainHbox != null : "fx:id=\"mainHbox\" was not injected: check your FXML file 'mainUI.fxml'.";
         assert radioImage != null : "fx:id=\"radioImage\" was not injected: check your FXML file 'mainUI.fxml'.";
 
@@ -116,6 +128,28 @@ public class MainUiController {
         closeButton.setOnAction(evt -> Platform.exit());
         minimizeButton.setOnAction(evt -> App.windowStage.setIconified(true));
         fullScreenButton.setOnAction(evt -> handleFullScreenButtonPress(App.windowStage));
+        configButton.setOnAction(evt -> {
+            try {
+                setConfigPane();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        serverButton.setOnAction(evt -> {
+            try {
+                setServerPane();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        trainingButton.setOnAction(evt -> {
+            try {
+                setTrainingPane();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
 
 
         freqSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
@@ -217,13 +251,33 @@ public class MainUiController {
 
         //Loading the other fxml in the HBOX. Starting with the trainingscreen for now. Maybe make this a method so that we can have DRY coding. Just pass in the string for the fxml name
 
+        setTrainingPane();
+        firstLoad = false;
+
+
+    }
+
+    private void setTrainingPane() throws IOException {
+        if (!firstLoad) {
+            mainHbox.getChildren().remove(mainHbox.getChildren().size() - 1);
+        }
         FXMLLoader loader = new FXMLLoader(getClass().getResource("TrainingScreen.fxml"));
         VBox trainingVbox = loader.load();
-
         mainHbox.getChildren().add(trainingVbox);
+    }
 
+    private void setServerPane() throws IOException {
+        mainHbox.getChildren().remove(mainHbox.getChildren().size() - 1);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Sandbox.fxml"));
+        VBox trainingVbox = loader.load();
+        mainHbox.getChildren().add(trainingVbox);
+    }
 
-
+    private void setConfigPane() throws IOException {
+        mainHbox.getChildren().remove(mainHbox.getChildren().size() - 1);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Config.fxml"));
+        VBox trainingVbox = loader.load();
+        mainHbox.getChildren().add(trainingVbox);
     }
 
 
@@ -267,8 +321,6 @@ public class MainUiController {
     }
 
     public void handleKeyPress(KeyEvent keyEvent) throws InterruptedException {
-        //System.out.println("key press");
-       // PaddleHandler.startPaddleTimer();
         if (keyEvent.getCode() == KeyCode.J) {
             new Thread(() -> {
                 PaddleHandler.playContinuousDot();
@@ -281,8 +333,7 @@ public class MainUiController {
         }
     }
 
-    public void handleKeyRelease(KeyEvent keyEvent) throws InterruptedException {
-        //System.out.println("key release");
+    public void handleKeyRelease() throws InterruptedException {
         PaddleHandler.stopPaddlePress();
     }
 
