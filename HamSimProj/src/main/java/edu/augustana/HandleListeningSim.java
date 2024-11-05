@@ -25,7 +25,7 @@ public class HandleListeningSim {
         simActive = true;
 
         for (int i = 0; i < numBots; i++) {
-            botList.add(new TrainingListeningBot(10));//Need to change this to whatever band we are listening to once we get the bands set up
+            botList.add(new TrainingListeningBot(Radio.getBand()));//Need to change this to whatever band we are listening to once we get the bands set up
             botList.get(i).playSound();
         }
     }

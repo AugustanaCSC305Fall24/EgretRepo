@@ -13,12 +13,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <VBox xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.SandboxController">
    <children>
       <TabPane prefHeight="339.0" prefWidth="400.0" style="-fx-background-color: #1c222e#f5289100;" tabClosingPolicy="UNAVAILABLE">
          <tabs>
-            <Tab fx:id="enviromentTab" style="-fx-background-color: #606160;" text="Enviroment">
+            <Tab fx:id="enviromentTab" style="-fx-background-color: #606160;" text="Scenario">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="790.0">
                      <children>
@@ -31,9 +30,7 @@
                                           <Font name="Verdana" size="12.0" />
                                        </font>
                                     </Label>
-                                    <ChoiceBox fx:id="scenarioChoiceBox" prefHeight="20.0" prefWidth="83.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 2px; -fx-border-radius: 20px;" />
-                                    <Label alignment="CENTER" prefHeight="43.0" prefWidth="71.0" text="Mode" textFill="WHITE" />
-                                    <ChoiceBox prefHeight="25.0" prefWidth="69.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 2px; -fx-border-radius: 20px;" />
+                                    <ChoiceBox fx:id="scenarioChoiceBox" prefHeight="29.0" prefWidth="168.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 2px; -fx-border-radius: 20px;" />
                                  </children>
                               </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
@@ -92,7 +89,7 @@
                   </AnchorPane>
                </content>
             </Tab>
-            <Tab text="Radio Controls">
+            <Tab text="Scenario Properties">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #606160;">
                      <children>

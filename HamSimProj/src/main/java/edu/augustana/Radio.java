@@ -46,14 +46,16 @@ public class Radio {
 
 
 
+
     public static void initializeRadio() throws LineUnavailableException{
+
 
         isRadioOn = true;
         simTime = 1200;
         cwToneFreq = 400;
         band = 10;
 
-        noiseAmplitud = 0.0;
+//        updateNoiseGain(0);
         randGen = new Random();
         soundAmplitud = 0;
         filterVal = 10;
@@ -108,7 +110,8 @@ public class Radio {
     private static double generateGaussianNoise(double stdDev, Random random) {
         double u1 = random.nextDouble();
         double u2 = random.nextDouble();
-        return Math.sqrt(-2.0 * Math.log(u1)) * Math.cos(2.0 * Math.PI * u2) * stdDev;
+
+        return (Math.sqrt(-2.0 * Math.log(u1)) * Math.cos(2.0 * Math.PI * u2)) * stdDev;
     }
 
     public static void  setSelectedRF(double newSelectedRF){
@@ -225,7 +228,8 @@ public class Radio {
 
         // Only play while isPlaying is true
         for (int i = 0; i < bufferSize; i++) {
-            double sineSample = ( soundAmplitud * ((Math.sin(angles[angleIndex])) + generateGaussianNoise(noiseAmplitud , randGen)));
+            double sineSample = ( soundAmplitud * ((Math.sin(angles[angleIndex])) + generateGaussianNoise( noiseAmplitud, randGen)));
+            //double sineSample = ( soundAmplitud * ((Math.sin(angles[angleIndex]))));
 
             // Clip and normalize the sample to fit into 8-bit range [-128, 127]
             sineSample = Math.max(-1.0, Math.min(1.0, sineSample));  // Clip sample to [-1.0, 1.0]
