@@ -55,7 +55,7 @@ public class TrainingScreenController {
         startSimButton.setOnAction(evt -> {
             try {
                 MorsePlayer.setBeatLength( (int) playbackSpeedSlider.getValue());
-                HandleListeningSim.startSim(numBotsSlider.getValue(), playbackSpeedSlider.getValue());
+                HandleListeningSim.startSim(numBotsSlider.getValue(), playbackSpeedSlider.getValue(), guessedMessagesVBox);
 
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
@@ -76,34 +76,4 @@ public class TrainingScreenController {
 
 
     }
-
-
-
-
-    //All Methods that are for the listening training screen
-
-//    public static int getNumBots() {
-//        return numBots;
-//
-//    }
-//
-//    public static String getGuessedCallSign() {
-//        return botCallSignTextField.getText();
-//    }
-//
-//    public static String getGuessedMessage() {
-//        return botMessageTextField.getText();
-//    }
-//
-//    public static VBox getGuessedMessagesVBox() {
-//        return guessedMessagesVBox;
-//    }
-//
-//    public static TextField getBotCallSignTextField() {
-//        return botCallSignTextField;
-//    }
-//
-//    public static TextField getBotMessageTextField() {
-//        return botMessageTextField;
-//    }
 }

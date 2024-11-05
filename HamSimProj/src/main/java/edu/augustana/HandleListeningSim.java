@@ -17,7 +17,9 @@ public class HandleListeningSim {
 
 
     //Creates the bots and adds them to the list, and then makes them call the method in MorsePlayer to have them continuously play their sound
-    public static void startSim(double numBots, double playbackSpeed) throws InterruptedException {
+    public static void startSim(double numBots, double playbackSpeed, VBox guessedMessagesVBox) throws InterruptedException {
+
+        stopSim(guessedMessagesVBox);
 
         numBots = (int) numBots;
         simActive = true;
@@ -52,10 +54,9 @@ public class HandleListeningSim {
                     bot.stopSound();
                     botList.remove(bot);
                     guessedCorrectly = true;
-
                 }
-
             }
+            if (guessedCorrectly) { break;} //Gets out of the for loop so that it doesn't check any oher bots. Can also get rid of the !guessedCorrectly in the if statement
         }
 
         //Will have to change this to a listview. So all of this code will have to change potentially
@@ -64,12 +65,12 @@ public class HandleListeningSim {
         label.setWrapText(true);
         label.setFont(Font.font("System", FontWeight.NORMAL, 11)); //Maybe need to play around with this to get a font we like
 
-        if (!guessedCorrectly) {
-            //Add guess as red into the listview
-            label.setTextFill(Color.RED);
-
-        } else { //Guessed correctly
+        if (guessedCorrectly) {
+            //Add guess as green into the listview
             label.setTextFill(Color.GREEN);
+
+        } else { //Guessed incorrectly
+            label.setTextFill(Color.RED);
 
         }
 
@@ -83,6 +84,7 @@ public class HandleListeningSim {
 
     public static void stopSim(VBox guessedMessagesVBox) {
         simActive = false;
+
         for (TrainingListeningBot bot : botList) {
             bot.stopSound();
         }
@@ -90,7 +92,10 @@ public class HandleListeningSim {
 
         guessedMessagesVBox.getChildren().clear(); //Clearing the messages log vbox
 
-        //Need to make the back button call this method as well, but I haven't instantiated that yet
+        //These are so that all the used phrases and call signs get added back into the array so that we don't run out of them
+        TrainingListeningBot.botCallSignArray.addAll(TrainingListeningBot.usedCallSigns);
+        TrainingListeningBot.botPhraseArray.addAll(TrainingListeningBot.usedBotPhrases);
+
     }
 
     public static boolean getSimActive() {
