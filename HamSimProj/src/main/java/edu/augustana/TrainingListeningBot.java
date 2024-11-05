@@ -27,7 +27,7 @@ public class TrainingListeningBot {
 
 
     public TrainingListeningBot(int band) throws InterruptedException {
-        this.band = 10; //temporary. Setting the band to 10
+        this.band = band; //temporary. Setting the band to 10
 
         String selection = botPhraseArray.get(randomGen.nextInt(botPhraseArray.size()));
         botPhraseArray.remove(selection);
@@ -41,13 +41,8 @@ public class TrainingListeningBot {
         usedCallSigns.add(selection);
         this.textCallSign = selection;
         this.morseCallSign = TextToMorseConverter.textToMorse(selection); //Morse string of their callSign
-
-
         this.playSound = false;
 
-        if (band == 10) { //need to add more if else statements to account for each band option
-
-        }
 
         switch (band){
             case 10:
@@ -80,6 +75,8 @@ public class TrainingListeningBot {
                 this.outputFrequency = frequency80;
                 break;
         }
+
+        System.out.println(this.textCallSign + " " + this.textBotPhrase + " " + outputFrequency);
 
 
     }
