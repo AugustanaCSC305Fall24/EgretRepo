@@ -10,8 +10,10 @@ import static edu.augustana.Radio.stopTone;
 public class MorsePlayer {
 
     private static Random randGen2;
-    private static int beatLength;
+    private static final long beatLength = 1200000000L / 20;
     private static int maxToneHz = 3000;
+    private static int wordsPerMinute;
+    private static double multiplier;
 
 
 
@@ -104,13 +106,13 @@ public class MorsePlayer {
                     stopTone(); stopTimer();
                 }else{
                     try {
-                        Thread.sleep((beatLength * 7) + randGen2.nextInt( (int) (beatLength * variation)));
+                        Thread.sleep((long) ((beatLength * 7) * (multiplier) + randGen2.nextInt( (int) (beatLength * (multiplier) * variation))));
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
                 }
                 try {
-                    Thread.sleep(beatLength + randGen2.nextInt( (int) (beatLength * variation)));
+                    Thread.sleep((long) ((beatLength) * multiplier + randGen2.nextInt( (int) (beatLength*multiplier * variation))));
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
@@ -123,9 +125,9 @@ public class MorsePlayer {
 
     }
 
-    public static void setBeatLength(int newValue){
-        //System.out.println(newValue);
-        beatLength = newValue;
+    public static void setWordsPerMinuteMultiplier(int wpm) {
+        wordsPerMinute = wpm;
+        multiplier = (double) wpm / 20;
     }
 
 

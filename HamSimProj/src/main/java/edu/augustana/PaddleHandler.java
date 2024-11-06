@@ -17,14 +17,14 @@ public class PaddleHandler {
     private static boolean dashPaddlePressed;
     private static StringBuilder cwString = new StringBuilder();
     private static long paddleReleaseTime;
+   // private static Boolean alreadyPressed = true;
 
 
     public static void playContinuousDot() {
-        if (!dotPaddlePressed) {
+        if (!dotPaddlePressed && !dashPaddlePressed) {
             // System.out.println("tone and dot loop start");
             stopSpaceTimer();
             dotPaddlePressed = true;
-
             while (dotPaddlePressed) {
                 playTone(Radio.getCwToneFreq());
                 try {
@@ -45,7 +45,7 @@ public class PaddleHandler {
     }
 
     public static void playContinuousDash() {
-        if (!dashPaddlePressed) {
+        if (!dashPaddlePressed && !dotPaddlePressed) {
             stopSpaceTimer();
             dashPaddlePressed = true;
             while (dashPaddlePressed) {
@@ -63,7 +63,7 @@ public class PaddleHandler {
                     throw new RuntimeException(e);
                 }
             }
-            CWHandler.addToArray(cwString.toString());
+            //CWHandler.addToArray(cwString.toString());
            // either add straight to array and not use string builder,
         }
     }
@@ -95,6 +95,10 @@ public class PaddleHandler {
 
     public static int getWordsPerMinute() {
         return wordsPerMinute;
+    }
+
+    public static String getCwString() {
+        return cwString.toString();
     }
 
 
