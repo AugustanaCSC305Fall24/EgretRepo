@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -10,17 +13,20 @@
 <?import javafx.scene.layout.VBox?>
 
 
-<AnchorPane prefHeight="733.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.ScenarioBuilController">
+<AnchorPane prefHeight="856.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.ScenarioBuilController">
    <children>
-      <VBox layoutY="-1.0" prefHeight="400.0" prefWidth="600.0">
+      <VBox layoutY="-1.0" prefHeight="884.0" prefWidth="600.0">
          <children>
-            <HBox alignment="CENTER" prefHeight="58.0" prefWidth="540.0">
+            <HBox alignment="CENTER_LEFT" prefHeight="58.0" prefWidth="540.0">
                <children>
                   <Label alignment="CENTER" prefHeight="58.0" prefWidth="56.0" text="Name" />
                   <TextField />
                   <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="138.0" prefWidth="79.0" text="Type" />
                   <ChoiceBox prefWidth="150.0" />
                </children>
+               <VBox.margin>
+                  <Insets left="20.0" />
+               </VBox.margin>
             </HBox>
             <VBox alignment="CENTER_LEFT" prefHeight="136.0" prefWidth="600.0" spacing="10.0">
                <children>
@@ -37,7 +43,7 @@
             </VBox>
             <VBox alignment="CENTER_LEFT" prefHeight="136.0" prefWidth="600.0" spacing="10.0">
                <children>
-                  <Label prefHeight="17.0" prefWidth="457.0" text="Scenario Description" />
+                  <Label prefHeight="17.0" prefWidth="457.0" text="Expected User Message" />
                   <TextArea maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="95.0" prefWidth="509.0">
                      <VBox.margin>
                         <Insets />
@@ -48,6 +54,64 @@
                   <Insets left="20.0" />
                </padding>
             </VBox>
+            <Label prefHeight="35.0" prefWidth="600.0" text="Scenario Variables">
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+            </Label>
+            <HBox alignment="CENTER_LEFT" prefHeight="58.0" prefWidth="540.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="58.0" prefWidth="86.0" text="Time:" />
+                  <TextField prefHeight="39.0" prefWidth="93.0" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="138.0" prefWidth="79.0" text="Wind Speed" />
+                  <TextField prefHeight="41.0" prefWidth="87.0" />
+               </children>
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="58.0" prefWidth="540.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="58.0" prefWidth="85.0" text="Temperature:" />
+                  <TextField prefHeight="37.0" prefWidth="92.0" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="138.0" prefWidth="79.0" text="Solar Index" />
+                  <TextField prefHeight="37.0" prefWidth="85.0" />
+               </children>
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="58.0" prefWidth="540.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="58.0" prefWidth="89.0" text="Humidity:" />
+                  <TextField prefHeight="41.0" prefWidth="94.0" />
+               </children>
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+            </HBox>
+            <Label alignment="CENTER" prefHeight="37.0" prefWidth="600.0" text="Bot Agents List" />
+            <TableView maxWidth="-Infinity" prefHeight="200.0" prefWidth="540.0">
+              <columns>
+                <TableColumn prefWidth="137.0" text="Name" />
+                <TableColumn prefWidth="144.0" text="Call Sign" />
+                  <TableColumn prefWidth="258.0" text="Message" />
+              </columns>
+               <VBox.margin>
+                  <Insets left="20.0" />
+               </VBox.margin>
+            </TableView>
+            <HBox alignment="CENTER_LEFT" prefHeight="57.0" prefWidth="600.0" spacing="15.0">
+               <children>
+                  <Button mnemonicParsing="false" text="Add Bot" />
+                  <Button mnemonicParsing="false" text="Save Scenario" />
+                  <Button mnemonicParsing="false" text="Cancel" />
+                  <Button mnemonicParsing="false" text="Delete Bot" />
+               </children>
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+            </HBox>
          </children>
       </VBox>
    </children>
