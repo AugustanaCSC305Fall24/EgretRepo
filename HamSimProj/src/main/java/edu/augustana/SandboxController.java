@@ -1,8 +1,12 @@
 package edu.augustana;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -45,6 +49,8 @@ public class SandboxController {
     @FXML
     private Button newScenarioBtn;
 
+    private
+
 
     @FXML
     void initialize(){
@@ -55,11 +61,33 @@ public class SandboxController {
         scenarioDescription.setText(scenarioChoiceBox.getValue().getDescription());
         agentList.getItems().addAll(scenarioChoiceBox.getValue().getBotCollection().getBots());
 
-//        startScenarioBtn.setOnAction((evt -> {
-//
-//        });
+        startScenarioBtn.setOnAction(evt -> {
+            try {
+                scenarioChoiceBox.getValue().startScenario();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        newScenarioBtn.setOnAction(evt -> {
+            try {
+                this.openScenarioBuilder();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
 
 
+    }
+
+
+    private void openScenarioBuilder() throws IOException {
+        //load fxml
+        Stage scenarioBuildStage = new Stage();
+        FXMLLoader loader = new FXMLLoader(App.class.getResource("ScenarioBuildUI.fxml"));
+        scenarioBuildStage.setTitle("Scenario Builder");
+        scenarioBuildStage.setScene(new Scene(loader.load()));
+        scenarioBuildStage.show();
     }
 
 
