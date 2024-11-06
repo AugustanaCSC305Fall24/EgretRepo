@@ -20,9 +20,9 @@
             <HBox alignment="CENTER_LEFT" prefHeight="58.0" prefWidth="540.0">
                <children>
                   <Label alignment="CENTER" prefHeight="58.0" prefWidth="56.0" text="Name" />
-                  <TextField />
+                  <TextField fx:id="scenarioNameField" />
                   <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="138.0" prefWidth="79.0" text="Type" />
-                  <ChoiceBox prefWidth="150.0" />
+                  <ChoiceBox fx:id="scenarioTypeChoice" prefWidth="150.0" />
                </children>
                <VBox.margin>
                   <Insets left="20.0" />
@@ -31,7 +31,7 @@
             <VBox alignment="CENTER_LEFT" prefHeight="136.0" prefWidth="600.0" spacing="10.0">
                <children>
                   <Label prefHeight="17.0" prefWidth="457.0" text="Scenario Description" />
-                  <TextArea maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="95.0" prefWidth="509.0">
+                  <TextArea fx:id="descripTionField" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="95.0" prefWidth="509.0">
                      <VBox.margin>
                         <Insets />
                      </VBox.margin>
@@ -44,7 +44,7 @@
             <VBox alignment="CENTER_LEFT" prefHeight="136.0" prefWidth="600.0" spacing="10.0">
                <children>
                   <Label prefHeight="17.0" prefWidth="457.0" text="Expected User Message" />
-                  <TextArea maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="95.0" prefWidth="509.0">
+                  <TextArea fx:id="userMessageField" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="95.0" prefWidth="509.0">
                      <VBox.margin>
                         <Insets />
                      </VBox.margin>
@@ -62,9 +62,9 @@
             <HBox alignment="CENTER_LEFT" prefHeight="58.0" prefWidth="540.0">
                <children>
                   <Label alignment="CENTER" prefHeight="58.0" prefWidth="86.0" text="Time:" />
-                  <TextField prefHeight="39.0" prefWidth="93.0" />
+                  <TextField fx:id="timeField" prefHeight="39.0" prefWidth="93.0" />
                   <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="138.0" prefWidth="79.0" text="Wind Speed" />
-                  <TextField prefHeight="41.0" prefWidth="87.0" />
+                  <TextField fx:id="windSpeedField" prefHeight="41.0" prefWidth="87.0" />
                </children>
                <padding>
                   <Insets left="20.0" />
@@ -73,9 +73,9 @@
             <HBox alignment="CENTER_LEFT" prefHeight="58.0" prefWidth="540.0">
                <children>
                   <Label alignment="CENTER" prefHeight="58.0" prefWidth="85.0" text="Temperature:" />
-                  <TextField prefHeight="37.0" prefWidth="92.0" />
+                  <TextField fx:id="tempField" prefHeight="37.0" prefWidth="92.0" />
                   <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="138.0" prefWidth="79.0" text="Solar Index" />
-                  <TextField prefHeight="37.0" prefWidth="85.0" />
+                  <TextField fx:id="solarIndex" prefHeight="37.0" prefWidth="85.0" />
                </children>
                <padding>
                   <Insets left="20.0" />
@@ -84,14 +84,14 @@
             <HBox alignment="CENTER_LEFT" prefHeight="58.0" prefWidth="540.0">
                <children>
                   <Label alignment="CENTER" prefHeight="58.0" prefWidth="89.0" text="Humidity:" />
-                  <TextField prefHeight="41.0" prefWidth="94.0" />
+                  <TextField fx:id="humidityField" prefHeight="41.0" prefWidth="94.0" />
                </children>
                <padding>
                   <Insets left="20.0" />
                </padding>
             </HBox>
             <Label alignment="CENTER" prefHeight="37.0" prefWidth="600.0" text="Bot Agents List" />
-            <TableView maxWidth="-Infinity" prefHeight="200.0" prefWidth="540.0">
+            <TableView fx:id="botListTable" maxWidth="-Infinity" prefHeight="200.0" prefWidth="540.0">
               <columns>
                 <TableColumn prefWidth="137.0" text="Name" />
                 <TableColumn prefWidth="144.0" text="Call Sign" />
@@ -103,10 +103,10 @@
             </TableView>
             <HBox alignment="CENTER_LEFT" prefHeight="57.0" prefWidth="600.0" spacing="15.0">
                <children>
-                  <Button mnemonicParsing="false" text="Add Bot" />
-                  <Button mnemonicParsing="false" text="Save Scenario" />
-                  <Button mnemonicParsing="false" text="Cancel" />
-                  <Button mnemonicParsing="false" text="Delete Bot" />
+                  <Button fx:id="addBotBtn" mnemonicParsing="false" text="Add Bot" />
+                  <Button fx:id="saveScenarioBtn" mnemonicParsing="false" text="Save Scenario" />
+                  <Button fx:id="cancelBtn" mnemonicParsing="false" text="Cancel" />
+                  <Button fx:id="deletebotBtn" mnemonicParsing="false" text="Delete Bot" />
                </children>
                <padding>
                   <Insets left="20.0" />
