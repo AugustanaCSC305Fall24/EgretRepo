@@ -82,7 +82,17 @@ public class TextToMorseConverter {
         morseToTextMap.put("-..-", "X");
         morseToTextMap.put("-.--", "Y");
         morseToTextMap.put("--..", "Z");
-        morseToTextMap.put("/", " "); // Space between words
+        morseToTextMap.put(".----", "1");
+        morseToTextMap.put("..---", "2");
+        morseToTextMap.put("...--", "3");
+        morseToTextMap.put("....-", "4");
+        morseToTextMap.put(".....", "5");
+        morseToTextMap.put("-....", "6");
+        morseToTextMap.put("--...", "7");
+        morseToTextMap.put("---..", "8");
+        morseToTextMap.put("----.", "9");
+        morseToTextMap.put("-----", "0");
+        morseToTextMap.put("/", " ");// Space between words
     }
 
 
@@ -103,19 +113,9 @@ public class TextToMorseConverter {
         return morseCode.toString().trim();
     }
 
-    public static String morseToText(ArrayList<String> morseList) {
-        ArrayList<String>  dividedMorseList = new ArrayList<String>();
-        StringBuilder finalMorseString = new StringBuilder();
-        for (String morseChar : morseList) {
-            finalMorseString.append(morseChar);
-        }
-
-
-        String[] morseCodeArray = finalMorseString.toString().split("/");
-
-
+    public static String morseToText(String morseString) {
+        String[] morseCodeArray = morseString.split("/");
         StringBuilder result = new StringBuilder();
-
         for (String morseCode : morseCodeArray) {
             morseCode = morseCode.trim();
 

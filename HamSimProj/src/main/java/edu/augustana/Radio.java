@@ -145,8 +145,6 @@ public class Radio {
     }
 
 
-
-
     public static void updateNoiseGain(double newAmplitud){
 
         noiseAmplitud = newAmplitud;

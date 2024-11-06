@@ -1,15 +1,12 @@
 package edu.augustana;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
-import javafx.scene.control.skin.SliderSkin;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -19,15 +16,17 @@ import javafx.scene.layout.VBox;
 
 import java.text.DecimalFormat;
 import javafx.beans.value.ChangeListener;
+import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 
 import javax.sound.sampled.LineUnavailableException;
 
-import static edu.augustana.Radio.setTunningRF;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
 public class MainUiController {
+    private boolean isMuted = false;
+    private double savedVolume = 0.0;
 
     @FXML
     private Label displayLabel;
@@ -98,6 +97,11 @@ public class MainUiController {
     @FXML
     private Button trainingButton;
 
+    @FXML
+    private Label morseText;
+
+    @FXML
+    private Label englishText;
 
 
     KnobControl volumeKnob;
@@ -107,15 +111,13 @@ public class MainUiController {
     private Boolean firstLoad = true;
 
 
-
-
-
     @FXML
     void initialize() throws IOException {
 
         assert mainHbox != null : "fx:id=\"mainHbox\" was not injected: check your FXML file 'mainUI.fxml'.";
         assert radioImage != null : "fx:id=\"radioImage\" was not injected: check your FXML file 'mainUI.fxml'.";
 
+        //morseText = new Label();
         volumeKnob = new KnobControl();
         knobBox00.getChildren().add(volumeKnob);
         filterKnob = new KnobControl();
@@ -151,6 +153,23 @@ public class MainUiController {
             }
         });
 
+        muteBtn.setOnAction(evt -> {
+            isMuted = !isMuted;
+            if (isMuted) {
+                try {
+                    mute();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            } else {
+                try {
+                    unmute();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+        });
 
         freqSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
            int band = Radio.getBand();
@@ -184,7 +203,6 @@ public class MainUiController {
             updateDisplayText(Radio.getTime(), Radio.getSelectedTuneFreq(), Radio.getCwToneFreq(), band);
 
         });
-
 
         volumeKnob.valueProperty().addListener((observable, oldValue, newValue) -> {
             System.out.println("Volume value changed: " + newValue);
@@ -234,7 +252,6 @@ public class MainUiController {
                         System.out.println("Radio Initialized");
                         Radio.initializeRadio();
                         updateKnobValues();
-
                     } catch (LineUnavailableException e) {
                         throw new RuntimeException(e);
                     } catch (InterruptedException e) {
@@ -266,6 +283,17 @@ public class MainUiController {
         mainHbox.getChildren().add(trainingVbox);
     }
 
+    private void mute() throws IOException{
+        savedVolume = volumeKnob.getValue();
+        volumeKnob.setValue(0.0);
+    }
+
+    private void unmute() throws IOException{
+        volumeKnob.setValue(savedVolume);
+    }
+
+
+
     private void setServerPane() throws IOException {
         mainHbox.getChildren().remove(mainHbox.getChildren().size() - 1);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Sandbox.fxml"));
@@ -289,7 +317,6 @@ public class MainUiController {
         filterKnob.setValue(((Radio.getFilterValue()/6379)*100));
         filterKnob.skin.rotateToPosition((int)  ((Radio.getFilterValue()/6379)*100));
         volumeKnob.setValue((Radio.getSoundAmplitud()/4)*100);
-
     }
 
 
@@ -330,15 +357,35 @@ public class MainUiController {
             new Thread(() ->{
                 PaddleHandler.playContinuousDash();
             }).start();
+        } else if (keyEvent.getCode() == KeyCode.L) {
+            CWHandler.startTimer();
         }
     }
 
-    public void handleKeyRelease() throws InterruptedException {
-        PaddleHandler.stopPaddlePress();
+    public void handleKeyRelease(KeyEvent keyEvent) throws InterruptedException {
+        if (keyEvent.getCode() == KeyCode.J || keyEvent.getCode() == KeyCode.K) {
+            PaddleHandler.stopPaddlePress();
+            addToMorseBox(PaddleHandler.getCwString()); // stops first paddle press on keyRelease of second paddle if both are held simultaneously
+            addToEnglishBox(CWHandler.getCwString());
+        } else if (keyEvent.getCode() == KeyCode.L) {
+            CWHandler.stopTimer();
+            addToMorseBox(CWHandler.getCwString());
+            addToEnglishBox(CWHandler.getCwString());
+        }
+
     }
 
     private void handleFullScreenButtonPress(Stage stage) {
         stage.setFullScreen(!stage.isFullScreen());
+    }
+
+    private void addToMorseBox(String morse) {
+        morseText.setText(morse);
+       // System.out.println("Label text: " + morseText.getText());
+    }
+
+    private void addToEnglishBox(String morse) {
+        englishText.setText(TextToMorseConverter.morseToText(morse));
     }
 
 
