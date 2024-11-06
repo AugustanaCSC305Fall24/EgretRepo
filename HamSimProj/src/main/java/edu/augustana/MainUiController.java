@@ -113,6 +113,7 @@ public class MainUiController {
 
     @FXML
     void initialize() throws IOException {
+        displayLabel.setText("");
 
         assert mainHbox != null : "fx:id=\"mainHbox\" was not injected: check your FXML file 'mainUI.fxml'.";
         assert radioImage != null : "fx:id=\"radioImage\" was not injected: check your FXML file 'mainUI.fxml'.";
@@ -215,13 +216,9 @@ public class MainUiController {
         filterKnob.valueProperty().addListener((observable, oldValue, newValue) -> {
             int val = (int)((newValue.doubleValue()/100)*6379);
             System.out.println("Filter value changed: " + val + 10);
-
-
-
             Radio.changeFilterValue(val + 10);
 
         });
-
 
         bandKnob.valueProperty().addListener((observable, oldValue, newValue) -> {
             System.out.println("Band value changed: " + newValue);
@@ -265,7 +262,6 @@ public class MainUiController {
         });
 
 
-
         //Loading the other fxml in the HBOX. Starting with the trainingscreen for now. Maybe make this a method so that we can have DRY coding. Just pass in the string for the fxml name
 
         setTrainingPane();
@@ -293,7 +289,6 @@ public class MainUiController {
     }
 
 
-
     private void setServerPane() throws IOException {
         mainHbox.getChildren().remove(mainHbox.getChildren().size() - 1);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Sandbox.fxml"));
@@ -319,13 +314,13 @@ public class MainUiController {
         volumeKnob.setValue((Radio.getSoundAmplitud()/4)*100);
     }
 
-
     void updateDisplayText(int time, double rFrequency, double tFrequency, int band){
 
-        DecimalFormat df = new DecimalFormat("#.#"); // For one decimal place
-        String formattedValue = df.format(tFrequency);
+        DecimalFormat df = new DecimalFormat("#.####"); // For one decimal place
+        String formattedTFrequency = df.format(tFrequency);
+        String formattedRFrequency = df.format(rFrequency);
 
-        displayLabel.setText(formattedValue + "Hz  "+ rFrequency + "Mhz  " + time + "  " + band + "m ");
+        displayLabel.setText(formattedTFrequency + "Hz  "+ formattedRFrequency + "Mhz  " + time + "  " + band + "m ");
     }
 
     int chooseBand(double angle){
@@ -335,13 +330,13 @@ public class MainUiController {
             return 17;
         } else if (angle > 180) {
             return 20;
-        }else if(angle > 90){
+        } else if(angle > 90){
             return 30;
-        }else if(angle > 45){
+        } else if(angle > 45){
             return 40;
-        }else if(angle >= 0){
+        } else if(angle >= 0){
             return 80;
-        }else{
+        } else{
             return 0;
         }
 
