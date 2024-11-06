@@ -25,7 +25,7 @@ public class App extends Application {
     public void start(Stage stage) throws IOException {
 
         scene = new Scene(loadFXML("mainUI"), 1280, 720);
-        stage.initStyle(StageStyle.UNDECORATED);
+        //stage.initStyle(StageStyle.UNDECORATED);
         stage.setScene(scene);
         stage.show();
         windowStage = stage;
@@ -41,7 +41,6 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
-
         System.out.println("Now using 10m band");
         launch();
     }

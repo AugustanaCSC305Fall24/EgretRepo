@@ -6,14 +6,22 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
+import static edu.augustana.Radio.playTone;
+import static edu.augustana.Radio.stopTone;
+
 public class CWHandler {
 
     private static ArrayList<String> cwArray = new ArrayList<String>();
+    private static StringBuilder cwString = new StringBuilder();
     private static ArrayList<Long> cwBufferArray = new ArrayList<Long>();
     private static long startTime;
     private static long releasedStartTime;
     private static long totalTimePressed = 0;
     private static int pressCount = 0;
+    private static Boolean alreadyPressed = false;
+    private int wpm = 18;
+
+
 
     // Dynamic timing variables
     private static long dotDuration;
@@ -26,15 +34,20 @@ public class CWHandler {
      * Starts the timer when the key is pressed
      */
     public static void startTimer() {
-        marginOfError = 0.2;
-        spaceTimerStop();
-        startTime = System.nanoTime();
+        if (!alreadyPressed) {
+            playTone(Radio.getCwToneFreq());
+            marginOfError = 0.2;
+            spaceTimerStop();
+            startTime = System.nanoTime();
+            alreadyPressed = true;
+        }
     }
 
     /**
      * Stops the timer when the key is released and calculates the time pressed
      */
     public static void stopTimer() {
+        stopTone();
         long timePressed = System.nanoTime() - startTime;
         pressCount++;
         totalTimePressed += timePressed;
@@ -47,7 +60,7 @@ public class CWHandler {
 
         spaceTimerStart();
 
-
+        alreadyPressed = false;
     }
 
 
@@ -57,18 +70,13 @@ public class CWHandler {
     }
 
     public static void spaceTimerStop() {
-
+       // int multiplier = 20 / wpm;
         long timeSinceReleased = System.nanoTime() - releasedStartTime;
 
         if(timeSinceReleased > dotDuration * 7 - 1 ){
-
-            cwArray.add("/");
-            cwArray.add("*");
-            cwArray.add("/");
-
-
+            cwString.append("/*/");
         } else if (timeSinceReleased > dotDuration * 3) {
-            cwArray.add("/");
+            cwString.append("/");
         }
     }
 
@@ -91,7 +99,7 @@ public class CWHandler {
     }
 
     public static void printOutArray(){
-        System.out.println(cwArray);
+        System.out.println(cwString.toString());
     }
 
     /**
@@ -103,15 +111,13 @@ public class CWHandler {
         dashDuration = 3 * dotDuration;   // Dash is 3 times a dot
         letterSpaceDuration = 3 * dotDuration;  // Letter space is 3 dots
         wordSpaceDuration = 7 * dotDuration;    // Word space is 7 dots
-
-//        System.out.println("Auto-detected WPM: " + wpm);
-//        System.out.println("Dot duration (ns): " + dotDuration);
-//        System.out.println("Dash duration (ns): " + dashDuration);
     }
 
     public static ArrayList<String> getCwArray(){
         return cwArray;
     }
+
+    public static String getCwString () {return cwString.toString();}
 
 
     /**
@@ -132,12 +138,9 @@ public class CWHandler {
         } else {
             cwCharacter = "-"; // Handle for invalid long press (optional)
         }
-
-        cwArray.add(cwCharacter);
+        cwString.append(cwCharacter);
         cwBufferArray.add(timePressed / 1000); // Store in microseconds for logging
-
         printOutArray();
-
     }
 
     public static void addToArray(String toBeAdded) {
