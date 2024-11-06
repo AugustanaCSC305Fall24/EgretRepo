@@ -46,33 +46,33 @@ public class TrainingListeningBot {
 
         switch (band){
             case 10:
-                double frequency10 = 28 + (1.7 * randomGen.nextDouble()); //This is because I was getting errors for trying to get a random value between two values, so I made it an integer and am getting a random integer in the range and then adding the lower bound to it
-                this.outputFrequency =  frequency10;
+                double frequency10 = 28000 + randomGen.nextInt(1701); //This is because I was getting errors for trying to get a random value between two values, so I made it an integer and am getting a random integer in the range and then adding the lower bound to it
+                this.outputFrequency =  frequency10 / 1000;
                 break;
 
             case 17:
-                double frequency17 = 18.068 + (18.168 - 18.068) * randomGen.nextDouble(); //This is because I was getting errors for trying to get a random value between two values, so I made it an integer and am getting a random integer in the range and then adding the lower bound to it
-                this.outputFrequency = frequency17;
+                double frequency17 = 18068 + randomGen.nextInt(101); //This is because I was getting errors for trying to get a random value between two values, so I made it an integer and am getting a random integer in the range and then adding the lower bound to it
+                this.outputFrequency = frequency17 / 1000;
                 break;
 
             case 20:
-                double frequency20 = 14.000 + (14.350 - 14.000) * randomGen.nextDouble();
-                this.outputFrequency = frequency20;
+                double frequency20 = 14000 + randomGen.nextInt(351);
+                this.outputFrequency = frequency20 / 1000;
                 break;
 
             case 30:
-                double frequency30 = 10.1 + (10.15 - 10.1) * randomGen.nextDouble();
-                this.outputFrequency = frequency30;
+                double frequency30 = 10100 + randomGen.nextInt(51);
+                this.outputFrequency = frequency30 / 1000;
                 break;
 
             case 40:
-                double frequency40 = 7.000 + (7.300 - 7.000) * randomGen.nextDouble();
-                this.outputFrequency = frequency40;
+                double frequency40 = 7000 + randomGen.nextInt(301);
+                this.outputFrequency = frequency40 / 1000;
                 break;
 
             case 80:
-                double frequency80 = 3.5 + (4.0 - 3.5) * randomGen.nextDouble();
-                this.outputFrequency = frequency80;
+                double frequency80 = 3500 + randomGen.nextInt(501);
+                this.outputFrequency = frequency80 / 1000;
                 break;
         }
 
@@ -129,7 +129,7 @@ public class TrainingListeningBot {
 
                 if (!playSound) {break;} //This is so that we can stop the sound sooner, rather than waiting till the end
 
-                try {
+                try { // Use WPM to calculate how long each thing takes
                     Thread.sleep(morseCallSign.length() * 500L); //This gets the amount of characters played, and then waits a certain amount of time. Currently, we are waiting half a second for every character. This may need to be shorter
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
