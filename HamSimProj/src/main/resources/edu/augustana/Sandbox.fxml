@@ -7,7 +7,6 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -21,68 +20,51 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="790.0">
                      <children>
-                        <VBox alignment="CENTER" prefHeight="306.0" prefWidth="400.0" style="-fx-background-color: #606160;">
+                        <VBox alignment="TOP_CENTER" prefHeight="306.0" prefWidth="400.0" style="-fx-background-color: #606160;">
                            <children>
-                              <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="377.0">
+                              <HBox alignment="CENTER_LEFT" prefHeight="42.0" prefWidth="400.0">
                                  <children>
                                     <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="43.0" prefWidth="61.0" text="Scenario" textFill="WHITE">
                                        <font>
                                           <Font name="Verdana" size="12.0" />
                                        </font>
                                     </Label>
-                                    <ChoiceBox fx:id="scenarioChoiceBox" prefHeight="29.0" prefWidth="168.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 2px; -fx-border-radius: 20px;" />
+                                    <ChoiceBox fx:id="scenarioChoiceBox" prefHeight="30.0" prefWidth="109.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 2px; -fx-border-radius: 20px;" />
+                                    <Button fx:id="startScenarioBtn" mnemonicParsing="false" prefHeight="26.0" prefWidth="59.0" text="Start">
+                                       <HBox.margin>
+                                          <Insets left="20.0" />
+                                       </HBox.margin>
+                                    </Button>
+                                    <Button fx:id="editScenarioBtn" mnemonicParsing="false" prefHeight="26.0" prefWidth="59.0" text="Edit">
+                                       <HBox.margin>
+                                          <Insets left="10.0" />
+                                       </HBox.margin>
+                                    </Button>
+                                    <Button fx:id="newScenarioBtn" mnemonicParsing="false" prefHeight="26.0" prefWidth="59.0" text="New">
+                                       <HBox.margin>
+                                          <Insets left="10.0" />
+                                       </HBox.margin>
+                                    </Button>
                                  </children>
                               </HBox>
-                              <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
-                                 <children>
-                                    <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="43.0" prefWidth="125.0" text="Time:   " textFill="WHITE">
-                                       <font>
-                                          <Font name="Verdana" size="12.0" />
-                                       </font>
-                                    </Label>
-                                    <TextField alignment="CENTER" prefHeight="29.0" prefWidth="119.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 2px; -fx-border-radius: 20px;" />
-                                 </children>
-                              </HBox>
-                              <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
-                                 <children>
-                                    <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="43.0" prefWidth="125.0" text="Temperature:   " textFill="WHITE">
-                                       <font>
-                                          <Font name="Verdana" size="12.0" />
-                                       </font>
-                                    </Label>
-                                    <TextField alignment="CENTER" prefHeight="29.0" prefWidth="117.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 2px; -fx-border-radius: 20px;" />
-                                 </children>
-                              </HBox>
-                              <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
-                                 <children>
-                                    <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="43.0" prefWidth="125.0" text="Humidity:   " textFill="WHITE">
-                                       <font>
-                                          <Font name="Verdana" size="12.0" />
-                                       </font>
-                                    </Label>
-                                    <TextField alignment="CENTER" prefHeight="29.0" prefWidth="120.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 2px; -fx-border-radius: 20px;" />
-                                 </children>
-                              </HBox>
-                              <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
-                                 <children>
-                                    <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="43.0" prefWidth="125.0" text="Wind Speed:   " textFill="WHITE">
-                                       <font>
-                                          <Font name="Verdana" size="12.0" />
-                                       </font>
-                                    </Label>
-                                    <TextField alignment="CENTER" prefHeight="29.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 2px; -fx-border-radius: 20px;" />
-                                 </children>
-                              </HBox>
-                              <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
-                                 <children>
-                                    <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="43.0" prefWidth="125.0" text="Solar Activity:   " textFill="WHITE">
-                                       <font>
-                                          <Font name="Verdana" size="12.0" />
-                                       </font>
-                                    </Label>
-                                    <TextField alignment="CENTER" prefHeight="29.0" prefWidth="123.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 2px; -fx-border-radius: 20px;" />
-                                 </children>
-                              </HBox>
+                              <Label prefHeight="18.0" prefWidth="413.0" text="Scenario Description">
+                                 <padding>
+                                    <Insets left="20.0" />
+                                 </padding>
+                              </Label>
+                              <Label fx:id="scenarioDescription" prefHeight="68.0" prefWidth="400.0" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,  aliquip ex ea commodo consequat." textOverrun="CLIP" wrapText="true">
+                                 <padding>
+                                    <Insets left="20.0" />
+                                 </padding>
+                              </Label>
+                              <Label prefHeight="18.0" prefWidth="418.0" text="Agent List">
+                                 <padding>
+                                    <Insets left="20.0" />
+                                 </padding>
+                              </Label>
+                              <ListView fx:id="agentList" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="86.0" prefWidth="366.0" />
+                              <Label prefHeight="18.0" prefWidth="366.0" text="Scenario Dialog" />
+                              <Label fx:id="scenarioDialog" prefHeight="41.0" prefWidth="364.0" text="Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet," wrapText="true" />
                            </children>
                         </VBox>
                      </children>

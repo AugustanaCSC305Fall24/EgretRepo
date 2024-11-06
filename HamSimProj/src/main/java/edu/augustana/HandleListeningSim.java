@@ -1,25 +1,51 @@
 package edu.augustana;
 
 
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.stage.Stage;
 
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class HandleListeningSim {
 
     public static ArrayList<TrainingListeningBot> botList = new ArrayList<TrainingListeningBot>();
     private static boolean simActive = false;
+    private static VBox messagesVBox;
+    private static Stage stage = new Stage();
 
 
+    //called by the startSimButton
+    public static void openBotView(VBox guessedMessagesVBox) throws IOException {
+        messagesVBox = guessedMessagesVBox;
+        stopSim(messagesVBox);
+
+        //load fxml
+        FXMLLoader loader = new FXMLLoader(App.class.getResource("BotFinderConfig.fxml"));
+        stage.setTitle("My New Stage Title");
+        stage.setScene(new Scene(loader.load(), 450, 450));
+        stage.show();
+    }
+
+    public static void closeBotView() {
+        stage.close();
+    }
+
+    public static VBox getMessagesVBox() {
+        return messagesVBox;
+    }
+
+    //called by the accept button in the BotView fxml
     //Creates the bots and adds them to the list, and then makes them call the method in MorsePlayer to have them continuously play their sound
-    public static void startSim(double numBots, double playbackSpeed, VBox guessedMessagesVBox) throws InterruptedException {
-
-        stopSim(guessedMessagesVBox);
+    public static void startSim(double numBots, double playbackSpeed) throws InterruptedException, IOException {
 
         numBots = (int) numBots;
         simActive = true;
@@ -27,7 +53,9 @@ public class HandleListeningSim {
         for (int i = 0; i < numBots; i++) {
             botList.add(new TrainingListeningBot(Radio.getBand()));//Need to change this to whatever band we are listening to once we get the bands set up
             botList.get(i).playSound();
+            //add bots to listview
         }
+
     }
 
     //Takes the value from the two text boxes and check to see if they match the bot they are listening to

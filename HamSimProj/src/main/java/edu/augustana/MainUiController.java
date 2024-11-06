@@ -1,15 +1,12 @@
 package edu.augustana;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
-import javafx.scene.control.skin.SliderSkin;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -24,11 +21,12 @@ import javafx.stage.Stage;
 
 import javax.sound.sampled.LineUnavailableException;
 
-import static edu.augustana.Radio.setTunningRF;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
 public class MainUiController {
+    private boolean isMuted = false;
+    private double savedVolume = 0.0;
 
     @FXML
     private Label displayLabel;
@@ -106,15 +104,11 @@ public class MainUiController {
     private Label englishText;
 
 
-
     KnobControl volumeKnob;
     KnobControl filterKnob;
     KnobControl bandKnob;
     KnobControl toneKnob;
     private Boolean firstLoad = true;
-
-
-
 
 
     @FXML
@@ -159,6 +153,23 @@ public class MainUiController {
             }
         });
 
+        muteBtn.setOnAction(evt -> {
+            isMuted = !isMuted;
+            if (isMuted) {
+                try {
+                    mute();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            } else {
+                try {
+                    unmute();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+        });
 
         freqSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
            int band = Radio.getBand();
@@ -192,7 +203,6 @@ public class MainUiController {
             updateDisplayText(Radio.getTime(), Radio.getSelectedTuneFreq(), Radio.getCwToneFreq(), band);
 
         });
-
 
         volumeKnob.valueProperty().addListener((observable, oldValue, newValue) -> {
             System.out.println("Volume value changed: " + newValue);
@@ -242,7 +252,6 @@ public class MainUiController {
                         System.out.println("Radio Initialized");
                         Radio.initializeRadio();
                         updateKnobValues();
-
                     } catch (LineUnavailableException e) {
                         throw new RuntimeException(e);
                     } catch (InterruptedException e) {
@@ -274,6 +283,17 @@ public class MainUiController {
         mainHbox.getChildren().add(trainingVbox);
     }
 
+    private void mute() throws IOException{
+        savedVolume = volumeKnob.getValue();
+        volumeKnob.setValue(0.0);
+    }
+
+    private void unmute() throws IOException{
+        volumeKnob.setValue(savedVolume);
+    }
+
+
+
     private void setServerPane() throws IOException {
         mainHbox.getChildren().remove(mainHbox.getChildren().size() - 1);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Sandbox.fxml"));
@@ -297,7 +317,6 @@ public class MainUiController {
         filterKnob.setValue(((Radio.getFilterValue()/6379)*100));
         filterKnob.skin.rotateToPosition((int)  ((Radio.getFilterValue()/6379)*100));
         volumeKnob.setValue((Radio.getSoundAmplitud()/4)*100);
-
     }
 
 
