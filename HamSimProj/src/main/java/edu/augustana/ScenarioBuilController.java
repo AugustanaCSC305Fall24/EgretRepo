@@ -5,5 +5,7 @@ import javafx.fxml.FXML;
 public class ScenarioBuilController {
 
     @FXML
-    void initialize(){}
+    void initialize(
+
+    ){}
 }

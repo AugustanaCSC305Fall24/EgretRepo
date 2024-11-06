@@ -16,6 +16,7 @@ import javafx.scene.layout.VBox;
 
 import java.text.DecimalFormat;
 import javafx.beans.value.ChangeListener;
+import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 
 import javax.sound.sampled.LineUnavailableException;
@@ -96,6 +97,12 @@ public class MainUiController {
     @FXML
     private Button trainingButton;
 
+    @FXML
+    private Label morseText;
+
+    @FXML
+    private Label englishText;
+
 
     KnobControl volumeKnob;
     KnobControl filterKnob;
@@ -111,6 +118,7 @@ public class MainUiController {
         assert mainHbox != null : "fx:id=\"mainHbox\" was not injected: check your FXML file 'mainUI.fxml'.";
         assert radioImage != null : "fx:id=\"radioImage\" was not injected: check your FXML file 'mainUI.fxml'.";
 
+        //morseText = new Label();
         volumeKnob = new KnobControl();
         knobBox00.getChildren().add(volumeKnob);
         filterKnob = new KnobControl();
@@ -344,15 +352,35 @@ public class MainUiController {
             new Thread(() ->{
                 PaddleHandler.playContinuousDash();
             }).start();
+        } else if (keyEvent.getCode() == KeyCode.L) {
+            CWHandler.startTimer();
         }
     }
 
-    public void handleKeyRelease() throws InterruptedException {
-        PaddleHandler.stopPaddlePress();
+    public void handleKeyRelease(KeyEvent keyEvent) throws InterruptedException {
+        if (keyEvent.getCode() == KeyCode.J || keyEvent.getCode() == KeyCode.K) {
+            PaddleHandler.stopPaddlePress();
+            addToMorseBox(PaddleHandler.getCwString()); // stops first paddle press on keyRelease of second paddle if both are held simultaneously
+            addToEnglishBox(CWHandler.getCwString());
+        } else if (keyEvent.getCode() == KeyCode.L) {
+            CWHandler.stopTimer();
+            addToMorseBox(CWHandler.getCwString());
+            addToEnglishBox(CWHandler.getCwString());
+        }
+
     }
 
     private void handleFullScreenButtonPress(Stage stage) {
         stage.setFullScreen(!stage.isFullScreen());
+    }
+
+    private void addToMorseBox(String morse) {
+        morseText.setText(morse);
+       // System.out.println("Label text: " + morseText.getText());
+    }
+
+    private void addToEnglishBox(String morse) {
+        englishText.setText(TextToMorseConverter.morseToText(morse));
     }
 
 

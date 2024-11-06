@@ -58,7 +58,16 @@ public class SimScenario {
      *For now we just need this method to be able to play the message and call sign of the bots
      * to have them continously play their message and and callsign with the different parameters in the scenario
      */
-    public void startScenario(){
+    public void startScenario() throws InterruptedException {
+        if(!botCollection.getBots().isEmpty()){
+            for(TrainingListeningBot bot: botCollection.getBots()){
+                bot.playSound();
+            }
+        }
+
+    }
+
+    public void stopScenario(){
 
     }
 
