@@ -118,6 +118,8 @@ public class TrainingListeningBot {
 
         //Can probably have this just play the whole message, but when I do I need to add more space between the call sign
         //and the message. So just append an * between the two I think.
+        System.out.println(outputFrequency);
+
 
         new Thread(() -> { //Need to continuously check "playSound" throughout this loop, and then break out of it if it is false
             while (playSound) {
