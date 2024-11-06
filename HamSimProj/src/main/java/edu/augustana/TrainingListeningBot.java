@@ -27,7 +27,7 @@ public class TrainingListeningBot {
 
 
     public TrainingListeningBot(int band) throws InterruptedException {
-        this.band = 10; //temporary. Setting the band to 10
+        this.band = band; //temporary. Setting the band to 10
 
         String selection = botPhraseArray.get(randomGen.nextInt(botPhraseArray.size()));
         botPhraseArray.remove(selection);
@@ -41,14 +41,42 @@ public class TrainingListeningBot {
         usedCallSigns.add(selection);
         this.textCallSign = selection;
         this.morseCallSign = TextToMorseConverter.textToMorse(selection); //Morse string of their callSign
-
-
         this.playSound = false;
 
-        if (band == 10) { //need to add more if else statements to account for each band option
-            int integerFrequency = randomGen.nextInt(1701) + 28000; //This is because I was getting errors for trying to get a random value between two values, so I made it an integer and am getting a random integer in the range and then adding the lower bound to it
-            this.outputFrequency = (double) integerFrequency / 1000;
+
+        switch (band){
+            case 10:
+                double frequency10 = 28 + (1.7 * randomGen.nextDouble()); //This is because I was getting errors for trying to get a random value between two values, so I made it an integer and am getting a random integer in the range and then adding the lower bound to it
+                this.outputFrequency =  frequency10;
+                break;
+
+            case 17:
+                double frequency17 = 18.068 + (18.168 - 18.068) * randomGen.nextDouble(); //This is because I was getting errors for trying to get a random value between two values, so I made it an integer and am getting a random integer in the range and then adding the lower bound to it
+                this.outputFrequency = frequency17;
+                break;
+
+            case 20:
+                double frequency20 = 14.000 + (14.350 - 14.000) * randomGen.nextDouble();
+                this.outputFrequency = frequency20;
+                break;
+
+            case 30:
+                double frequency30 = 10.1 + (10.15 - 10.1) * randomGen.nextDouble();
+                this.outputFrequency = frequency30;
+                break;
+
+            case 40:
+                double frequency40 = 7.000 + (7.300 - 7.000) * randomGen.nextDouble();
+                this.outputFrequency = frequency40;
+                break;
+
+            case 80:
+                double frequency80 = 3.5 + (4.0 - 3.5) * randomGen.nextDouble();
+                this.outputFrequency = frequency80;
+                break;
         }
+
+        System.out.println(this.textCallSign + " " + this.textBotPhrase + " " + outputFrequency);
 
 
     }

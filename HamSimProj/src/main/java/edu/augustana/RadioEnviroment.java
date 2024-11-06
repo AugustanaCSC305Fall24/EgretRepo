@@ -13,16 +13,16 @@ public class RadioEnviroment {
     String nameScenario = "";
 
     // Weights for each factor
-    private double weightTemperature = 0.2;
-    private double weightHumidity = 0.3;
-    private double weightWindSpeed = 0.1;
-    private double weightSolarActivity = 0.4;
+    private final double weightTemperature = 0.2;
+    private final double weightHumidity = 0.3;
+    private final double weightWindSpeed = 0.1;
+    private final double weightSolarActivity = 0.4;
 
     // Max values for normalization
-    private double maxTemperature = 50;      // Max temperature
-    private double maxHumidity = 1;          // Max humidity
-    private double maxWindSpeed = 150;       // Max wind speed
-    private double maxSolarActivity = 300;   // Max solar activity
+    private final double maxTemperature = 50;      // Max temperature
+    private final  double maxHumidity = 1;          // Max humidity
+    private final double maxWindSpeed = 150;       // Max wind speed
+    private final  double maxSolarActivity = 300;   // Max solar activity
 
     // Normalizing the environmental factors
     private double normTemperature = temperature / maxTemperature;
@@ -53,6 +53,8 @@ public class RadioEnviroment {
 
         return noiseAmplitude;
     }
+
+
 
 
 
