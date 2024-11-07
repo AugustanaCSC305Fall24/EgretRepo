@@ -31,7 +31,7 @@ public class RadioEnviroment {
     private double normWindSpeed = windSpeed / maxWindSpeed;
     private double normSolarActivity = solarActivity / maxSolarActivity;
 
-    Random random = new Random();
+    transient Random  random = new Random();
 
 
     public RadioEnviroment(String name, double solarActivity, double windSpeed, double humidity, double temperature) {

@@ -10,6 +10,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.FileWriter;
 import java.io.IOException;
 import com.google.gson.annotations.Expose;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 public class SimScenario {
 
@@ -157,20 +159,17 @@ public class SimScenario {
     public void saveToFile(){
         Gson gson = new Gson();
 
-        // Initialize the file chooser
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setDialogTitle("Save JSON File");
+        // Initialize the JavaFX FileChooser
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save JSON File");
 
-        // Set a filter to only allow saving as JSON
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("JSON Files", "json");
-        fileChooser.setFileFilter(filter);
+        // Set a filter to only allow saving as JSON files
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JSON Files", "*.json"));
 
         // Show the Save dialog
-        int userSelection = fileChooser.showSaveDialog(null);
+        File fileToSave = fileChooser.showSaveDialog(new Stage());
 
-        if (userSelection == JFileChooser.APPROVE_OPTION) {
-            File fileToSave = fileChooser.getSelectedFile();
-
+        if (fileToSave != null) {
             // Ensure the file has a .json extension
             if (!fileToSave.getName().endsWith(".json")) {
                 fileToSave = new File(fileToSave.getAbsolutePath() + ".json");
