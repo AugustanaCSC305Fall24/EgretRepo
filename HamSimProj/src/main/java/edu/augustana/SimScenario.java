@@ -99,4 +99,25 @@ public class SimScenario {
     public String toString() {
         return this.scenarioName;
     }
+
+    public String getUserMessage(){
+        return expectedMesagge;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        // Check if the object is an instance of Agent
+        if (obj instanceof SimScenario) {
+            SimScenario other = (SimScenario) obj;
+            // Define equality based on name and id
+            return this.scenarioName == other.scenarioName;
+        }
+
+        return false;
+    }
+
 }
