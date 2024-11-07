@@ -54,6 +54,11 @@ public class SandboxController {
     @FXML
     private Slider wpmSlider;
 
+    @FXML
+    private Button showBotMessageButton;
+
+    private MainUiController mainUIController;
+
 
     @FXML
     void initialize(){
@@ -117,7 +122,13 @@ public class SandboxController {
             MorsePlayer.setWordsPerMinuteMultiplier((int) wpmSlider.getValue());
         });
 
+        showBotMessageButton.setOnAction(evt -> mainUIController.showMessageInTextBox(agentList.getSelectionModel().getSelectedItem()));
 
+
+    }
+
+    public void setMainUIControllerController(MainUiController controller) {
+        mainUIController = controller;
     }
 
     public void updateScenarioChoice(){

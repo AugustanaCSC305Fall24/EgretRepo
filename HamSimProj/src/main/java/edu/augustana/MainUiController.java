@@ -299,6 +299,8 @@ public class MainUiController {
         mainHbox.getChildren().remove(mainHbox.getChildren().size() - 1);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Sandbox.fxml"));
         VBox trainingVbox = loader.load();
+        SandboxController controller = loader.getController();
+        controller.setMainUIControllerController(this);
         mainHbox.getChildren().add(trainingVbox);
     }
 
@@ -390,5 +392,9 @@ public class MainUiController {
     }
 
 
-
+    public void showMessageInTextBox(TrainingListeningBot selectedBot) {
+        String fullMessage = selectedBot.getMorseCallSign() + "**" + selectedBot.getMorseBotPhrase();
+        addToEnglishBox(fullMessage);
+        addToMorseBox(fullMessage);
+    }
 }

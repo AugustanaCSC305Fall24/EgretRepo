@@ -61,8 +61,7 @@ public class botAdderController {
     }
 
     private void addBot() throws InterruptedException {
-        TrainingListeningBot bot = new TrainingListeningBot(Radio.getBand());
-
+        TrainingListeningBot bot = new TrainingListeningBot(Radio.getBand(), botNameField.getText(), callSignField.getText(), messageField.getText());
         botCollection.addBot(bot);
 
 

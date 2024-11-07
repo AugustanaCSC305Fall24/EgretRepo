@@ -182,6 +182,14 @@ public class TrainingListeningBot {
         return name;
     }
 
+    public String getMorseBotPhrase() {
+        return morseBotPhrase;
+    }
+
+    public String getMorseCallSign() {
+        return morseCallSign;
+    }
+
     public void playSound() throws InterruptedException {
         playSound = true;
         playContinuousMessage();
