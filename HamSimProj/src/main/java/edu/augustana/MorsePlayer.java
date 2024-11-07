@@ -31,7 +31,7 @@ public class MorsePlayer {
 
         for(int i = 0; i < morse.length ; i++){
             if(morse[i] == '.'){
-                playTone(Math.abs(getSelectedTuneFreq() -  getSelectedOutFrequency()) * 1000000);
+                playTone(Radio.getCwToneFreq());
                 startTimer();
                 try {
                     Thread.sleep(beatLength + randGen2.nextInt( (int) (beatLength * variation)));
@@ -41,7 +41,7 @@ public class MorsePlayer {
                 stopTone();
                 stopTimer();
             }else if(morse[i] == '-'){
-                playTone(Math.abs(getSelectedTuneFreq() -  getSelectedOutFrequency()) * 1000000); startTimer();
+                playTone(Radio.getCwToneFreq()); startTimer();
                 try {
                     Thread.sleep((beatLength * 3) + randGen2.nextInt( (int) (beatLength * variation)));
                 } catch (InterruptedException e) {

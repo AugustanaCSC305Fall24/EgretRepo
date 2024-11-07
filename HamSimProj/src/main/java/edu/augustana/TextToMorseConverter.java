@@ -133,4 +133,12 @@ public class TextToMorseConverter {
         return result.toString();
     }
 
+    public static HashMap<String, String> getMorseToTextMap() {
+        return morseToTextMap;
+    }
+
+    public static Map<Character, String> getTextToMorseMap() {
+        return morseCodeMap;
+    }
+
 }
