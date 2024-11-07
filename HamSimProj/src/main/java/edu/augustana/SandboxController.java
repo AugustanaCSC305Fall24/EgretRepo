@@ -133,7 +133,7 @@ public class SandboxController {
             scenarioChoiceBox.getValue().stopScenario();
         });
 
-        
+        MorsePlayer.setWordsPerMinuteMultiplier((int) wpmSlider.getValue());
 
 
 
