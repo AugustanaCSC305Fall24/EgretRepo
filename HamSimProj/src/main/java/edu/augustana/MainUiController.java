@@ -360,6 +360,8 @@ public class MainUiController {
             }).start();
         } else if (keyEvent.getCode() == KeyCode.L) {
             CWHandler.startTimer();
+        } else if (keyEvent.getCode() == KeyCode.N) {
+            Radio.setNoiseAmplitud();
         }
     }
 

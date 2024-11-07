@@ -22,6 +22,7 @@ public class Radio {
     private static double soundAmplitud;
     public static final int MAX_CWTONE_FREQ = 800;
     public static final int MIN_CWTONE_FREQ = 400;
+    private static double oldNoiseAmplitude;
 
 
 
@@ -226,7 +227,7 @@ public class Radio {
 
         // Only play while isPlaying is true
         for (int i = 0; i < bufferSize; i++) {
-            double sineSample = ( soundAmplitud * ((Math.sin(angles[angleIndex])) + generateGaussianNoise(0, randGen))); // 0 for no noise
+            double sineSample = ( soundAmplitud * ((Math.sin(angles[angleIndex])) + generateGaussianNoise(noiseAmplitud, randGen))); // 0 for no noise
             //double sineSample = ( soundAmplitud * ((Math.sin(angles[angleIndex]))));
 
             // Clip and normalize the sample to fit into 8-bit range [-128, 127]
@@ -248,6 +249,15 @@ public class Radio {
         line.write(buffer, 0, buffer.length);
 
 
+    }
+
+    public static void setNoiseAmplitud() {
+        if (noiseAmplitud != 0) {
+            oldNoiseAmplitude = noiseAmplitud;
+            noiseAmplitud = 0;
+        } else {
+            noiseAmplitud = oldNoiseAmplitude;
+        }
     }
 
 
