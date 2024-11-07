@@ -112,7 +112,7 @@ public class MorsePlayer {
                     }
                 }
                 try {
-                    Thread.sleep((long) ((beatLength) * multiplier + randGen2.nextInt( (int) (beatLength*multiplier * variation))));
+                    Thread.sleep((beatLength + randGen2.nextInt( (int) (beatLength * variation))));
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
@@ -124,6 +124,33 @@ public class MorsePlayer {
 
 
     }
+
+    //returns the amount of time that this message will take to play
+    public static long getMessagePlayDuration(String morseMessage) {
+        double variation = 0.3;
+        char[] morse = morseMessage.toCharArray();
+
+        randGen2 = new Random();
+
+        long millisTimeWaited = 0;
+
+        for(int i = 0; i < morse.length ; i++){
+            if(morse[i] == '.'){
+                millisTimeWaited = millisTimeWaited + beatLength + randGen2.nextInt( (int) (beatLength * variation));
+            }else if(morse[i] == '-'){
+                millisTimeWaited = millisTimeWaited + (beatLength * 3) + randGen2.nextInt( (int) (beatLength * variation));
+            }else{
+                millisTimeWaited = millisTimeWaited + (long) ((beatLength * 7) * (multiplier) + randGen2.nextInt( (int) (beatLength * (multiplier) * variation)));
+
+            }
+
+            millisTimeWaited = millisTimeWaited + (beatLength + randGen2.nextInt( (int) (beatLength * variation)));
+
+        }
+
+        return millisTimeWaited;
+    }
+
 
     public static void setWordsPerMinuteMultiplier(int wpm) {
         wordsPerMinute = wpm;
