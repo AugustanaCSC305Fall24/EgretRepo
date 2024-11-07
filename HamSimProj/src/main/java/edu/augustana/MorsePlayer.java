@@ -68,7 +68,7 @@ public class MorsePlayer {
     
     //Temporary method to get the bots to play their sound
     //Not DRY code at all, but I didn't want to break anything
-    public static void playBotMorseString(String morseString, double botFrequency) throws InterruptedException {
+    public static void playBotMorseString(String morseString, double botFrequency, double frequencyRange) throws InterruptedException {
 
         new Thread(() -> {
 
