@@ -27,8 +27,10 @@ public class TrainingListeningBot {
 
     private final String name;
 
-    //this count is just for
+    //this count is just for the names
     private static int count = 1;
+
+    private static final double frequencyRange;
 
 
     public TrainingListeningBot(int band) throws InterruptedException {
@@ -56,31 +58,37 @@ public class TrainingListeningBot {
             case 10:
                 double frequency10 = 28000 + randomGen.nextInt(1701); //This is because I was getting errors for trying to get a random value between two values, so I made it an integer and am getting a random integer in the range and then adding the lower bound to it
                 this.outputFrequency =  frequency10 / 1000;
+                this.frequencyRange = 1.7;
                 break;
 
             case 17:
                 double frequency17 = 18068 + randomGen.nextInt(101); //This is because I was getting errors for trying to get a random value between two values, so I made it an integer and am getting a random integer in the range and then adding the lower bound to it
                 this.outputFrequency = frequency17 / 1000;
+                this.frequencyRange = .1;
                 break;
 
             case 20:
                 double frequency20 = 14000 + randomGen.nextInt(351);
                 this.outputFrequency = frequency20 / 1000;
+                this.frequencyRange = .35;
                 break;
 
             case 30:
                 double frequency30 = 10100 + randomGen.nextInt(51);
                 this.outputFrequency = frequency30 / 1000;
+                this.frequencyRange = .05;
                 break;
 
             case 40:
                 double frequency40 = 7000 + randomGen.nextInt(301);
                 this.outputFrequency = frequency40 / 1000;
+                this.frequencyRange = .3;
                 break;
 
             case 80:
                 double frequency80 = 3500 + randomGen.nextInt(501);
                 this.outputFrequency = frequency80 / 1000;
+                this.frequencyRange = .5;
                 break;
         }
 
@@ -108,31 +116,37 @@ public class TrainingListeningBot {
             case 10:
                 double frequency10 = 28000 + randomGen.nextInt(1701); //This is because I was getting errors for trying to get a random value between two values, so I made it an integer and am getting a random integer in the range and then adding the lower bound to it
                 this.outputFrequency =  frequency10 / 1000;
+                this.frequencyRange = 1.7;
                 break;
 
             case 17:
                 double frequency17 = 18068 + randomGen.nextInt(101); //This is because I was getting errors for trying to get a random value between two values, so I made it an integer and am getting a random integer in the range and then adding the lower bound to it
                 this.outputFrequency = frequency17 / 1000;
+                this.frequencyRange = .1;
                 break;
 
             case 20:
                 double frequency20 = 14000 + randomGen.nextInt(351);
                 this.outputFrequency = frequency20 / 1000;
+                this.frequencyRange = .35;
                 break;
 
             case 30:
                 double frequency30 = 10100 + randomGen.nextInt(51);
                 this.outputFrequency = frequency30 / 1000;
+                this.frequencyRange = .05;
                 break;
 
             case 40:
                 double frequency40 = 7000 + randomGen.nextInt(301);
                 this.outputFrequency = frequency40 / 1000;
+                this.frequencyRange = .3;
                 break;
 
             case 80:
                 double frequency80 = 3500 + randomGen.nextInt(501);
                 this.outputFrequency = frequency80 / 1000;
+                this.frequencyRange = .5;
                 break;
         }
 
@@ -187,7 +201,7 @@ public class TrainingListeningBot {
         new Thread(() -> { //Need to continuously check "playSound" throughout this loop, and then break out of it if it is false
             while (playSound) {
                 try {
-                    MorsePlayer.playBotMorseString(morseCallSign, outputFrequency);
+                    MorsePlayer.playBotMorseString(morseCallSign, outputFrequency, frequencyRange);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
@@ -203,7 +217,7 @@ public class TrainingListeningBot {
                 if (!playSound) {break;}
 
                 try {
-                    MorsePlayer.playBotMorseString(morseBotPhrase, outputFrequency);
+                    MorsePlayer.playBotMorseString(morseBotPhrase, outputFrequency, frequencyRange);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
