@@ -22,7 +22,7 @@ public class BotFinderConfigController {
         acceptBotsButton.setOnAction(evt -> {
             try {
                 HandleListeningSim.startSim(numBotsSlider.getValue(), wpmSlider.getValue());
-                MorsePlayer.setWordsPerMinuteMultiplier((int) wpmSlider.getValue()); //Need to change the wpm slider to 10-25 once we get that set up.
+                MorsePlayer.setWordsPerMinuteMultiplier((int) wpmSlider.getValue());
                 HandleListeningSim.closeBotView();
             } catch (InterruptedException | IOException e) {
                 throw new RuntimeException(e);

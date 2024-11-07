@@ -51,6 +51,9 @@ public class SandboxController {
 
     private ScenarioBuilController buildController;
 
+    @FXML
+    private Slider wpmSlider;
+
 
     @FXML
     void initialize(){
@@ -108,6 +111,10 @@ public class SandboxController {
         scenarioChoiceBox.setOnAction(event -> {
             scenarioChoiceBox.setValue(ScenarioCollection.getCollection().get(ScenarioCollection.getCollection().size() - 1));
             displayCurrentScenario();
+        });
+
+        wpmSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+            MorsePlayer.setWordsPerMinuteMultiplier((int) wpmSlider.getValue());
         });
 
 
