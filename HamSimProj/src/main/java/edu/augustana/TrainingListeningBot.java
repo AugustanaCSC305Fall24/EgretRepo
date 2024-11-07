@@ -25,9 +25,17 @@ public class TrainingListeningBot {
 
     private static final Random randomGen = new Random();
 
+    private final String name;
+
+    //this count is just for
+    private static int count = 1;
+
 
     public TrainingListeningBot(int band) throws InterruptedException {
         this.band = band; //temporary. Setting the band to 10
+
+        this.name = "bot" + count;
+        count++;
 
         String selection = botPhraseArray.get(randomGen.nextInt(botPhraseArray.size()));
         botPhraseArray.remove(selection);
@@ -84,6 +92,8 @@ public class TrainingListeningBot {
     //temporary constructor method. Will create a bot interface later.
     public TrainingListeningBot(int band, String name, String callSign, String message) {
         this.band = band;
+
+        this.name = name;
 
         this.textBotPhrase = message;
         this.morseBotPhrase = TextToMorseConverter.textToMorse(message);
@@ -154,6 +164,10 @@ public class TrainingListeningBot {
         //this method can be used if we want to add a hint button
     }
 
+    public String getName() {
+        return name;
+    }
+
     public void playSound() throws InterruptedException {
         playSound = true;
         playContinuousMessage();
@@ -204,5 +218,10 @@ public class TrainingListeningBot {
             }
         }).start();
 
+    }
+
+    //returns string representation of bot
+    public String toString() {
+        return name + ", " + textCallSign + ", " + textBotPhrase + ", " + outputFrequency + ", " + band;
     }
 }
