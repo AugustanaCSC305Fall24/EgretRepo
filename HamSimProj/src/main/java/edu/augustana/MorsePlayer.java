@@ -81,8 +81,7 @@ public class MorsePlayer {
             for(int i = 0; i < morse.length ; i++){
 
                 double freq = Math.abs(getSelectedTuneFreq() -  botFrequency) * 1000000 + 400;
-                double freqDiff = Math.abs(getSelectedTuneFreq() -  botFrequency);
-                double filterRange = getSelectedTuneFreq() * (filterVal / 100);
+
 
                 //testing
                 System.out.println(freq);
@@ -96,10 +95,13 @@ public class MorsePlayer {
 
                 if (freq < 400) {
                     freq = 400;
-                } else if (freq > filterRange) {
-                    freq = 0;
                 }
 
+                double freqDiff = Math.abs(getSelectedTuneFreq() -  botFrequency);
+                double filterRange = (frequencyRange * filterVal) / 2;
+                if (freqDiff > filterRange) {
+                    freq = 0;
+                }
 
 
 
