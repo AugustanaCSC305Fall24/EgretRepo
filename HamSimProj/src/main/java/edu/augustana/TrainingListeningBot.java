@@ -25,9 +25,17 @@ public class TrainingListeningBot {
 
     private static final Random randomGen = new Random();
 
+    private final String name;
+
+    //this count is just for
+    private static int count = 1;
+
 
     public TrainingListeningBot(int band) throws InterruptedException {
         this.band = band; //temporary. Setting the band to 10
+
+        this.name = "bot" + count;
+        count++;
 
         String selection = botPhraseArray.get(randomGen.nextInt(botPhraseArray.size()));
         botPhraseArray.remove(selection);
@@ -76,11 +84,62 @@ public class TrainingListeningBot {
                 break;
         }
 
+        //testing
         System.out.println(this.textCallSign + " " + this.textBotPhrase + " " + outputFrequency);
-
 
     }
 
+    //temporary constructor method. Will create a bot interface later.
+    public TrainingListeningBot(int band, String name, String callSign, String message) {
+        this.band = band;
+
+        this.name = name;
+
+        this.textBotPhrase = message;
+        this.morseBotPhrase = TextToMorseConverter.textToMorse(message);
+
+        this.textCallSign = callSign;
+        this.morseCallSign = TextToMorseConverter.textToMorse(callSign);
+
+        this.playSound = false;
+
+
+        switch (band){
+            case 10:
+                double frequency10 = 28000 + randomGen.nextInt(1701); //This is because I was getting errors for trying to get a random value between two values, so I made it an integer and am getting a random integer in the range and then adding the lower bound to it
+                this.outputFrequency =  frequency10 / 1000;
+                break;
+
+            case 17:
+                double frequency17 = 18068 + randomGen.nextInt(101); //This is because I was getting errors for trying to get a random value between two values, so I made it an integer and am getting a random integer in the range and then adding the lower bound to it
+                this.outputFrequency = frequency17 / 1000;
+                break;
+
+            case 20:
+                double frequency20 = 14000 + randomGen.nextInt(351);
+                this.outputFrequency = frequency20 / 1000;
+                break;
+
+            case 30:
+                double frequency30 = 10100 + randomGen.nextInt(51);
+                this.outputFrequency = frequency30 / 1000;
+                break;
+
+            case 40:
+                double frequency40 = 7000 + randomGen.nextInt(301);
+                this.outputFrequency = frequency40 / 1000;
+                break;
+
+            case 80:
+                double frequency80 = 3500 + randomGen.nextInt(501);
+                this.outputFrequency = frequency80 / 1000;
+                break;
+        }
+
+        //testing
+        System.out.println(this.textCallSign + " " + this.textBotPhrase + " " + outputFrequency);
+
+    }
     /**
      * Accessor method for botPhrase
      * @return botPhrase
@@ -103,6 +162,10 @@ public class TrainingListeningBot {
         return outputFrequency;
 
         //this method can be used if we want to add a hint button
+    }
+
+    public String getName() {
+        return name;
     }
 
     public void playSound() throws InterruptedException {
@@ -132,7 +195,7 @@ public class TrainingListeningBot {
                 if (!playSound) {break;} //This is so that we can stop the sound sooner, rather than waiting till the end
 
                 try { // Use WPM to calculate how long each thing takes
-                    Thread.sleep(morseCallSign.length() * 500L); //This gets the amount of characters played, and then waits a certain amount of time. Currently, we are waiting half a second for every character. This may need to be shorter
+                    Thread.sleep(MorsePlayer.getMessagePlayDuration(morseCallSign) + 2000); //waiting the duration of the message, plus 2 seconds
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
@@ -148,12 +211,17 @@ public class TrainingListeningBot {
                 if (!playSound) {break;}
 
                 try {
-                    Thread.sleep(morseBotPhrase.length() * 500L); //Same thing as other sleep
+                    Thread.sleep(MorsePlayer.getMessagePlayDuration(morseBotPhrase) + 2000); //Same thing as other sleep
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
             }
         }).start();
 
+    }
+
+    //returns string representation of bot
+    public String toString() {
+        return name + ", " + textCallSign + ", " + textBotPhrase + ", " + outputFrequency + ", " + band;
     }
 }

@@ -76,16 +76,27 @@ public class MorsePlayer {
 
             randGen2 = new Random();
 
-            double freq = Math.abs(getSelectedTuneFreq() -  botFrequency) *1000000;
-            if (freq < 400) {
-                freq = 400;
-            } else if(freq > 1.7 * .25 * 1000000) {
-                freq = 0;
-            } else if(freq > 20000) {
-                freq = 20000;
-            }
 
             for(int i = 0; i < morse.length ; i++){
+
+                double freq = Math.abs(getSelectedTuneFreq() -  botFrequency) *1000000;
+
+                //testing
+                System.out.println(freq);
+
+                if (freq < 400) {
+                    freq = 400;
+                } else if(freq > 1.7 * .25 * 1000000) {
+                    freq = 0;
+                } else if(freq > 20000) {
+                    freq = 20000;
+                }
+
+                freq = Math.log10(freq);
+
+                //testing
+                System.out.println(freq);
+
                 if(morse[i] == '.'){
 
                     playTone(freq);
@@ -115,7 +126,7 @@ public class MorsePlayer {
                     }
                 }
                 try {
-                    Thread.sleep(((beatLength) + randGen2.nextInt( (int) (beatLength*multiplier * variation))));
+                    Thread.sleep(((beatLength) + randGen2.nextInt( (int) (beatLength * multiplier * variation))));
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
@@ -127,6 +138,33 @@ public class MorsePlayer {
 
 
     }
+
+    //returns the amount of time that this message will take to play
+    public static long getMessagePlayDuration(String morseMessage) {
+        double variation = 0.3;
+        char[] morse = morseMessage.toCharArray();
+
+        randGen2 = new Random();
+
+        long millisTimeWaited = 0;
+
+        for(int i = 0; i < morse.length ; i++){
+            if(morse[i] == '.'){
+                millisTimeWaited = millisTimeWaited + beatLength + randGen2.nextInt( (int) (beatLength * variation));
+            }else if(morse[i] == '-'){
+                millisTimeWaited = millisTimeWaited + (beatLength * 3) + randGen2.nextInt( (int) (beatLength * variation));
+            }else{
+                millisTimeWaited = millisTimeWaited + (long) ((beatLength * 7) * (multiplier) + randGen2.nextInt( (int) (beatLength * (multiplier) * variation)));
+
+            }
+
+            millisTimeWaited = millisTimeWaited + (beatLength + randGen2.nextInt( (int) (beatLength * variation)));
+
+        }
+
+        return millisTimeWaited;
+    }
+
 
     public static void setWordsPerMinuteMultiplier(int wpm) {
         wordsPerMinute = wpm;

@@ -4,9 +4,11 @@ module edu.augustana {
     requires javafx.controls;
     requires javax.websocket.api;
     requires tyrus.client;
+    requires com.google.gson;
     requires java.sql;
 
+    // Ensure Gson is required
+    opens edu.augustana;// Opens the package to Gson
 
-    opens edu.augustana to javafx.fxml;
     exports edu.augustana;
 }

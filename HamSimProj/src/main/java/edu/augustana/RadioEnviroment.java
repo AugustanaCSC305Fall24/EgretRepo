@@ -1,6 +1,7 @@
 package edu.augustana;
 
 import java.util.Random;
+import com.google.gson.annotations.Expose;
 
 public class RadioEnviroment {
 

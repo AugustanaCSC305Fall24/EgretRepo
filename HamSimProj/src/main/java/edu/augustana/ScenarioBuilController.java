@@ -56,6 +56,12 @@ public class ScenarioBuilController {
     @FXML
     private TextField windSpeedField;
 
+    @FXML
+    private Button loadBtn;
+
+    @FXML
+    private Button saveFileBtn;
+
     private SimScenario scenario;
 
     private botAdderController adderController;
@@ -82,7 +88,10 @@ public class ScenarioBuilController {
             }
         });
 
-        cancelBtn.setOnAction(evt -> Platform.exit());
+        cancelBtn.setOnAction(evt -> {
+            Stage stage = (Stage) ((Node) evt.getSource()).getScene().getWindow();
+            stage.close();
+        });
 
         saveScenarioBtn.setOnAction(event -> {
 
@@ -91,6 +100,10 @@ public class ScenarioBuilController {
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.close();
 
+        });
+
+        saveFileBtn.setOnAction(event -> {
+            scenario.saveToFile();
         });
 
     }
@@ -119,7 +132,7 @@ public class ScenarioBuilController {
         this.scenario = scenario;
         environment  = scenario.getEnvironment();
         botCollection  = scenario.getBotCollection();
-
+        descripTionField.setText(scenario.getDescription());
         scenarioNameField.setText(scenario.getName());
         userMessageField.setText(scenario.getUserMessage());
         timeField.setText("00:00");
@@ -128,6 +141,7 @@ public class ScenarioBuilController {
         windSpeedField.setText(String.valueOf(environment.windSpeed));
         solarIndex.setText(String.valueOf(environment.solarActivity));
         scenarioTypeChoice.setValue(scenario.getType());
+        System.out.print("Added text");
 
 
 
@@ -154,9 +168,18 @@ public class ScenarioBuilController {
             parentController.updateScenarioChoice();
         }else{
 
+            environment = new RadioEnviroment("scenarioNameField.getText()",
+                    Double.parseDouble(solarIndex.getText()),
+                    Double.parseDouble(windSpeedField.getText()),
+                    Double.parseDouble(humidityField.getText()),
+                    Double.parseDouble(tempField.getText()));
+
+            scenario.setScenarioName(scenarioNameField.getText());
+            scenario.setDescription(descripTionField.getText());
+            scenario.setEnvironment(environment);
+            scenario.setExpectedMesagge(userMessageField.getText());
+            parentController.updateScenarioChoice();
         }
-
-
     }
 
 

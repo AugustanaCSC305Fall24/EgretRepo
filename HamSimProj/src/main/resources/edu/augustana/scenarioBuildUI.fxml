@@ -23,6 +23,11 @@
                   <TextField fx:id="scenarioNameField" />
                   <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="138.0" prefWidth="79.0" text="Type" />
                   <ChoiceBox fx:id="scenarioTypeChoice" prefWidth="150.0" />
+                  <Button fx:id="loadBtn" mnemonicParsing="false" text="Load Scenario">
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                  </Button>
                </children>
                <VBox.margin>
                   <Insets left="20.0" />
@@ -107,6 +112,7 @@
                   <Button fx:id="saveScenarioBtn" mnemonicParsing="false" text="Save Scenario" />
                   <Button fx:id="cancelBtn" mnemonicParsing="false" text="Cancel" />
                   <Button fx:id="deletebotBtn" mnemonicParsing="false" text="Delete Bot" />
+                  <Button fx:id="saveFileBtn" mnemonicParsing="false" text="Save To File" />
                </children>
                <padding>
                   <Insets left="20.0" />

@@ -91,11 +91,13 @@ public class SandboxController {
             try {
                 Stage scenarioBuildStage = new Stage();
                 FXMLLoader loader = new FXMLLoader(App.class.getResource("ScenarioBuildUI.fxml"));
-                buildController = loader.getController();
+
                 scenarioBuildStage.setTitle("Scenario Builder");
                 scenarioBuildStage.setScene(new Scene(loader.load()));
                 scenarioBuildStage.show();
                 Thread.sleep(500);
+                buildController = loader.getController();
+                buildController.setParentController(this);
                 buildController.editScenario(scenarioChoiceBox.getValue());
 
             } catch (IOException | InterruptedException e) {
