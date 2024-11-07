@@ -139,7 +139,7 @@ public class ScenarioBuilController {
 
     public void updateBotListView(){
         botListTable.getItems().clear();
-        botListTable.getItems().addAll(scenario.getBotCollection().getBots());
+        botListTable.getItems().addAll(botCollection.getBots());
     }
 
     public void deleteBot(){

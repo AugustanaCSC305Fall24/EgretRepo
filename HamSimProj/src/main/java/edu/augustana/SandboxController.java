@@ -61,6 +61,10 @@ public class SandboxController {
 
 
     @FXML
+    private Button stopScenario;
+
+
+    @FXML
     void initialize(){
 
         ScenarioCollection.addScenario(SimScenario.getDefaultScenario());
@@ -123,6 +127,10 @@ public class SandboxController {
         });
 
         showBotMessageButton.setOnAction(evt -> mainUIController.showMessageInTextBox(agentList.getSelectionModel().getSelectedItem()));
+
+        stopScenario.setOnAction(event -> {
+            scenarioChoiceBox.getValue().stopScenario();
+        });
 
 
     }

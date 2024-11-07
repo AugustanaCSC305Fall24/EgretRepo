@@ -88,7 +88,11 @@ public class SimScenario {
     }
 
     public void stopScenario(){
-
+        if(!botCollection.getBots().isEmpty()){
+            for(TrainingListeningBot bot: botCollection.getBots()){
+                bot.stopSound();
+            }
+        }
     }
 
     public boolean checkUserInput(String userInput){
