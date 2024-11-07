@@ -128,9 +128,15 @@ public class SandboxController {
 
         showBotMessageButton.setOnAction(evt -> mainUIController.showMessageInTextBox(agentList.getSelectionModel().getSelectedItem()));
 
+
         stopScenario.setOnAction(event -> {
             scenarioChoiceBox.getValue().stopScenario();
         });
+
+        
+
+
+
 
 
     }
