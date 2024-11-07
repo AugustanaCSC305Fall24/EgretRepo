@@ -103,6 +103,9 @@ public class MainUiController {
     @FXML
     private Label englishText;
 
+    @FXML
+    private Slider frequencyFilterSlider;
+
 
     KnobControl volumeKnob;
     KnobControl filterKnob;
@@ -267,6 +270,9 @@ public class MainUiController {
         setTrainingPane();
         firstLoad = false;
 
+        frequencyFilterSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+            MorsePlayer.setFrequencyFilter((double) newValue);
+        });
 
     }
 

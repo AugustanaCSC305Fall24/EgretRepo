@@ -15,6 +15,7 @@ public class MorsePlayer {
     private static int maxToneHz = 3000;
     private static int wordsPerMinute;
     private static double multiplier;
+    private static double filterVal;
 
 
 
@@ -80,6 +81,8 @@ public class MorsePlayer {
             for(int i = 0; i < morse.length ; i++){
 
                 double freq = Math.abs(getSelectedTuneFreq() -  botFrequency) * 1000000 + 400;
+                double freqDiff = Math.abs(getSelectedTuneFreq() -  botFrequency);
+                double filterRange = getSelectedTuneFreq() * (filterVal / 100);
 
                 //testing
                 System.out.println(freq);
@@ -93,6 +96,8 @@ public class MorsePlayer {
 
                 if (freq < 400) {
                     freq = 400;
+                } else if (freq > filterRange) {
+                    freq = 0;
                 }
 
 
@@ -171,6 +176,10 @@ public class MorsePlayer {
     public static void setWordsPerMinuteMultiplier(int wpm) {
         wordsPerMinute = wpm;
         multiplier = (double) 20 / wpm;
+    }
+
+    public static void setFrequencyFilter(double num) {
+        filterVal = num;
     }
 
 
