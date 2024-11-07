@@ -1,16 +1,18 @@
 package edu.augustana;
 
-import javafx.application.Platform;
+import com.google.gson.Gson;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Random;
 
 public class ScenarioBuilController {
 
@@ -106,6 +108,24 @@ public class ScenarioBuilController {
             scenario.saveToFile();
         });
 
+        loadBtn.setOnAction(event -> {
+            openFile();
+        });
+
+    }
+
+    public void loadScenario(){
+        environment  = scenario.getEnvironment();
+        botCollection  = scenario.getBotCollection();
+        descripTionField.setText(scenario.getDescription());
+        scenarioNameField.setText(scenario.getName());
+        userMessageField.setText(scenario.getUserMessage());
+        timeField.setText("00:00");
+        tempField.setText(String.valueOf(environment.temperature));
+        humidityField.setText(String.valueOf(String.valueOf(environment.humidity)));
+        windSpeedField.setText(String.valueOf(environment.windSpeed));
+        solarIndex.setText(String.valueOf(environment.solarActivity));
+        scenarioTypeChoice.setValue(scenario.getType());
     }
 
     public void setScenario(SimScenario scenario){
@@ -130,22 +150,41 @@ public class ScenarioBuilController {
         isNewScenario = false;
 
         this.scenario = scenario;
-        environment  = scenario.getEnvironment();
-        botCollection  = scenario.getBotCollection();
-        descripTionField.setText(scenario.getDescription());
-        scenarioNameField.setText(scenario.getName());
-        userMessageField.setText(scenario.getUserMessage());
-        timeField.setText("00:00");
-        tempField.setText(String.valueOf(environment.temperature));
-        humidityField.setText(String.valueOf(String.valueOf(environment.humidity)));
-        windSpeedField.setText(String.valueOf(environment.windSpeed));
-        solarIndex.setText(String.valueOf(environment.solarActivity));
-        scenarioTypeChoice.setValue(scenario.getType());
-        System.out.print("Added text");
 
+        loadScenario();
 
+    }
 
+    public void loadFromFile(){
+        isNewScenario =  false;
+    }
+    public void openFile() {
+        Stage fileChooserStage = new Stage();
 
+        // Set up the FileChooser
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JSON Files", "*.json"));
+
+        // Open the FileChooser dialog
+        File selectedFile = fileChooser.showOpenDialog(fileChooserStage);
+
+        // If a file is selected, deserialize it
+        if (selectedFile != null) {
+            deserializeJson(selectedFile);
+        }
+    }
+
+    public void deserializeJson(File file) {
+        Gson gson = new Gson();
+        try (FileReader reader = new FileReader(file)) {
+
+            this.scenario = gson.fromJson(reader, SimScenario.class);
+
+            loadScenario();
+            // Use the simScenario object
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void newScenario(){
