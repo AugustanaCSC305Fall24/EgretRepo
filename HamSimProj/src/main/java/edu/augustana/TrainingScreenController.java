@@ -73,6 +73,7 @@ public class TrainingScreenController {
         submitButton.setOnAction(evt-> {
             if (CWFlashcards.handleGuess(guessTextField.getText().toUpperCase())) {
                 correctIncorrectLabel.setText("Correct!");
+                guessTextField.setText("");
             } else {
                 correctIncorrectLabel.setText("Incorrect, try again!");
             }

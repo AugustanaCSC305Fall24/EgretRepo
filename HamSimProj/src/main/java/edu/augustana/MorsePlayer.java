@@ -36,7 +36,6 @@ public class MorsePlayer {
                 try {
                     Thread.sleep(beatLength + randGen2.nextInt( (int) (beatLength * variation)));
                 } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
                 }
                 stopTone();
                 stopTimer();

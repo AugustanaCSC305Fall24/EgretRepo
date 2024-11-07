@@ -17,11 +17,11 @@
 
 <VBox prefHeight="678.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.TrainingScreenController">
    <children>
-      <TabPane fx:id="trainingScreenDemoTab" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="391.0" prefWidth="399.0" style="-fx-background-color: #CDDEE8;" tabClosingPolicy="UNAVAILABLE">
+      <TabPane fx:id="trainingScreenDemoTab" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="391.0" prefWidth="399.0" style="-fx-background-color: #353538;" tabClosingPolicy="UNAVAILABLE">
          <tabs>
             <Tab text="Listening">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #606160;">
                      <children>
                         <VBox maxWidth="-Infinity" prefHeight="654.0" prefWidth="400.0">
                            <children>
@@ -45,7 +45,7 @@
                                                 <Insets />
                                              </HBox.margin>
                                              <children>
-                                                <Label text="Enter Bot Call Sign:">
+                                                <Label text="Enter Bot Call Sign:" textFill="#f4f1f1">
                                                    <padding>
                                                       <Insets bottom="5.0" />
                                                    </padding>
@@ -62,7 +62,7 @@
                                           </VBox>
                                           <VBox prefHeight="146.0" prefWidth="200.0">
                                              <children>
-                                                <Label text="Enter Bot Message:">
+                                                <Label text="Enter Bot Message:" textFill="#faf8f8">
                                                    <padding>
                                                       <Insets bottom="5.0" />
                                                    </padding>
@@ -90,11 +90,11 @@
             </Tab>
             <Tab text="CW Flashcards">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #606160;">
                      <children>
-                        <VBox alignment="CENTER" prefHeight="364.0" prefWidth="399.0">
+                        <VBox alignment="CENTER" prefHeight="364.0" prefWidth="399.0" style="-fx-background-color: #606160;">
                            <children>
-                              <Label fx:id="correctIncorrectLabel" text="Incorrect/Correct">
+                              <Label fx:id="correctIncorrectLabel" text="Incorrect/Correct" textFill="#f2f0f0f7">
                                  <padding>
                                     <Insets bottom="20.0" />
                                  </padding>
@@ -102,7 +102,7 @@
                               <Button fx:id="playLetterButton" mnemonicParsing="false" text="Play Letter" />
                               <HBox alignment="CENTER" prefHeight="58.0" prefWidth="399.0">
                                  <children>
-                                    <Label prefHeight="26.0" prefWidth="41.0" text="Guess: " />
+                                    <Label prefHeight="26.0" prefWidth="41.0" text="Guess: " textFill="#faf9f9" />
                                     <TextField fx:id="guessTextField" />
                                  </children>
                               </HBox>
@@ -119,7 +119,7 @@
         <tabs>
           <Tab text="Instructions">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: white;">
                      <children>
                         <HBox prefHeight="292.0" prefWidth="503.0" />
                      </children>
@@ -141,7 +141,7 @@
             </Tab>
         </tabs>
       </TabPane>
-      <ToolBar prefHeight="76.0" prefWidth="374.0">
+      <ToolBar prefHeight="76.0" prefWidth="374.0" style="-fx-background-color: #606160;">
          <items>
             <Button fx:id="startSimButton" mnemonicParsing="false" text="Start Simulation" />
             <Button fx:id="stopSimButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="110.0" text="Stop Simulation" />
