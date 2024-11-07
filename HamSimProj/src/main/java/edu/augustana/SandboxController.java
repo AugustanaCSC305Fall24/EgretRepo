@@ -143,6 +143,11 @@ public class SandboxController {
 
     public void displayCurrentScenario(){
         scenarioDescription.setText(scenarioChoiceBox.getValue().getDescription());
+
+    }
+
+    public void displayBots(){
+        agentList.getItems().clear();
         agentList.getItems().addAll(scenarioChoiceBox.getValue().getBotCollection().getBots());
     }
 

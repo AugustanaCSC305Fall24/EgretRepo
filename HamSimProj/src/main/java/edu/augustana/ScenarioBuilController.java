@@ -20,7 +20,7 @@ public class ScenarioBuilController {
     private Button addBotBtn;
 
     @FXML
-    private TableView<?> botListTable;
+    private ListView<TrainingListeningBot> botListTable;
 
     @FXML
     private Button cancelBtn;
@@ -112,6 +112,10 @@ public class ScenarioBuilController {
             openFile();
         });
 
+        deletebotBtn.setOnAction(event -> {
+            deleteBot();
+        });
+
     }
 
     public void loadScenario(){
@@ -126,10 +130,25 @@ public class ScenarioBuilController {
         windSpeedField.setText(String.valueOf(environment.windSpeed));
         solarIndex.setText(String.valueOf(environment.solarActivity));
         scenarioTypeChoice.setValue(scenario.getType());
+        updateBotListView();
     }
 
     public void setScenario(SimScenario scenario){
         this.scenario = scenario;
+    }
+
+    public void updateBotListView(){
+        botListTable.getItems().clear();
+        botListTable.getItems().addAll(scenario.getBotCollection().getBots());
+    }
+
+    public void deleteBot(){
+        if(botListTable.getSelectionModel().getSelectedItem() !=  null){
+            scenario.getBotCollection().deleteBot(botListTable.getSelectionModel().getSelectedItem());
+            updateBotListView();
+        }
+
+
     }
 
 
@@ -143,6 +162,7 @@ public class ScenarioBuilController {
 
         adderController = loader.getController();
         adderController.setBotCollection(botCollection);
+        adderController.setParentController(this);
     }
 
     public void editScenario(SimScenario scenario){
@@ -205,6 +225,7 @@ public class ScenarioBuilController {
 
             ScenarioCollection.addScenario(newScenario);
             parentController.updateScenarioChoice();
+            parentController.displayBots();
         }else{
 
             environment = new RadioEnviroment("scenarioNameField.getText()",
@@ -218,6 +239,7 @@ public class ScenarioBuilController {
             scenario.setEnvironment(environment);
             scenario.setExpectedMesagge(userMessageField.getText());
             parentController.updateScenarioChoice();
+            parentController.displayBots();
         }
     }
 
