@@ -30,7 +30,7 @@ public class TrainingListeningBot {
     //this count is just for the names
     private static int count = 1;
 
-    private static final double frequencyRange;
+    private double frequencyRange;
 
 
     public TrainingListeningBot(int band) throws InterruptedException {

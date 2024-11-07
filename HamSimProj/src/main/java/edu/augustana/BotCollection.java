@@ -20,4 +20,8 @@ public class BotCollection {
         return botCollection;
     }
 
+    public void deleteBot(TrainingListeningBot bot){
+        botCollection.remove(bot);
+    }
+
 }

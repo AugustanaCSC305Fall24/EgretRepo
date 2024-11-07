@@ -28,6 +28,8 @@ public class botAdderController {
 
     private BotCollection botCollection;
 
+    private ScenarioBuilController parentController;
+
     @FXML
     private Button okBtn;
 
@@ -45,6 +47,9 @@ public class botAdderController {
 
         okBtn.setOnAction(evt -> {
             Stage stage = (Stage) ((Node) evt.getSource()).getScene().getWindow();
+
+            parentController.updateBotListView();
+
             stage.close();
         });
 
@@ -53,8 +58,12 @@ public class botAdderController {
             stage.close();
         });
 
+
     }
 
+    public void setParentController(ScenarioBuilController parentController) {
+        this.parentController = parentController;
+    }
 
     public void setBotCollection(BotCollection collection){
         botCollection = collection;
