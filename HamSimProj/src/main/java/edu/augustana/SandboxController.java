@@ -124,6 +124,7 @@ public class SandboxController {
 
         showBotMessageButton.setOnAction(evt -> mainUIController.showMessageInTextBox(agentList.getSelectionModel().getSelectedItem()));
 
+        MorsePlayer.setWordsPerMinuteMultiplier((int) wpmSlider.getValue());
 
     }
 
