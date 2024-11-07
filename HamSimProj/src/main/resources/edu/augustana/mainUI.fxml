@@ -36,7 +36,7 @@
                                     <VBox prefHeight="36.0" prefWidth="846.0">
                                        <children>
                                           <Label fx:id="morseText" prefHeight="2.0" prefWidth="846.0" />
-                                          <Label fx:id="englishText" prefHeight="18.0" prefWidth="846.0" />
+                                          <Label fx:id="englishText" prefHeight="61.0" prefWidth="846.0" />
                                        </children>
                                     </VBox>
                                  </children>
@@ -54,10 +54,9 @@
                                        </font>
                                     </Label>
                                     <Slider fx:id="freqSlider" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="14.0" prefWidth="528.0" translateX="-63.0" translateY="240.0" />
-                                    <RadioButton fx:id="muteBtn" accessibleRole="BUTTON" mnemonicParsing="false" prefHeight="24.0" prefWidth="20.0" scaleX="2.0" scaleY="2.0" translateX="277.0" translateY="230.0" />
-                                    <RadioButton fx:id="powerBtn" accessibleRole="BUTTON" layoutX="418.0" layoutY="321.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="20.0" scaleX="2.0" scaleY="2.0" translateX="330.0" translateY="230.0" />
-                                    <RadioButton mnemonicParsing="false" scaleX="2.0" scaleY="2.0" translateX="275.0" translateY="185.0" />
-                                    <Slider maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="14.0" prefWidth="530.0" translateX="-63.0" translateY="194.0" />
+                                    <RadioButton fx:id="muteBtn" accessibleRole="BUTTON" alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="33.0" prefWidth="21.0" scaleX="2.0" scaleY="2.0" translateX="277.0" translateY="230.0" />
+                                    <RadioButton fx:id="powerBtn" accessibleRole="BUTTON" alignment="TOP_LEFT" layoutX="418.0" layoutY="321.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="21.0" scaleX="2.0" scaleY="2.0" translateX="330.0" translateY="230.0" />
+                                    <Slider fx:id="frequencyFilterSlider" max="1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="14.0" prefWidth="530.0" translateX="-63.0" translateY="194.0" />
                                     <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="176.0" prefWidth="706.0" translateX="10.0" translateY="55.0">
                                        <children>
                                           <HBox prefHeight="176.0" prefWidth="706.0">
@@ -138,9 +137,9 @@
       <ToolBar prefHeight="40.0" prefWidth="424.0" BorderPane.alignment="CENTER">
         <items>
             <HBox prefHeight="30.0" prefWidth="522.0" />
-            <Button fx:id="serverButton" mnemonicParsing="false" text="Server" />
+            <Button fx:id="sandboxButton" mnemonicParsing="false" text="Sandbox" />
             <Button fx:id="trainingButton" mnemonicParsing="false" text="Training" />
-            <HBox fx:id="spacingHBox" maxWidth="1.7976931348623157E308" prefHeight="30.0" prefWidth="478.0" />
+            <HBox fx:id="spacingHBox" maxWidth="1.7976931348623157E308" prefHeight="30.0" prefWidth="463.0" />
             <Button fx:id="configButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="56.0" text="Config" />
             <Button fx:id="minimizeButton" mnemonicParsing="false" text="-" />
             <Button fx:id="fullScreenButton" mnemonicParsing="false" text="#" />

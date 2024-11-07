@@ -35,6 +35,18 @@ public class TrainingScreenController {
     @FXML
     private Button submitGuessButton;
 
+    @FXML
+    private Label correctIncorrectLabel;
+
+    @FXML
+    private Button playLetterButton;
+
+    @FXML
+    private TextField guessTextField;
+
+    @FXML
+    private Button submitButton;
+
 
 
     @FXML
@@ -56,9 +68,31 @@ public class TrainingScreenController {
 
         stopSimButton.setOnAction(evt -> HandleListeningSim.stopSim(guessedMessagesVBox));
 
+        //CW Flashcards Section
+        CWFlashcards.generateAlphabetList();
+        submitButton.setOnAction(evt-> {
+            if (CWFlashcards.handleGuess(guessTextField.getText().toUpperCase())) {
+                correctIncorrectLabel.setText("Correct!");
+                guessTextField.setText("");
+            } else {
+                correctIncorrectLabel.setText("Incorrect, try again!");
+            }
+            correctIncorrectLabel.setVisible(true);
+
+        });
+        correctIncorrectLabel.setVisible(false);
+        playLetterButton.setOnAction(evt -> {
+            correctIncorrectLabel.setVisible(false);
+            try {
+                CWFlashcards.playLetter();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        //End of CW Flashcards Section
+
 
         }
-
-
 
 }

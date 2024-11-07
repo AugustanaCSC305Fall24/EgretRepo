@@ -15,6 +15,7 @@ public class MorsePlayer {
     private static int maxToneHz = 3000;
     private static int wordsPerMinute;
     private static double multiplier;
+    private static double filterVal;
 
 
 
@@ -31,17 +32,16 @@ public class MorsePlayer {
 
         for(int i = 0; i < morse.length ; i++){
             if(morse[i] == '.'){
-                playTone(Math.abs(getSelectedTuneFreq() -  getSelectedOutFrequency()) * 1000000);
+                playTone(Radio.getCwToneFreq());
                 startTimer();
                 try {
                     Thread.sleep(beatLength + randGen2.nextInt( (int) (beatLength * variation)));
                 } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
                 }
                 stopTone();
                 stopTimer();
             }else if(morse[i] == '-'){
-                playTone(Math.abs(getSelectedTuneFreq() -  getSelectedOutFrequency()) * 1000000); startTimer();
+                playTone(Radio.getCwToneFreq()); startTimer();
                 try {
                     Thread.sleep((beatLength * 3) + randGen2.nextInt( (int) (beatLength * variation)));
                 } catch (InterruptedException e) {
@@ -82,6 +82,7 @@ public class MorsePlayer {
 
                 double freq = Math.abs(getSelectedTuneFreq() -  botFrequency) * 1000000 + 400;
 
+
                 //testing
                 System.out.println(freq);
 
@@ -96,6 +97,11 @@ public class MorsePlayer {
                     freq = 400;
                 }
 
+                double freqDiff = Math.abs(getSelectedTuneFreq() -  botFrequency);
+                double filterRange = (frequencyRange * filterVal) / 2;
+                if (freqDiff > filterRange) {
+                    freq = 0;
+                }
 
 
 
@@ -172,6 +178,10 @@ public class MorsePlayer {
     public static void setWordsPerMinuteMultiplier(int wpm) {
         wordsPerMinute = wpm;
         multiplier = (double) 20 / wpm;
+    }
+
+    public static void setFrequencyFilter(double num) {
+        filterVal = num;
     }
 
 

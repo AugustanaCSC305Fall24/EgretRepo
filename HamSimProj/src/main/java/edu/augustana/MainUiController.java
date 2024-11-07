@@ -92,7 +92,7 @@ public class MainUiController {
     private Button configButton;
 
     @FXML
-    private Button serverButton;
+    private Button sandboxButton;
 
     @FXML
     private Button trainingButton;
@@ -102,6 +102,9 @@ public class MainUiController {
 
     @FXML
     private Label englishText;
+
+    @FXML
+    private Slider frequencyFilterSlider;
 
 
     KnobControl volumeKnob;
@@ -138,7 +141,7 @@ public class MainUiController {
                 throw new RuntimeException(e);
             }
         });
-        serverButton.setOnAction(evt -> {
+        sandboxButton.setOnAction(evt -> {
             try {
                 setServerPane();
             } catch (IOException e) {
@@ -267,6 +270,9 @@ public class MainUiController {
         setTrainingPane();
         firstLoad = false;
 
+        frequencyFilterSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+            MorsePlayer.setFrequencyFilter((double) newValue);
+        });
 
     }
 
@@ -354,6 +360,8 @@ public class MainUiController {
             }).start();
         } else if (keyEvent.getCode() == KeyCode.L) {
             CWHandler.startTimer();
+        } else if (keyEvent.getCode() == KeyCode.N) {
+            Radio.setNoiseAmplitud();
         }
     }
 
@@ -361,7 +369,7 @@ public class MainUiController {
         if (keyEvent.getCode() == KeyCode.J || keyEvent.getCode() == KeyCode.K) {
             PaddleHandler.stopPaddlePress();
             addToMorseBox(PaddleHandler.getCwString()); // stops first paddle press on keyRelease of second paddle if both are held simultaneously
-            addToEnglishBox(CWHandler.getCwString());
+            addToEnglishBox(PaddleHandler.getCwString());
         } else if (keyEvent.getCode() == KeyCode.L) {
             CWHandler.stopTimer();
             addToMorseBox(CWHandler.getCwString());
