@@ -58,7 +58,16 @@ public class SimScenario {
      *For now we just need this method to be able to play the message and call sign of the bots
      * to have them continously play their message and and callsign with the different parameters in the scenario
      */
-    public void startScenario(){
+    public void startScenario() throws InterruptedException {
+        if(!botCollection.getBots().isEmpty()){
+            for(TrainingListeningBot bot: botCollection.getBots()){
+                bot.playSound();
+            }
+        }
+
+    }
+
+    public void stopScenario(){
 
     }
 
@@ -90,4 +99,25 @@ public class SimScenario {
     public String toString() {
         return this.scenarioName;
     }
+
+    public String getUserMessage(){
+        return expectedMesagge;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        // Check if the object is an instance of Agent
+        if (obj instanceof SimScenario) {
+            SimScenario other = (SimScenario) obj;
+            // Define equality based on name and id
+            return this.scenarioName == other.scenarioName;
+        }
+
+        return false;
+    }
+
 }

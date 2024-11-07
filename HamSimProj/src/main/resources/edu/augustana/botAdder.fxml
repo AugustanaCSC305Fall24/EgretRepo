@@ -25,7 +25,7 @@
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
                   <Label prefHeight="40.0" prefWidth="94.0" text="Name:" />
-                  <TextField prefHeight="43.0" prefWidth="121.0" />
+                  <TextField fx:id="botNameField" prefHeight="43.0" prefWidth="121.0" />
                </children>
                <padding>
                   <Insets left="20.0" />
@@ -34,7 +34,7 @@
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
                   <Label prefHeight="40.0" prefWidth="94.0" text="Call Sign:" />
-                  <TextField prefHeight="43.0" prefWidth="121.0" />
+                  <TextField fx:id="callSignField" prefHeight="43.0" prefWidth="121.0" />
                </children>
                <padding>
                   <Insets left="20.0" />
@@ -43,7 +43,7 @@
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
                   <Label prefHeight="40.0" prefWidth="94.0" text="Message:" />
-                  <TextField prefHeight="43.0" prefWidth="121.0" />
+                  <TextField fx:id="messageField" prefHeight="43.0" prefWidth="121.0" />
                </children>
                <padding>
                   <Insets left="20.0" />
@@ -51,8 +51,9 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0" style="-fx-background-color: #616161;">
                <children>
-                  <Button mnemonicParsing="false" text="Add Bot" />
-                  <Button mnemonicParsing="false" text="Cancel" />
+                  <Button fx:id="addBtn" mnemonicParsing="false" text="Add Bot" />
+                  <Button fx:id="cancelBtn" mnemonicParsing="false" text="Cancel" />
+                  <Button fx:id="okBtn" mnemonicParsing="false" text="OK" />
                </children>
                <padding>
                   <Insets left="20.0" />

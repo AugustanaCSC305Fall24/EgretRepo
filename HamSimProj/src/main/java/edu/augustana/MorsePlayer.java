@@ -1,6 +1,7 @@
 package edu.augustana;
 
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 import static edu.augustana.CWHandler.startTimer;
 import static edu.augustana.CWHandler.stopTimer;
@@ -10,7 +11,7 @@ import static edu.augustana.Radio.stopTone;
 public class MorsePlayer {
 
     private static Random randGen2;
-    private static final long beatLength = 1200000000L / 20;
+    private static final long beatLength = TimeUnit.NANOSECONDS.toMillis((1200000000L / 20));
     private static int maxToneHz = 3000;
     private static int wordsPerMinute;
     private static double multiplier;
@@ -76,12 +77,18 @@ public class MorsePlayer {
 
             randGen2 = new Random();
 
+            double freq = Math.abs(getSelectedTuneFreq() -  botFrequency) *1000000;
+            if (freq < 400) {
+                freq = 400;
+            } else if(freq > 1.7 * .25 * 1000000) {
+                freq = 0;
+            } else if(freq > 20000) {
+                freq = 20000;
+            }
+
             for(int i = 0; i < morse.length ; i++){
                 if(morse[i] == '.'){
-                    double freq = Math.min(Math.abs(getSelectedTuneFreq() -  botFrequency) *1000000, Radio.getCwToneFreq());
-                    if(freq >= 7000){
-                        freq = 0;
-                    }
+
                     playTone(freq);
                     startTimer();
                     try {
@@ -92,10 +99,7 @@ public class MorsePlayer {
                     stopTone();
                     stopTimer();
                 }else if(morse[i] == '-'){
-                    double freq = Math.min(Math.abs(getSelectedTuneFreq() -  botFrequency) *1000000, Radio.getCwToneFreq());
-                    if(freq >= 7000){
-                        freq = 0;
-                    }
+
                     playTone(freq);
                     startTimer();
                     try {
@@ -112,7 +116,7 @@ public class MorsePlayer {
                     }
                 }
                 try {
-                    Thread.sleep((beatLength + randGen2.nextInt( (int) (beatLength * variation))));
+                    Thread.sleep(((beatLength) + randGen2.nextInt( (int) (beatLength * multiplier * variation))));
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
@@ -154,7 +158,7 @@ public class MorsePlayer {
 
     public static void setWordsPerMinuteMultiplier(int wpm) {
         wordsPerMinute = wpm;
-        multiplier = (double) wpm / 20;
+        multiplier = (double) 20 / wpm;
     }
 
 
