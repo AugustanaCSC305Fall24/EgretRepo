@@ -1,25 +1,43 @@
 package edu.augustana;
 
+import java.io.File;
 import java.util.ArrayList;
+
+import com.google.gson.Gson;
+
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.io.FileWriter;
+import java.io.IOException;
+import com.google.gson.annotations.Expose;
 
 public class SimScenario {
 
+    @Expose
     private String description = "Hello World";
 
+    @Expose
     private String expectedMesagge = "Sample";
 
+    @Expose
     private int numBots;
 
+    @Expose
     private String scenarioName;
 
+    @Expose
     private RadioEnviroment environment;
 
+    @Expose
     private BotCollection botCollection;
 
+    @Expose
     private String winMessage;
 
+    @Expose
     private String failMessage;
 
+    @Expose
     private int scenarioType;
 
 
@@ -120,4 +138,51 @@ public class SimScenario {
         return false;
     }
 
+    public void setEnvironment(RadioEnviroment environment) {
+        this.environment = environment;
+    }
+
+    public void setDescription(String newDescription){
+        this.description = newDescription;
+    }
+
+    public void setExpectedMesagge(String newMessage){
+        this.expectedMesagge = newMessage;
+    }
+
+    public void setScenarioName(String scenarioName) {
+        this.scenarioName = scenarioName;
+    }
+
+    public void saveToFile(){
+        Gson gson = new Gson();
+
+        // Initialize the file chooser
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Save JSON File");
+
+        // Set a filter to only allow saving as JSON
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("JSON Files", "json");
+        fileChooser.setFileFilter(filter);
+
+        // Show the Save dialog
+        int userSelection = fileChooser.showSaveDialog(null);
+
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File fileToSave = fileChooser.getSelectedFile();
+
+            // Ensure the file has a .json extension
+            if (!fileToSave.getName().endsWith(".json")) {
+                fileToSave = new File(fileToSave.getAbsolutePath() + ".json");
+            }
+
+            // Write JSON to the selected file
+            try (FileWriter writer = new FileWriter(fileToSave)) {
+                gson.toJson(this, writer);
+                System.out.println("File saved to: " + fileToSave.getAbsolutePath());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
