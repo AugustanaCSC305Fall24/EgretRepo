@@ -80,23 +80,25 @@ public class MorsePlayer {
 
             for(int i = 0; i < morse.length ; i++){
 
-                double freq = Math.abs(getSelectedTuneFreq() -  botFrequency) *1000000;
+                double freq = Math.abs(getSelectedTuneFreq() -  botFrequency) * 1000000 + 400;
 
                 //testing
                 System.out.println(freq);
+
+                freq = 1000 * Math.log10(freq); //if you are about on, it puts out freq of 2500
+                freq = freq - 2100; //so now I am bringing it down to 400
+
+                //testing
+                System.out.println(freq);
+                //3950
 
                 if (freq < 400) {
                     freq = 400;
-                } else if(freq > 1.7 * .25 * 1000000) {
-                    freq = 0;
-                } else if(freq > 20000) {
-                    freq = 20000;
                 }
 
-                freq = Math.log10(freq);
 
-                //testing
-                System.out.println(freq);
+
+
 
                 if(morse[i] == '.'){
 
