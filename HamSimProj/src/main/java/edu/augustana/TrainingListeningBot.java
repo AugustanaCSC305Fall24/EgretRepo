@@ -222,6 +222,6 @@ public class TrainingListeningBot {
 
     //returns string representation of bot
     public String toString() {
-        return name + ", " + textCallSign + ", " + textBotPhrase + ", " + outputFrequency + ", " + band;
+        return name + ", " + textCallSign + ", " + outputFrequency;
     }
 }
