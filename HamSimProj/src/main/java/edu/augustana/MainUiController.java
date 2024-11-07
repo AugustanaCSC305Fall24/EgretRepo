@@ -395,8 +395,8 @@ public class MainUiController {
 
 
     public void showMessageInTextBox(TrainingListeningBot selectedBot) {
-        String fullMessage = selectedBot.getMorseCallSign() + "**" + selectedBot.getMorseBotPhrase();
-        addToEnglishBox(fullMessage);
-        addToMorseBox(fullMessage);
+        String fullMessage = selectedBot.getMorseCallSign() + "/*//*/" + selectedBot.getMorseBotPhrase();
+        addToEnglishBox(fullMessage.replace(' ', '/'));
+        addToMorseBox(fullMessage.replace(' ', '/'));
     }
 }
