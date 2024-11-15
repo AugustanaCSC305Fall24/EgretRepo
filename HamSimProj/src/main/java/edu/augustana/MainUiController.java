@@ -211,7 +211,6 @@ public class MainUiController {
         volumeKnob.valueProperty().addListener((observable, oldValue, newValue) -> {
             System.out.println("Volume value changed: " + newValue);
             Radio.updateGain(((newValue.doubleValue()/100) * 4));
-            Radio.updateNoiseGain((newValue.doubleValue()/100) * 4);
 
         });
 
@@ -363,7 +362,7 @@ public class MainUiController {
         } else if (keyEvent.getCode() == KeyCode.L) {
             CWHandler.startTimer();
         } else if (keyEvent.getCode() == KeyCode.N) {
-            Radio.setNoiseAmplitud();
+            Radio.toggleNoise();
         }
     }
 

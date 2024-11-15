@@ -79,6 +79,7 @@ public class SimScenario {
      * to have them continously play their message and and callsign with the different parameters in the scenario
      */
     public void startScenario() throws InterruptedException {
+        Radio.setNoiseAmplitud(environment.getNoiseAmplitude());
         if(!botCollection.getBots().isEmpty()){
             for(TrainingListeningBot bot: botCollection.getBots()){
                 bot.playSound();
