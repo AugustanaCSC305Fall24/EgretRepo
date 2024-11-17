@@ -6,8 +6,11 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class HamRadioServerClient {
+
+    private static ArrayList<String> serverList;
 
     // Method to create a server by sending a POST request
     public void createServer(String serverId, float noiseLevel, float signalStrength) throws Exception {

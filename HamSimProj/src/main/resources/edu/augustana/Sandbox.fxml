@@ -31,7 +31,7 @@
                                        </font>
                                     </Label>
                                     <ChoiceBox fx:id="scenarioChoiceBox" prefHeight="30.0" prefWidth="109.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 2px; -fx-border-radius: 20px;" />
-                                    <Button fx:id="startScenarioBtn" mnemonicParsing="false" prefHeight="26.0" prefWidth="59.0" text="Start">
+                                    <Button fx:id="startStopScenarioBtn" mnemonicParsing="false" prefHeight="26.0" prefWidth="59.0" text="Start">
                                        <HBox.margin>
                                           <Insets left="20.0" />
                                        </HBox.margin>

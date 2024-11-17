@@ -42,6 +42,8 @@ public class SimScenario {
     @Expose
     private int scenarioType;
 
+    public boolean isPlaying;
+
 
     public SimScenario(String name, String description, String expectedMesagge, String failMessage, String winMessage, RadioEnviroment environment, BotCollection botCollection, int type){
         this.scenarioName = name;
@@ -52,6 +54,7 @@ public class SimScenario {
         scenarioType = type;
         this.failMessage = failMessage;
         this.winMessage = winMessage;
+        isPlaying = false;
     }
 
     public static SimScenario getDefaultScenario(){
@@ -80,6 +83,7 @@ public class SimScenario {
      */
     public void startScenario() throws InterruptedException {
         Radio.setNoiseAmplitud(environment.getNoiseAmplitude());
+        isPlaying = true;
         if(!botCollection.getBots().isEmpty()){
             for(TrainingListeningBot bot: botCollection.getBots()){
                 bot.playSound();
@@ -89,6 +93,7 @@ public class SimScenario {
     }
 
     public void stopScenario(){
+        isPlaying = false;
         if(!botCollection.getBots().isEmpty()){
             for(TrainingListeningBot bot: botCollection.getBots()){
                 bot.stopSound();
