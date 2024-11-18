@@ -1,11 +1,13 @@
-package edu.augustana;
+package edu.augustana.Bots;
 
-import java.sql.Array;
+import edu.augustana.MorsePlayer;
+import edu.augustana.TextToMorseConverter;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
-public class TrainingListeningBot {
+public class ContinuousMessageBot implements Bot{
 
     private double outputFrequency;
     private final String morseBotPhrase;
@@ -33,8 +35,9 @@ public class TrainingListeningBot {
     private double frequencyRange;
 
 
-    public TrainingListeningBot(int band) throws InterruptedException {
-        this.band = band; //temporary. Setting the band to 10
+    //bot constructor for training listening sim
+    public ContinuousMessageBot(int band) {
+        this.band = band;
 
         this.name = "bot" + count;
         count++;
@@ -48,57 +51,22 @@ public class TrainingListeningBot {
 
         selection = botCallSignArray.get(randomGen.nextInt(botCallSignArray.size()));
         botCallSignArray.remove(selection);
-        usedCallSigns.add(selection);
+        usedCallSigns.add(selection); //This is so that we can add them back into the array once we stop the sim
         this.textCallSign = selection;
         this.morseCallSign = TextToMorseConverter.textToMorse(selection); //Morse string of their callSign
         this.playSound = false;
 
-
-        switch (band){
-            case 10:
-                double frequency10 = 28000 + randomGen.nextInt(1701); //This is because I was getting errors for trying to get a random value between two values, so I made it an integer and am getting a random integer in the range and then adding the lower bound to it
-                this.outputFrequency =  frequency10 / 1000;
-                this.frequencyRange = 1.7;
-                break;
-
-            case 17:
-                double frequency17 = 18068 + randomGen.nextInt(101); //This is because I was getting errors for trying to get a random value between two values, so I made it an integer and am getting a random integer in the range and then adding the lower bound to it
-                this.outputFrequency = frequency17 / 1000;
-                this.frequencyRange = .1;
-                break;
-
-            case 20:
-                double frequency20 = 14000 + randomGen.nextInt(351);
-                this.outputFrequency = frequency20 / 1000;
-                this.frequencyRange = .35;
-                break;
-
-            case 30:
-                double frequency30 = 10100 + randomGen.nextInt(51);
-                this.outputFrequency = frequency30 / 1000;
-                this.frequencyRange = .05;
-                break;
-
-            case 40:
-                double frequency40 = 7000 + randomGen.nextInt(301);
-                this.outputFrequency = frequency40 / 1000;
-                this.frequencyRange = .3;
-                break;
-
-            case 80:
-                double frequency80 = 3500 + randomGen.nextInt(501);
-                this.outputFrequency = frequency80 / 1000;
-                this.frequencyRange = .5;
-                break;
-        }
+        //assigns the random output frequency depending on the band
+        generateOutputFreqAndRange(band);
 
         //testing
         System.out.println(this.textCallSign + " " + this.textBotPhrase + " " + outputFrequency);
 
     }
 
-    //temporary constructor method. Will create a bot interface later.
-    public TrainingListeningBot(int band, String name, String callSign, String message) {
+    //bot constructor for scenario bots
+    public ContinuousMessageBot(int band, String name, String callSign, String message) {
+
         this.band = band;
 
         this.name = name;
@@ -111,6 +79,16 @@ public class TrainingListeningBot {
 
         this.playSound = false;
 
+        //assigns the random output frequency depending on the band
+        generateOutputFreqAndRange(band);
+
+        //testing
+        System.out.println(this.textCallSign + " " + this.textBotPhrase + " " + outputFrequency);
+
+    }
+
+    //Helper method for the constructors to get the random output frequency and frequency range
+    private void generateOutputFreqAndRange(int band) {
 
         switch (band){
             case 10:
@@ -149,56 +127,53 @@ public class TrainingListeningBot {
                 this.frequencyRange = .5;
                 break;
         }
-
-        //testing
-        System.out.println(this.textCallSign + " " + this.textBotPhrase + " " + outputFrequency);
-
     }
-    /**
-     * Accessor method for botPhrase
-     * @return botPhrase
-     */
+
+
+    @Override
     public String getTextBotPhrase() {
         return textBotPhrase;
     }
 
-    /**
-     * Accessor method for callSign
-     * @return callSign
-     */
+    @Override
     public String getTextCallSign() {return textCallSign;}
 
-    /**
-     * Accessor method for outputFrequency
-     * @return outputFrequency
-     */
+    @Override
     public double getOutputFrequency() {
         return outputFrequency;
 
         //this method can be used if we want to add a hint button
     }
 
+    @Override
     public String getName() {
         return name;
     }
 
+    @Override
     public String getMorseBotPhrase() {
         return morseBotPhrase;
     }
 
+    @Override
     public String getMorseCallSign() {
         return morseCallSign;
     }
 
+    //Sets boolean to true and calls the bots to start their sound
     public void playSound() throws InterruptedException {
         playSound = true;
         playContinuousMessage();
     }
 
+    //Sets the boolean to false which stops the bot sound
     public void stopSound() {
         playSound = false;
     }
 
+    /**
+     * Calls the bot to play their call sign and message in a loop while the boolean playSound is true
+     */
     private void playContinuousMessage() {
 
         //Can probably have this just play the whole message, but when I do I need to add more space between the call sign

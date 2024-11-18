@@ -2,6 +2,7 @@ package edu.augustana;
 
 import java.io.IOException;
 
+import edu.augustana.Bots.ContinuousMessageBot;
 import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -16,7 +17,6 @@ import javafx.scene.layout.VBox;
 
 import java.text.DecimalFormat;
 import javafx.beans.value.ChangeListener;
-import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 
 import javax.sound.sampled.LineUnavailableException;
@@ -393,7 +393,7 @@ public class MainUiController {
     }
 
 
-    public void showMessageInTextBox(TrainingListeningBot selectedBot) {
+    public void showMessageInTextBox(ContinuousMessageBot selectedBot) {
         String fullMessage = selectedBot.getMorseCallSign() + "/*//*/" + selectedBot.getMorseBotPhrase();
         addToEnglishBox(fullMessage.replace(' ', '/'));
         addToMorseBox(fullMessage.replace(' ', '/'));

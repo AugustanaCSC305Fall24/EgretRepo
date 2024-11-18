@@ -1,5 +1,6 @@
 package edu.augustana;
 
+import edu.augustana.Bots.ContinuousMessageBot;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -12,7 +13,7 @@ import java.io.IOException;
 public class SandboxController {
 
     @FXML
-    private ListView<TrainingListeningBot> agentList;
+    private ListView<ContinuousMessageBot> agentList;
 
     @FXML
     private Button editScenarioBtn;

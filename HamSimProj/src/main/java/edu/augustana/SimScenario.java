@@ -5,11 +5,10 @@ import java.util.ArrayList;
 
 import com.google.gson.Gson;
 
-import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.FileWriter;
 import java.io.IOException;
 import com.google.gson.annotations.Expose;
+import edu.augustana.Bots.ContinuousMessageBot;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -68,7 +67,7 @@ public class SimScenario {
         String defWinMessage= "";
 
         RadioEnviroment defRadioEnviroment = new RadioEnviroment("DEFAULT",0.1,0.1,0.1,0.1);
-        ArrayList<TrainingListeningBot> defBotList = new ArrayList<>();
+        ArrayList<ContinuousMessageBot> defBotList = new ArrayList<>();
         BotCollection defBotCollection = new BotCollection(defBotList);
         SimScenario defaultScenario = new SimScenario("DEFAULT",defDescription,defexpectedMessage,deffailMessagge, defWinMessage, defRadioEnviroment, defBotCollection, 0);
 
@@ -85,7 +84,7 @@ public class SimScenario {
         Radio.setNoiseAmplitud(environment.getNoiseAmplitude());
         isPlaying = true;
         if(!botCollection.getBots().isEmpty()){
-            for(TrainingListeningBot bot: botCollection.getBots()){
+            for(ContinuousMessageBot bot: botCollection.getBots()){
                 bot.playSound();
             }
         }
@@ -95,7 +94,7 @@ public class SimScenario {
     public void stopScenario(){
         isPlaying = false;
         if(!botCollection.getBots().isEmpty()){
-            for(TrainingListeningBot bot: botCollection.getBots()){
+            for(ContinuousMessageBot bot: botCollection.getBots()){
                 bot.stopSound();
             }
         }

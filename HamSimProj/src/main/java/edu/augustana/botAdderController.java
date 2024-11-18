@@ -1,6 +1,6 @@
 package edu.augustana;
 
-import javafx.application.Platform;
+import edu.augustana.Bots.ContinuousMessageBot;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -70,7 +70,7 @@ public class botAdderController {
     }
 
     private void addBot() throws InterruptedException {
-        TrainingListeningBot bot = new TrainingListeningBot(Radio.getBand(), botNameField.getText(), callSignField.getText(), messageField.getText());
+        ContinuousMessageBot bot = new ContinuousMessageBot(Radio.getBand(), botNameField.getText(), callSignField.getText(), messageField.getText());
         botCollection.addBot(bot);
 
 
