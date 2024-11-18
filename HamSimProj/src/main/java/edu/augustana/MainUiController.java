@@ -28,6 +28,7 @@ public class MainUiController {
     private boolean isMuted = false;
     private double savedVolume = 0.0;
 
+
     @FXML
     private Label displayLabel;
 
@@ -177,34 +178,8 @@ public class MainUiController {
 
         freqSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
            int band = Radio.getBand();
-
-           switch (band){
-               case 10:
-                   Radio.setTunningRF(((newValue.doubleValue()/100)*1.7) + 28);
-                   break;
-
-               case 17:
-                   Radio.setTunningRF(((newValue.doubleValue()/100)*(18.168 - 18.068) + 18.068));
-                   break;
-
-               case 20:
-                   Radio.setTunningRF(((newValue.doubleValue()/100)*(14.350 - 14.000) + 14.000));
-                   break;
-
-               case 30:
-                   Radio.setTunningRF(((newValue.doubleValue()/100)*(10.15 - 10.1) + 10.1));
-                   break;
-
-               case 40:
-                   Radio.setTunningRF(((newValue.doubleValue()/100)*(7.300 - 7.000) + 7.000));
-                   break;
-
-               case 80:
-                   Radio.setTunningRF(((newValue.doubleValue()/100)*(4.0 - 3.5) + 3.5));
-                   break;
-           }
-
-            updateDisplayText(Radio.getTime(), Radio.getSelectedTuneFreq(), Radio.getCwToneFreq(), band);
+           updateRadioFrequency(Radio.getBand(), newValue.doubleValue());
+           updateDisplayText(Radio.getTime(), Radio.getSelectedTuneFreq(), Radio.getCwToneFreq(), band);
 
         });
 
@@ -226,6 +201,7 @@ public class MainUiController {
             System.out.println("Band value changed: " + newValue);
             double angle = (newValue.doubleValue() / 100)*360;
             Radio.setBand(chooseBand(angle));
+            updateRadioFrequency(Radio.getBand(), freqSlider.getValue());
             updateDisplayText(Radio.getTime(), Radio.getSelectedTuneFreq(), Radio.getCwToneFreq(), chooseBand(angle));
         });
 
@@ -273,6 +249,34 @@ public class MainUiController {
             MorsePlayer.setFrequencyFilter((double) newValue);
         });
 
+    }
+
+    private void updateRadioFrequency (int band, double frequencySliderValue){
+        switch (band){
+            case 10:
+                Radio.setTunningRF(((frequencySliderValue/100)*1.7) + 28);
+                break;
+
+            case 17:
+                Radio.setTunningRF(((frequencySliderValue/100)*(18.168 - 18.068) + 18.068));
+                break;
+
+            case 20:
+                Radio.setTunningRF(((frequencySliderValue)/100)*(14.350 - 14.000) + 14.000);
+                break;
+
+            case 30:
+                Radio.setTunningRF(((frequencySliderValue/100)*(10.15 - 10.1) + 10.1));
+                break;
+
+            case 40:
+                Radio.setTunningRF(((frequencySliderValue/100)*(7.300 - 7.000) + 7.000));
+                break;
+
+            case 80:
+                Radio.setTunningRF(((frequencySliderValue/100)*(4.0 - 3.5) + 3.5));
+                break;
+        }
     }
 
     private void setTrainingPane() throws IOException {
