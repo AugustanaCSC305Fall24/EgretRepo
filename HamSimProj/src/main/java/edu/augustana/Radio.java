@@ -251,13 +251,17 @@ public class Radio {
 
     }
 
-    public static void setNoiseAmplitud() {
+    public static void toggleNoise() {
         if (noiseAmplitud != 0) {
             oldNoiseAmplitude = noiseAmplitud;
             noiseAmplitud = 0;
         } else {
             noiseAmplitud = oldNoiseAmplitude;
         }
+    }
+
+    public static void setNoiseAmplitud(double newAmplitud){
+        noiseAmplitud = newAmplitud;
     }
 
 

@@ -16,10 +16,10 @@ import javafx.stage.Stage;
 public class SimScenario {
 
     @Expose
-    private String description = "Hello World";
+    private String description ;
 
     @Expose
-    private String expectedMesagge = "Sample";
+    private String expectedMesagge ;
 
     @Expose
     private int numBots;
@@ -42,6 +42,8 @@ public class SimScenario {
     @Expose
     private int scenarioType;
 
+    public boolean isPlaying;
+
 
     public SimScenario(String name, String description, String expectedMesagge, String failMessage, String winMessage, RadioEnviroment environment, BotCollection botCollection, int type){
         this.scenarioName = name;
@@ -52,6 +54,7 @@ public class SimScenario {
         scenarioType = type;
         this.failMessage = failMessage;
         this.winMessage = winMessage;
+        isPlaying = false;
     }
 
     public static SimScenario getDefaultScenario(){
@@ -79,6 +82,8 @@ public class SimScenario {
      * to have them continously play their message and and callsign with the different parameters in the scenario
      */
     public void startScenario() throws InterruptedException {
+        Radio.setNoiseAmplitud(environment.getNoiseAmplitude());
+        isPlaying = true;
         if(!botCollection.getBots().isEmpty()){
             for(TrainingListeningBot bot: botCollection.getBots()){
                 bot.playSound();
@@ -88,7 +93,12 @@ public class SimScenario {
     }
 
     public void stopScenario(){
-
+        isPlaying = false;
+        if(!botCollection.getBots().isEmpty()){
+            for(TrainingListeningBot bot: botCollection.getBots()){
+                bot.stopSound();
+            }
+        }
     }
 
     public boolean checkUserInput(String userInput){
@@ -183,5 +193,43 @@ public class SimScenario {
                 e.printStackTrace();
             }
         }
+    }
+
+    public int responseCorrectnessLevel(String userMessage){
+
+
+
+
+        //Turn user message String into an ArrayList to be able to check for existence of individual characters in user message
+        userMessage = userMessage.strip();
+        char[] userCharArray = userMessage.toCharArray();
+        ArrayList<Character> userCharList =  new ArrayList<>();
+        for(char character: userCharArray){
+            userCharList.add(character);
+        }
+        //Turn expected message String into an ArrayList to be able to check for existence of individual characters in user message
+        char[] scenarioCharArray = expectedMesagge.toCharArray();
+        ArrayList<Character> scenarioCharList =  new ArrayList<>();
+        for(char character: scenarioCharArray){
+            scenarioCharList.add(character);
+        }
+
+        int level1 = expectedMesagge.length() / 3;
+        int level2 = level1 * 2;
+        int level3 = scenarioCharList.size() - 1;
+        int messageScore = 0;
+
+        //Increments the score by one every time the user had the same character in the right place
+        for(char character: scenarioCharList){
+            if(userCharList.contains(character)){
+                messageScore++;
+            }
+        }
+
+
+
+        return 0;
+
+
     }
 }

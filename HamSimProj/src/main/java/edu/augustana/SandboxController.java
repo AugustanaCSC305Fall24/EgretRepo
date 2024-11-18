@@ -5,11 +5,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class SandboxController {
 
@@ -44,7 +42,7 @@ public class SandboxController {
     private HBox serverhbox;
 
     @FXML
-    private Button startScenarioBtn;
+    private Button startStopScenarioBtn;
 
     @FXML
     private Button newScenarioBtn;
@@ -61,6 +59,10 @@ public class SandboxController {
 
 
     @FXML
+    private Button stopScenario;
+
+
+    @FXML
     void initialize(){
 
         ScenarioCollection.addScenario(SimScenario.getDefaultScenario());
@@ -70,12 +72,19 @@ public class SandboxController {
         agentList.getItems().addAll(scenarioChoiceBox.getValue().getBotCollection().getBots());
 
 
-        startScenarioBtn.setOnAction(evt -> {
-            try {
-                scenarioChoiceBox.getValue().startScenario();
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+        startStopScenarioBtn.setOnAction(evt -> {
+            if(!scenarioChoiceBox.getValue().isPlaying){
+                try {
+                    scenarioChoiceBox.getValue().startScenario();
+                    startStopScenarioBtn.textProperty().set("Stop");
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }else{
+                scenarioChoiceBox.getValue().stopScenario();
+                startStopScenarioBtn.textProperty().set("Start");
             }
+
         });
 
         newScenarioBtn.setOnAction(evt -> {
@@ -125,6 +134,10 @@ public class SandboxController {
         showBotMessageButton.setOnAction(evt -> mainUIController.showMessageInTextBox(agentList.getSelectionModel().getSelectedItem()));
 
         MorsePlayer.setWordsPerMinuteMultiplier((int) wpmSlider.getValue());
+
+
+
+
 
     }
 
