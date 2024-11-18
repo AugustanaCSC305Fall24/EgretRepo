@@ -16,6 +16,8 @@ public class MorsePlayer {
     private static int wordsPerMinute;
     private static double multiplier;
     private static double filterVal;
+    private static double sideTone = 400;
+    //private static int logFrequencyHelper
 
 
 
@@ -82,10 +84,10 @@ public class MorsePlayer {
 
             for(int i = 0; i < morse.length ; i++){
 
-                double freq = Math.abs(botFrequency - getSelectedTuneFreq()) * 1000000 + 400;
+                double freq = Math.abs(botFrequency - getSelectedTuneFreq()) * 1000000 + sideTone;
 
                 freq = logFrequency(botFrequency, getSelectedTuneFreq(), freq);
-
+               // System.out.println(sideTone);
                 freq = checkIfHigherThanBot(botFrequency, getSelectedTuneFreq(), freq);
 
                 if (freq < 50) {
@@ -183,16 +185,20 @@ public class MorsePlayer {
             return tone;
         }else {
             tone = 1000 * Math.log10(tone); //if you are about on, it puts out freq of 2500
-            tone = tone - 2500; //so now I am bringing it down to 400
+            tone = tone - 2300; //so now I am bringing it down to sidetone
             return tone;
         }
     }
 
     public static double checkIfHigherThanBot(double botFrequency, double userFrequency, double tone) {
         if (botFrequency < userFrequency) {
-            double difference = tone - 400;
-            tone = 400 - difference - 100; // subtract by 100 because tone was off, purely an error fixing num
+            double difference = tone - sideTone;
+            tone = sideTone - difference - 100; // subtract by 100 because tone was off, purely an error fixing num
         }
         return tone;
+    }
+
+    public static void setSideTone() {
+        sideTone = Radio.getCwToneFreq();
     }
 }

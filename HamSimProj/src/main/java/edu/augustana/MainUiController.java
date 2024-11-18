@@ -214,6 +214,7 @@ public class MainUiController {
             if(newFreq < 400)newFreq = 400;
 
             Radio.setCwToneFreq(newFreq);
+            MorsePlayer.setSideTone();
 
             updateDisplayText(Radio.getTime(), Radio.getSelectedTuneFreq(), Radio.getCwToneFreq(), Radio.getBand());
 
