@@ -70,6 +70,8 @@ public class MorsePlayer {
     //Not DRY code at all, but I didn't want to break anything
     public static void playBotMorseString(String morseString, double botFrequency, double frequencyRange) throws InterruptedException {
 
+        //Change the 400 variable to our selected side tone
+
         new Thread(() -> {
 
             double variation = 0.3;
@@ -80,31 +82,22 @@ public class MorsePlayer {
 
             for(int i = 0; i < morse.length ; i++){
 
-                double freq = Math.abs(getSelectedTuneFreq() -  botFrequency) * 1000000 + 400;
+                double freq = Math.abs(botFrequency - getSelectedTuneFreq()) * 1000000 + 400;
 
+                freq = logFrequency(botFrequency, getSelectedTuneFreq(), freq);
 
-                //testing
-                System.out.println(freq);
+                freq = checkIfHigherThanBot(botFrequency, getSelectedTuneFreq(), freq);
 
-                freq = 1000 * Math.log10(freq); //if you are about on, it puts out freq of 2500
-                freq = freq - 2100; //so now I am bringing it down to 400
-
-                //testing
-                System.out.println(freq);
-                //3950
-
-                if (freq < 400) {
-                    freq = 400;
+                if (freq < 50) {
+                    freq = 50;
                 }
-
+                System.out.println("Final freq: " + freq);
+                // this is for the tuning slider
                 double freqDiff = Math.abs(getSelectedTuneFreq() -  botFrequency);
                 double filterRange = (frequencyRange * filterVal) / 2;
                 if (freqDiff > filterRange) {
                     freq = 0;
                 }
-
-
-
 
                 if(morse[i] == '.'){
 
@@ -184,6 +177,22 @@ public class MorsePlayer {
         filterVal = num;
     }
 
+    public static double logFrequency(double botFrequency, double userFrequency, double tone) {
+        if (botFrequency < userFrequency) {
+            tone = 110 * Math.log10(tone);
+            return tone;
+        }else {
+            tone = 1000 * Math.log10(tone); //if you are about on, it puts out freq of 2500
+            tone = tone - 2500; //so now I am bringing it down to 400
+            return tone;
+        }
+    }
 
-
+    public static double checkIfHigherThanBot(double botFrequency, double userFrequency, double tone) {
+        if (botFrequency < userFrequency) {
+            double difference = tone - 400;
+            tone = 400 - difference - 100; // subtract by 100 because tone was off, purely an error fixing num
+        }
+        return tone;
+    }
 }
