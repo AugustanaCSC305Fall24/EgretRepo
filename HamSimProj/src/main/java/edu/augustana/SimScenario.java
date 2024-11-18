@@ -16,10 +16,10 @@ import javafx.stage.Stage;
 public class SimScenario {
 
     @Expose
-    private String description = "Hello World";
+    private String description ;
 
     @Expose
-    private String expectedMesagge = "Sample";
+    private String expectedMesagge ;
 
     @Expose
     private int numBots;
@@ -193,5 +193,43 @@ public class SimScenario {
                 e.printStackTrace();
             }
         }
+    }
+
+    public int responseCorrectnessLevel(String userMessage){
+
+
+
+
+        //Turn user message String into an ArrayList to be able to check for existence of individual characters in user message
+        userMessage = userMessage.strip();
+        char[] userCharArray = userMessage.toCharArray();
+        ArrayList<Character> userCharList =  new ArrayList<>();
+        for(char character: userCharArray){
+            userCharList.add(character);
+        }
+        //Turn expected message String into an ArrayList to be able to check for existence of individual characters in user message
+        char[] scenarioCharArray = expectedMesagge.toCharArray();
+        ArrayList<Character> scenarioCharList =  new ArrayList<>();
+        for(char character: scenarioCharArray){
+            scenarioCharList.add(character);
+        }
+
+        int level1 = expectedMesagge.length() / 3;
+        int level2 = level1 * 2;
+        int level3 = scenarioCharList.size() - 1;
+        int messageScore = 0;
+
+        //Increments the score by one every time the user had the same character in the right place
+        for(char character: scenarioCharList){
+            if(userCharList.contains(character)){
+                messageScore++;
+            }
+        }
+
+
+
+        return 0;
+
+
     }
 }
