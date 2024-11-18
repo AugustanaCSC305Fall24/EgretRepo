@@ -69,13 +69,13 @@ public class MorsePlayer {
     //Temporary method to get the bots to play their sound
     //Not DRY code at all, but I didn't want to break anything
     public static void playBotMorseString(String morseString, double botFrequency, double frequencyRange) throws InterruptedException {
-
         new Thread(() -> {
 
             double variation = 0.3;
             char[] morse = morseString.toCharArray();
 
             randGen2 = new Random();
+
 
 
             for(int i = 0; i < morse.length ; i++){
@@ -102,7 +102,6 @@ public class MorsePlayer {
                 if (freqDiff > filterRange) {
                     freq = 0;
                 }
-
 
 
 
