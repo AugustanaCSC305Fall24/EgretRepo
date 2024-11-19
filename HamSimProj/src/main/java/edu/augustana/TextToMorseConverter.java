@@ -1,10 +1,6 @@
 package edu.augustana;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-
+import java.util.*;
 
 
 public class TextToMorseConverter {
@@ -114,6 +110,9 @@ public class TextToMorseConverter {
     }
 
     public static String morseToText(String morseString) {
+        if(Objects.equals(morseString, "")){
+            return morseString;
+        }
         String[] morseCodeArray = morseString.split("/");
         StringBuilder result = new StringBuilder();
         for (String morseCode : morseCodeArray) {
@@ -126,7 +125,7 @@ public class TextToMorseConverter {
             if (letter != null) {
                 result.append(letter);
             } else {
-                result.append(" ");  // For invalid Morse code
+                result.append("?");  // For invalid Morse code
             }
         }
 
