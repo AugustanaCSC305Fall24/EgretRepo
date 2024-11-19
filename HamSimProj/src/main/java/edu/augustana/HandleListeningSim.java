@@ -1,8 +1,8 @@
 package edu.augustana;
 
 
+import edu.augustana.Bots.ContinuousMessageBot;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class HandleListeningSim {
 
-    public static ArrayList<TrainingListeningBot> botList = new ArrayList<TrainingListeningBot>();
+    public static ArrayList<ContinuousMessageBot> botList = new ArrayList<ContinuousMessageBot>();
     private static boolean simActive = false;
     private static VBox messagesVBox;
     private static Stage stage = new Stage();
@@ -51,7 +51,7 @@ public class HandleListeningSim {
         simActive = true;
 
         for (int i = 0; i < numBots; i++) {
-            botList.add(new TrainingListeningBot(Radio.getBand()));//Need to change this to whatever band we are listening to once we get the bands set up
+            botList.add(new ContinuousMessageBot(Radio.getBand()));//Need to change this to whatever band we are listening to once we get the bands set up
             botList.get(i).playSound();
             //add bots to listview
         }
@@ -69,7 +69,7 @@ public class HandleListeningSim {
 
         boolean guessedCorrectly = false; //Make this variable so that you can check if you have to add the guess as red text into the listview
 
-        for (TrainingListeningBot bot : botList) {
+        for (ContinuousMessageBot bot : botList) {
 
             //testing
             System.out.println("bot: " +  bot.getTextCallSign() + " " + bot.getTextBotPhrase());
@@ -113,7 +113,7 @@ public class HandleListeningSim {
     public static void stopSim(VBox guessedMessagesVBox) {
         simActive = false;
 
-        for (TrainingListeningBot bot : botList) {
+        for (ContinuousMessageBot bot : botList) {
             bot.stopSound();
         }
         botList.clear();
@@ -121,8 +121,8 @@ public class HandleListeningSim {
         guessedMessagesVBox.getChildren().clear(); //Clearing the messages log vbox
 
         //These are so that all the used phrases and call signs get added back into the array so that we don't run out of them
-        TrainingListeningBot.botCallSignArray.addAll(TrainingListeningBot.usedCallSigns);
-        TrainingListeningBot.botPhraseArray.addAll(TrainingListeningBot.usedBotPhrases);
+        ContinuousMessageBot.botCallSignArray.addAll(ContinuousMessageBot.usedCallSigns);
+        ContinuousMessageBot.botPhraseArray.addAll(ContinuousMessageBot.usedBotPhrases);
 
     }
 

@@ -1,6 +1,7 @@
 package edu.augustana;
 
 import com.google.gson.Gson;
+import edu.augustana.Bots.ContinuousMessageBot;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -20,7 +21,7 @@ public class ScenarioBuilController {
     private Button addBotBtn;
 
     @FXML
-    private ListView<TrainingListeningBot> botListTable;
+    private ListView<ContinuousMessageBot> botListTable;
 
     @FXML
     private Button cancelBtn;
@@ -208,7 +209,7 @@ public class ScenarioBuilController {
     }
 
     public void newScenario(){
-        botCollection = new BotCollection(new ArrayList<TrainingListeningBot>());
+        botCollection = new BotCollection(new ArrayList<ContinuousMessageBot>());
     }
 
     private void createScenario(){

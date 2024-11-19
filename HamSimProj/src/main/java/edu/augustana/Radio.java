@@ -41,7 +41,7 @@ public class Radio {
     private static int upperNoiseFreqBoundary = 550;
 
     private static int simTime;
-    private static double cwToneFreq;
+    private static double cwToneFreq = 400;
     private static int band;
 
 

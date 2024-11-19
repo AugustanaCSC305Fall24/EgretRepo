@@ -12,4 +12,6 @@ module edu.augustana {
     opens edu.augustana;// Opens the package to Gson
 
     exports edu.augustana;
+    exports edu.augustana.Bots;
+    opens edu.augustana.Bots;
 }

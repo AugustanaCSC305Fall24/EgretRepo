@@ -63,8 +63,6 @@ public class PaddleHandler {
                     throw new RuntimeException(e);
                 }
             }
-            //CWHandler.addToArray(cwString.toString());
-           // either add straight to array and not use string builder,
         }
     }
 
