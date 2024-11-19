@@ -6,6 +6,7 @@ module edu.augustana {
     requires tyrus.client;
     requires com.google.gson;
     requires java.sql;
+    requires java.net.http;
 
     // Ensure Gson is required
     opens edu.augustana;// Opens the package to Gson

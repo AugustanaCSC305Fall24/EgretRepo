@@ -31,17 +31,17 @@
                                        </font>
                                     </Label>
                                     <ChoiceBox fx:id="scenarioChoiceBox" prefHeight="30.0" prefWidth="109.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 2px; -fx-border-radius: 20px;" />
-                                    <Button fx:id="startStopScenarioBtn" mnemonicParsing="false" prefHeight="26.0" prefWidth="59.0" text="Start" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 2px; -fx-border-radius: 20px;">
+                                    <Button fx:id="startStopScenarioBtn" mnemonicParsing="false" prefHeight="26.0" prefWidth="59.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 2px; -fx-border-radius: 20px;" text="Start">
                                        <HBox.margin>
                                           <Insets left="20.0" />
                                        </HBox.margin>
                                     </Button>
-                                    <Button fx:id="editScenarioBtn" mnemonicParsing="false" prefHeight="26.0" prefWidth="59.0" text="Edit" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 2px; -fx-border-radius: 20px;">
+                                    <Button fx:id="editScenarioBtn" mnemonicParsing="false" prefHeight="26.0" prefWidth="59.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 2px; -fx-border-radius: 20px;" text="Edit">
                                        <HBox.margin>
                                           <Insets left="10.0" />
                                        </HBox.margin>
                                     </Button>
-                                    <Button fx:id="newScenarioBtn" mnemonicParsing="false" prefHeight="26.0" prefWidth="59.0" text="New" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 2px; -fx-border-radius: 20px;">
+                                    <Button fx:id="newScenarioBtn" mnemonicParsing="false" prefHeight="26.0" prefWidth="59.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 2px; -fx-border-radius: 20px;" text="New">
                                        <HBox.margin>
                                           <Insets left="10.0" />
                                        </HBox.margin>
@@ -80,7 +80,7 @@
                                           </Label>
                                        </children>
                                     </VBox>
-                                    <Button fx:id="showBotMessageButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="116.0" text="Show Bot Message" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 2px; -fx-border-radius: 20px;">
+                                    <Button fx:id="showBotMessageButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="116.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 2px; -fx-border-radius: 20px;" text="Show Bot Message">
                                        <HBox.margin>
                                           <Insets left="10.0" right="18.0" top="18.0" />
                                        </HBox.margin>
@@ -134,7 +134,7 @@
                                           <Font name="Verdana" size="12.0" />
                                        </font>
                                     </Label>
-                                    <Label alignment="CENTER" prefHeight="38.0" prefWidth="115.0" text="Scenario" textFill="WHITE">
+                                    <Label alignment="CENTER" prefHeight="38.0" prefWidth="115.0" text="Environment" textFill="WHITE">
                                        <font>
                                           <Font name="Verdana" size="12.0" />
                                        </font>
@@ -151,7 +151,7 @@
                                     </Label>
                                  </children>
                               </HBox>
-                              <ListView prefHeight="240.0" prefWidth="400.0" style="-fx-background-color: #14173ade;" />
+                              <ListView prefHeight="259.0" prefWidth="400.0" style="-fx-background-color: #14173ade;" />
                               <HBox alignment="CENTER_LEFT" prefHeight="33.0" prefWidth="400.0" spacing="30.0">
                                  <children>
                                     <Button fx:id="joinBtn" mnemonicParsing="false" prefHeight="25.0" prefWidth="51.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 2px; -fx-border-radius: 20px;" text="Join" textFill="WHITE">

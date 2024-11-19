@@ -191,6 +191,7 @@ public class TrainingListeningBot {
     }
 
     public void playSound() throws InterruptedException {
+
         playSound = true;
         playContinuousMessage();
     }

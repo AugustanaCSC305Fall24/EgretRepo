@@ -5,38 +5,50 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.URI;
 import java.net.URL;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.util.ArrayList;
 
 public class HamRadioServerClient {
 
     private static ArrayList<String> serverList;
 
+    private static final String API_URL = "http://127.0.0.1:8000"; // Replace with your FastAPI server's URL
+    private static final HttpClient httpClient = HttpClient.newHttpClient();
+
     // Method to create a server by sending a POST request
-    public void createServer(String serverId, float noiseLevel, float signalStrength) throws Exception {
-        URL url = new URL("http://localhost:8000/server/" + serverId + "?noise_level=" + noiseLevel + "&signal_strength=" + signalStrength);
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setRequestMethod("POST");
-        connection.setRequestProperty("Content-Type", "application/json");
-        connection.setDoOutput(true);
+    private static void createServer(String serverId, double noiseLevel, double signalStrength) throws Exception {
+        String url = String.format("%s/server/%s?noise_level=%.2f&signal_strength=%.2f",
+                API_URL, serverId, noiseLevel, signalStrength);
 
-        // Empty JSON body, if needed
-        OutputStream os = connection.getOutputStream();
-        os.write("{}".getBytes());
-        os.flush();
-        os.close();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .POST(HttpRequest.BodyPublishers.noBody())
+                .build();
 
-        int responseCode = connection.getResponseCode();
-        if (responseCode == HttpURLConnection.HTTP_OK) {
-            System.out.println("Server created successfully.");
-        } else {
-            System.out.println("Failed to create server. Response code: " + responseCode);
+        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+        if (response.statusCode() != 200) {
+            throw new RuntimeException("Failed to create server: " + response.body());
         }
+        System.out.println("Server created successfully: " + response.body());
+    }
+
+    private static String getAvailableServers() throws Exception {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(API_URL + "/servers"))
+                .GET()
+                .build();
+
+        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+        return response.body();
     }
 
     // Method to retrieve server conditions
     public void getServerConditions(String serverId) throws Exception {
-        URL url = new URL("http://localhost:8000/server/" + serverId + "/conditions");
+        URL url = new URL(API_URL + serverId + "/conditions");
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
         connection.setRequestProperty("Accept", "application/json");
