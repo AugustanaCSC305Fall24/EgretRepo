@@ -28,6 +28,24 @@ public class HamRadioWebSocketClient {
         System.out.println("Received message: " + message);
     }
 
+    public void connect(String serverId) {
+        try {
+            // Construct the WebSocket URI using the server ID
+            String wsUri = HamRadioServerClient.getServerURL() + serverId;
+
+            // Create a WebSocket container
+            WebSocketContainer container = ContainerProvider.getWebSocketContainer();
+
+            // Connect to the WebSocket server
+            session = container.connectToServer(this, new URI("ws://localhost:8000/ws/"+serverId));
+            System.out.println("Connected to WebSocket server: " + wsUri);
+
+        } catch (Exception e) {
+            System.err.println("Failed to connect to WebSocket server");
+            e.printStackTrace();
+        }
+    }
+
     // Send a message to the WebSocket
     public void sendMessage(String message) throws Exception {
         if (session != null && session.isOpen()) {
@@ -36,22 +54,6 @@ public class HamRadioWebSocketClient {
             System.out.println("No open WebSocket session to send message.");
         }
     }
-
-    // Method to connect to the WebSocket server using Tyrus explicitly
-    public void connectWebSocket(String serverId) throws Exception {
-        ClientManager client = ClientManager.createClient();
-
-        // Create a default ClientEndpointConfig
-        ClientEndpointConfig config = ClientEndpointConfig.Builder.create()
-                .encoders(Collections.emptyList())  // Add your encoders here if any
-                .decoders(Collections.emptyList())  // Add your decoders here if any
-                .build();
-
-        // Pass the serverId as part of the WebSocket URI
-        URI uri = URI.create("ws://127.0.0.1:8000/ws/" + serverId);
-        client.connectToServer(this, uri);
-    }
-
 
     // Method to disconnect from the WebSocket server
     public void disconnectWebSocket() throws Exception {
