@@ -1,34 +1,24 @@
 package edu.augustana.Bots;
 
-public class AIBot implements Bot{
+public class AIBot extends Bot{
 
-    @Override
-    public String getTextBotPhrase() {
-        return "";
+
+    public AIBot(int band) {
+        super(band);
     }
 
     @Override
-    public String getTextCallSign() {
-        return "";
+    public void playSound() {
+
     }
 
     @Override
-    public double getOutputFrequency() {
-        return 0;
+    public void stopSound() {
+
     }
 
     @Override
-    public String getName() {
-        return "";
-    }
-
-    @Override
-    public String getMorseBotPhrase() {
-        return "";
-    }
-
-    @Override
-    public String getMorseCallSign() {
+    public String toString() {
         return "";
     }
 }
