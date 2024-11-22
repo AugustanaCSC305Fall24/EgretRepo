@@ -25,9 +25,6 @@ public class SandboxController {
     private Button filterBtn;
 
     @FXML
-    private Button joinBtn;
-
-    @FXML
     private ChoiceBox<SimScenario> scenarioChoiceBox;
 
     @FXML
@@ -58,9 +55,24 @@ public class SandboxController {
 
     private MainUiController mainUIController;
 
+    @FXML
+    private Button serverJoinLeaveBtn;
+
+    @FXML
+    private ListView<String> serverListView;
+
+    @FXML
+    private Button createServerBtn;
+
+    @FXML
+    private Tab serverInfoTab;
+
 
     @FXML
     private Button stopScenario;
+
+    @FXML
+    private Button updateServersBtn;
 
 
     @FXML
@@ -85,6 +97,22 @@ public class SandboxController {
                 scenarioChoiceBox.getValue().stopScenario();
                 startStopScenarioBtn.textProperty().set("Start");
             }
+
+        });
+
+        createServerBtn.setOnAction(event -> {
+            Stage serverBuildStage = new Stage();
+            FXMLLoader loader = new FXMLLoader(App.class.getResource("serverBuildUI.fxml"));
+            serverBuildStage.setTitle("Server Builder");
+            try {
+                serverBuildStage.setScene(new Scene(loader.load()));
+                ServerBuildController controller = loader.getController();
+                controller.parentController = this;
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            serverBuildStage.show();
+            createServerBtn.setVisible(false);
 
         });
 
@@ -138,7 +166,42 @@ public class SandboxController {
 
 
 
+        serverJoinLeaveBtn.setOnAction(event -> {
+            if(HamRadioServerClient.isConnected == true){
+                try {
+                    HamRadioServerClient.disconnectServer();
+                    serverJoinLeaveBtn.setText("Connect");
+                    updateListOfServer();
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }else{
+                Stage serverConnectStage = new Stage();
+                FXMLLoader loader = new FXMLLoader(App.class.getResource("serverConnect.fxml"));
+                serverConnectStage.setTitle("Connect To server");
+                try {
+                    serverConnectStage.setScene(new Scene(loader.load()));
+                    ServerBuildController controller = loader.getController();
+                    controller.parentController = this;
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                serverConnectStage.show();
+                try {
+                    updateListOfServer();
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
 
+        updateServersBtn.setOnAction(event -> {
+            try {
+                updateListOfServer();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
 
     }
 
@@ -178,4 +241,16 @@ public class SandboxController {
     }
 
 
+    public void setConnected() {
+        serverJoinLeaveBtn.setText("Disconnect");
+    }
+
+    public void updateListOfServer() throws Exception {
+
+        serverListView.getItems().addAll( HamRadioServerClient.getAvailableServers().keySet());
+    }
+
+    public void setCreateServerVisible(boolean bool){
+        createServerBtn.setVisible(bool);
+    }
 }

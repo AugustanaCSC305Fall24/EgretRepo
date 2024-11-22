@@ -78,6 +78,8 @@ public class ScenarioBuilController {
     private boolean isNewScenario = true;
 
 
+
+
     @FXML
     void initialize(){
 

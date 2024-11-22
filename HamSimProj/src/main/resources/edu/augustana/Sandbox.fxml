@@ -13,11 +13,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.SandboxController">
+<VBox style="-fx-background-color: #353538;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.SandboxController">
    <children>
-      <TabPane prefHeight="339.0" prefWidth="400.0" style="-fx-background-color: #1c222e#f5289100;" tabClosingPolicy="UNAVAILABLE">
+      <TabPane prefHeight="339.0" prefWidth="400.0" style="-fx-background-color: #353538; -fx-border-color: #353538;" tabClosingPolicy="UNAVAILABLE">
          <tabs>
-            <Tab fx:id="enviromentTab" style="-fx-background-color: #606160;" text="Scenario">
+            <Tab fx:id="enviromentTab" style="-fx-background-color: #4c587a;" text="Scenario">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="790.0">
                      <children>
@@ -27,38 +27,41 @@
                                  <children>
                                     <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="43.0" prefWidth="61.0" text="Scenario" textFill="WHITE">
                                        <font>
-                                          <Font name="Verdana" size="12.0" />
+                                          <Font name="System Bold" size="12.0" />
                                        </font>
                                     </Label>
                                     <ChoiceBox fx:id="scenarioChoiceBox" prefHeight="30.0" prefWidth="109.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 2px; -fx-border-radius: 20px;" />
-                                    <Button fx:id="startStopScenarioBtn" mnemonicParsing="false" prefHeight="26.0" prefWidth="59.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 2px; -fx-border-radius: 20px;" text="Start">
+                                    <Button fx:id="startStopScenarioBtn" mnemonicParsing="false" prefHeight="26.0" prefWidth="59.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 2px; -fx-border-radius: 20px;" text="Start" textFill="WHITE">
                                        <HBox.margin>
                                           <Insets left="20.0" />
                                        </HBox.margin>
                                     </Button>
-                                    <Button fx:id="editScenarioBtn" mnemonicParsing="false" prefHeight="26.0" prefWidth="59.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 2px; -fx-border-radius: 20px;" text="Edit">
+                                    <Button fx:id="editScenarioBtn" mnemonicParsing="false" prefHeight="26.0" prefWidth="59.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 2px; -fx-border-radius: 20px;" text="Edit" textFill="WHITE">
                                        <HBox.margin>
                                           <Insets left="10.0" />
                                        </HBox.margin>
                                     </Button>
-                                    <Button fx:id="newScenarioBtn" mnemonicParsing="false" prefHeight="26.0" prefWidth="59.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 2px; -fx-border-radius: 20px;" text="New">
+                                    <Button fx:id="newScenarioBtn" mnemonicParsing="false" prefHeight="26.0" prefWidth="59.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 2px; -fx-border-radius: 20px;" text="New" textFill="WHITE">
                                        <HBox.margin>
                                           <Insets left="10.0" />
                                        </HBox.margin>
                                     </Button>
                                  </children>
                               </HBox>
-                              <Label prefHeight="18.0" prefWidth="413.0" text="Scenario Description">
+                              <Label prefHeight="18.0" prefWidth="413.0" text="Scenario Description" textFill="WHITE">
+                                 <padding>
+                                    <Insets left="20.0" />
+                                 </padding>
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="scenarioDescription" prefHeight="68.0" prefWidth="400.0" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,  aliquip ex ea commodo consequat." textFill="WHITE" textOverrun="CLIP" wrapText="true">
                                  <padding>
                                     <Insets left="20.0" />
                                  </padding>
                               </Label>
-                              <Label fx:id="scenarioDescription" prefHeight="68.0" prefWidth="400.0" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,  aliquip ex ea commodo consequat." textOverrun="CLIP" wrapText="true">
-                                 <padding>
-                                    <Insets left="20.0" />
-                                 </padding>
-                              </Label>
-                              <Label prefHeight="18.0" prefWidth="418.0" text="Agent List">
+                              <Label prefHeight="22.0" prefWidth="400.0" text="Agent List" textFill="WHITE">
                                  <padding>
                                     <Insets left="20.0" />
                                  </padding>
@@ -68,19 +71,19 @@
                                  <children>
                                     <VBox prefHeight="62.0" prefWidth="282.0">
                                        <children>
-                                          <Label prefHeight="18.0" prefWidth="366.0" text="Scenario Dialog">
+                                          <Label prefHeight="18.0" prefWidth="366.0" text="Scenario Dialog" textFill="WHITE">
                                              <VBox.margin>
                                                 <Insets left="20.0" top="5.0" />
                                              </VBox.margin>
                                           </Label>
-                                          <Label fx:id="scenarioDialog" prefHeight="42.0" prefWidth="254.0" text="Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet," wrapText="true">
+                                          <Label fx:id="scenarioDialog" prefHeight="42.0" prefWidth="254.0" text="Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet," textFill="WHITE" wrapText="true">
                                              <VBox.margin>
                                                 <Insets left="20.0" />
                                              </VBox.margin>
                                           </Label>
                                        </children>
                                     </VBox>
-                                    <Button fx:id="showBotMessageButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="116.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 2px; -fx-border-radius: 20px;" text="Show Bot Message">
+                                    <Button fx:id="showBotMessageButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="116.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 2px; -fx-border-radius: 20px;" text="Show Bot Message" textFill="WHITE">
                                        <HBox.margin>
                                           <Insets left="10.0" right="18.0" top="18.0" />
                                        </HBox.margin>
@@ -119,7 +122,7 @@
             </Tab>
          </tabs>
       </TabPane>
-      <TabPane prefHeight="339.0" prefWidth="400.0" style="-fx-background-color: #1c222e;" tabClosingPolicy="UNAVAILABLE">
+      <TabPane prefHeight="339.0" prefWidth="400.0" style="-fx-background-color: gray;" tabClosingPolicy="UNAVAILABLE">
          <tabs>
             <Tab text="Servers">
                <content>
@@ -151,27 +154,23 @@
                                     </Label>
                                  </children>
                               </HBox>
-                              <ListView prefHeight="259.0" prefWidth="400.0" style="-fx-background-color: #14173ade;" />
+                              <ListView fx:id="serverListView" prefHeight="259.0" prefWidth="400.0" style="-fx-background-color: #14173ade;" />
                               <HBox alignment="CENTER_LEFT" prefHeight="33.0" prefWidth="400.0" spacing="30.0">
                                  <children>
-                                    <Button fx:id="joinBtn" mnemonicParsing="false" prefHeight="25.0" prefWidth="51.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 2px; -fx-border-radius: 20px;" text="Join" textFill="WHITE">
+                                    <Button fx:id="serverJoinLeaveBtn" mnemonicParsing="false" prefHeight="28.0" prefWidth="82.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 2px; -fx-border-radius: 20px;" text="Connect" textFill="WHITE">
                                        <font>
                                           <Font name="Verdana" size="12.0" />
                                        </font>
                                     </Button>
-                                    <Button fx:id="servInfoBtn" mnemonicParsing="false" prefHeight="27.0" prefWidth="108.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 2px; -fx-border-radius: 20px;" text="Server Info" textFill="WHITE">
+                                    <Button fx:id="updateServersBtn" mnemonicParsing="false" prefHeight="27.0" prefWidth="108.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 2px; -fx-border-radius: 20px;" text="Refresh" textFill="WHITE">
                                        <font>
                                           <Font name="Verdana" size="12.0" />
                                        </font>
                                     </Button>
-                                    <Button fx:id="filterBtn" mnemonicParsing="false" prefHeight="25.0" prefWidth="48.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 2px; -fx-border-radius: 20px;" text="Filter" textFill="WHITE" />
-                                    <Button fx:id="stopScenario" mnemonicParsing="false" text="Stop Scenario">
+                                    <Button fx:id="createServerBtn" mnemonicParsing="false" prefHeight="27.0" prefWidth="108.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 2px; -fx-border-radius: 20px;" text="Create" textFill="WHITE">
                                        <font>
-                                          <Font size="10.0" />
+                                          <Font name="Verdana" size="12.0" />
                                        </font>
-                                       <HBox.margin>
-                                          <Insets right="10.0" />
-                                       </HBox.margin>
                                     </Button>
                                  </children>
                                  <padding>
@@ -184,7 +183,7 @@
                   </AnchorPane>
                </content>
             </Tab>
-            <Tab text="Untitled Tab 2">
+            <Tab fx:id="serverInfoTab" text="Server Info">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #606160;">
                      <children>
