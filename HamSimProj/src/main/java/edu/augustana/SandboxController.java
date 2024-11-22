@@ -45,7 +45,7 @@ public class SandboxController {
     @FXML
     private Button newScenarioBtn;
 
-    private ScenarioBuilController buildController;
+    private ScenarioBuildController buildController;
 
     @FXML
     private Slider wpmSlider;

@@ -119,8 +119,8 @@ public class MainUiController {
     void initialize() throws IOException {
         displayLabel.setText("");
 
-        assert mainHbox != null : "fx:id=\"mainHbox\" was not injected: check your FXML file 'mainUI.fxml'.";
-        assert radioImage != null : "fx:id=\"radioImage\" was not injected: check your FXML file 'mainUI.fxml'.";
+        assert mainHbox != null : "fx:id=\"mainHbox\" was not injected: check your FXML file 'MainUI.fxml'.";
+        assert radioImage != null : "fx:id=\"radioImage\" was not injected: check your FXML file 'MainUI.fxml'.";
 
         //morseText = new Label();
         volumeKnob = new KnobControl();

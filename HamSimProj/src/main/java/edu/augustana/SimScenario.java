@@ -27,7 +27,7 @@ public class SimScenario {
     private String scenarioName;
 
     @Expose
-    private RadioEnviroment environment;
+    private RadioEnvironment environment;
 
     @Expose
     private BotCollection botCollection;
@@ -44,7 +44,7 @@ public class SimScenario {
     public boolean isPlaying;
 
 
-    public SimScenario(String name, String description, String expectedMesagge, String failMessage, String winMessage, RadioEnviroment environment, BotCollection botCollection, int type){
+    public SimScenario(String name, String description, String expectedMesagge, String failMessage, String winMessage, RadioEnvironment environment, BotCollection botCollection, int type){
         this.scenarioName = name;
         this.expectedMesagge = expectedMesagge;
         this.description = description;
@@ -66,10 +66,10 @@ public class SimScenario {
 
         String defWinMessage= "";
 
-        RadioEnviroment defRadioEnviroment = new RadioEnviroment("DEFAULT",0.1,0.1,0.1,0.1);
+        RadioEnvironment defRadioEnvironment = new RadioEnvironment("DEFAULT",0.1,0.1,0.1,0.1);
         ArrayList<ContinuousMessageBot> defBotList = new ArrayList<>();
         BotCollection defBotCollection = new BotCollection(defBotList);
-        SimScenario defaultScenario = new SimScenario("DEFAULT",defDescription,defexpectedMessage,deffailMessagge, defWinMessage, defRadioEnviroment, defBotCollection, 0);
+        SimScenario defaultScenario = new SimScenario("DEFAULT",defDescription,defexpectedMessage,deffailMessagge, defWinMessage, defRadioEnvironment, defBotCollection, 0);
 
         return defaultScenario;
 
@@ -112,7 +112,7 @@ public class SimScenario {
         return scenarioName;
     }
 
-    public RadioEnviroment getEnvironment(){
+    public RadioEnvironment getEnvironment(){
         return environment;
     }
 
@@ -149,7 +149,7 @@ public class SimScenario {
         return false;
     }
 
-    public void setEnvironment(RadioEnviroment environment) {
+    public void setEnvironment(RadioEnvironment environment) {
         this.environment = environment;
     }
 
