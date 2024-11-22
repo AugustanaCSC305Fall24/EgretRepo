@@ -4,7 +4,7 @@ import java.util.Random;
 
 public abstract class Bot {
 
-    PlayingBehavior behaviorType;
+    private PlayingBehavior behaviorType;
 
     private double outputFrequency;
     private double frequencyRange;

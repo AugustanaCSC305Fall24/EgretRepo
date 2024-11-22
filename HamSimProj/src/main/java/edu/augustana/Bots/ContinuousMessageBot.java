@@ -1,11 +1,10 @@
 package edu.augustana.Bots;
 
-import edu.augustana.MorsePlayer;
+
 import edu.augustana.TextToMorseConverter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Random;
 
 public class ContinuousMessageBot extends Bot{
 
@@ -17,7 +16,6 @@ public class ContinuousMessageBot extends Bot{
     private final String textCallSign;
 
     private boolean playSound;
-
 
 
     public static ArrayList<String> botPhraseArray = new ArrayList<>(Arrays.asList("Hello", "SOS", "Pizza is good", "You are cool", "Good Morning", "Good Afternoon", "Good night", "Weather is good", "My CW is bad", "Help me", "The wilderness needs to be explored")); //Add the phrases to this list
