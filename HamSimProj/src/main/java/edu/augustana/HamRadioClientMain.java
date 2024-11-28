@@ -9,7 +9,7 @@ public class HamRadioClientMain {
 
 
 //        HamRadioServerClient.createServer("SERV1",0.0,0.0);
-        HamRadioServerClient.connectToSever("SERV1");
+        HamRadioServerClient.connectToSever("QWER");
         Thread.sleep(1000);
         Map<String, List<String>> serverClientsMap = HamRadioServerClient.getAvailableServers();
         ((java.util.Map<?, ?>) serverClientsMap).forEach((serverId, clients) -> {

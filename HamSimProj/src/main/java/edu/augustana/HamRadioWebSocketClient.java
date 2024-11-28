@@ -24,8 +24,9 @@ public class HamRadioWebSocketClient {
 
     // When a message is received
     @OnMessage
-    public void onMessage(String message) {
+    public void onMessage(String message) throws InterruptedException {
         System.out.println("Received message: " + message);
+        HamRadioServerClient.playOutMessage(message);
     }
 
     public void connect(String serverId) {

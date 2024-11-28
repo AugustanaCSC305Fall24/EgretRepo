@@ -61,8 +61,9 @@ async def websocket_endpoint(websocket: WebSocket, server_id: str):
             print(f"Received message: {data}")  # Log received messages
             # Broadcast the message to all connected clients
             for client in servers[server_id]["clients"]:
-                if client["websocket"] != websocket:
-                    await client["websocket"].send_text(data)
+                await client["websocket"].send_text(data)
+                # if client["websocket"] != websocket:
+                    
     except WebSocketDisconnect:
         servers[server_id]["clients"] = [
             client for client in servers[server_id]["clients"] if client["websocket"] != websocket

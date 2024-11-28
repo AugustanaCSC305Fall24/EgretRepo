@@ -181,8 +181,9 @@ public class SandboxController {
                 serverConnectStage.setTitle("Connect To server");
                 try {
                     serverConnectStage.setScene(new Scene(loader.load()));
-                    ServerBuildController controller = loader.getController();
+                    ServerConnectUI controller = loader.getController();
                     controller.parentController = this;
+                    controller.setServerID(serverListView.getSelectionModel().getSelectedItem());
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -246,7 +247,7 @@ public class SandboxController {
     }
 
     public void updateListOfServer() throws Exception {
-
+        serverListView.getItems().clear();
         serverListView.getItems().addAll( HamRadioServerClient.getAvailableServers().keySet());
     }
 
