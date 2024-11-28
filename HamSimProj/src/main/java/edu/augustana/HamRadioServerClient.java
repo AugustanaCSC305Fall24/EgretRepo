@@ -15,10 +15,7 @@ import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class HamRadioServerClient {
 
@@ -140,7 +137,7 @@ public class HamRadioServerClient {
 
     public static void sendMessage(String message) throws Exception {
         String formattedMessage = String.valueOf(Radio.getSelectedTuneFreq()) + "," + String.valueOf(Radio.generateFrequencyRange(Radio.getBand())) + "," + message;
-        socketClient.sendMessage(message);
+        socketClient.sendMessage(formattedMessage);
     }
 
     public static void disconnectServer() throws Exception {
@@ -152,6 +149,7 @@ public class HamRadioServerClient {
         String[] messageParts = message.split(",", 3);
         double frequency = Double.valueOf(messageParts[0]);
         double range = Double.valueOf(messageParts[1]);
+        System.out.println(Arrays.toString(messageParts));
         String morseMessage = messageParts[2];
 
         MorsePlayer.playBotMorseString(morseMessage,frequency,range);
