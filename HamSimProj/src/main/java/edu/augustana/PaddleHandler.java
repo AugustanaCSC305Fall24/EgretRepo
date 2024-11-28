@@ -2,6 +2,9 @@ package edu.augustana;
 
 import javafx.scene.input.KeyCode;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 import static edu.augustana.CWHandler.startTimer;
@@ -17,7 +20,30 @@ public class PaddleHandler {
     private static boolean dashPaddlePressed;
     private static StringBuilder cwString = new StringBuilder();
     private static long paddleReleaseTime;
+    private static final int SEND_TIMER_LENGHT = 1;
    // private static Boolean alreadyPressed = true;
+   private static final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
+    private static ScheduledFuture<?> scheduledTask;
+
+    public static void sendMessageTimer() {
+        // Cancel the previous task if it exists
+        if (scheduledTask != null && !scheduledTask.isDone()) {
+            scheduledTask.cancel(false); // Cancel the current task but do not interrupt if running
+        }
+
+        // Schedule the new task
+        scheduledTask = scheduler.schedule(() -> {
+            try {
+                HamRadioServerClient.sendMessage(getCwString());
+                if(cwString.length() > 1){
+                    cwString.delete(0,cwString.length());
+                }
+                System.out.println("Message sent after timer expires");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }, SEND_TIMER_LENGHT, TimeUnit.SECONDS);
+    }
 
 
     public static void playContinuousDot() throws Exception {
@@ -66,22 +92,23 @@ public class PaddleHandler {
         }
     }
 
-    public static void stopPaddlePress() {
+    public static void stopPaddlePress() throws Exception {
         dotPaddlePressed = false;
         dashPaddlePressed = false;
         startSpaceTimer();
     }
 
-    public static void startSpaceTimer() {
+    public static void startSpaceTimer() throws Exception {
         paddleReleaseTime = System.nanoTime();
+
     }
 
     public static void stopSpaceTimer() throws Exception {
         int multiplier = 20 / wordsPerMinute;
         long timeSinceReleased = System.nanoTime() - paddleReleaseTime;
         if (timeSinceReleased > (dotDurationPaddle * 7 - 1) * multiplier) {
+
             cwString.append("/*/");
-            HamRadioServerClient.sendMessage(getCwString());
             System.out.println(cwString.toString());
         } else if (timeSinceReleased > ((dotDurationPaddle * 3) + ((dotDurationPaddle * 3) * 0.2)) * multiplier) {
             cwString.append("/");
@@ -99,6 +126,5 @@ public class PaddleHandler {
     public static String getCwString() {
         return cwString.toString();
     }
-
 
 }

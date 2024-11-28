@@ -379,8 +379,9 @@ public class MainUiController {
         }
     }
 
-    public void handleKeyRelease(KeyEvent keyEvent) throws InterruptedException {
+    public void handleKeyRelease(KeyEvent keyEvent) throws Exception {
         if (keyEvent.getCode() == KeyCode.J || keyEvent.getCode() == KeyCode.K) {
+            PaddleHandler.sendMessageTimer();
             PaddleHandler.stopPaddlePress();
             addToMorseBox(PaddleHandler.getCwString()); // stops first paddle press on keyRelease of second paddle if both are held simultaneously
             addToEnglishBox(PaddleHandler.getCwString());

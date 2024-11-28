@@ -156,4 +156,10 @@ public class HamRadioServerClient {
 
     }
 
+    public static void handleMessageSend(){
+        long lastTimePressed = System.currentTimeMillis();
+
+
+    }
+
 }
