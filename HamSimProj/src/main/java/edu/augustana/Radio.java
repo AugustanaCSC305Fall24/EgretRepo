@@ -264,6 +264,40 @@ public class Radio {
         noiseAmplitud = newAmplitud;
     }
 
+    public static double generateFrequencyRange(int band) {
+
+        double output = 0;
+
+        switch (band){
+            case 10:
+                output = 1.7;
+                break;
+
+            case 17:
+
+                output = .1;
+                break;
+
+            case 20:
+                output = .35;
+
+
+            case 30:
+
+                output = .05;
+                break;
+
+            case 40:
+                output = .3;
+                break;
+
+            case 80:
+                output = .5;
+                break;
+        }
+        return output;
+    }
+
 
 
 

@@ -20,7 +20,7 @@ public class PaddleHandler {
    // private static Boolean alreadyPressed = true;
 
 
-    public static void playContinuousDot() {
+    public static void playContinuousDot() throws Exception {
         if (!dotPaddlePressed && !dashPaddlePressed) {
             // System.out.println("tone and dot loop start");
             stopSpaceTimer();
@@ -44,7 +44,7 @@ public class PaddleHandler {
         }
     }
 
-    public static void playContinuousDash() {
+    public static void playContinuousDash() throws Exception {
         if (!dashPaddlePressed && !dotPaddlePressed) {
             stopSpaceTimer();
             dashPaddlePressed = true;
@@ -76,11 +76,12 @@ public class PaddleHandler {
         paddleReleaseTime = System.nanoTime();
     }
 
-    public static void stopSpaceTimer() {
+    public static void stopSpaceTimer() throws Exception {
         int multiplier = 20 / wordsPerMinute;
         long timeSinceReleased = System.nanoTime() - paddleReleaseTime;
         if (timeSinceReleased > (dotDurationPaddle * 7 - 1) * multiplier) {
             cwString.append("/*/");
+            HamRadioServerClient.sendMessage(getCwString());
             System.out.println(cwString.toString());
         } else if (timeSinceReleased > ((dotDurationPaddle * 3) + ((dotDurationPaddle * 3) * 0.2)) * multiplier) {
             cwString.append("/");

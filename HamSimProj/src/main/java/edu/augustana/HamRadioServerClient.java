@@ -47,6 +47,8 @@ public class HamRadioServerClient {
         // Handle the response
         if (response.statusCode() != 200) {
             throw new RuntimeException("Failed to create server: " + response.body());
+        }else{
+            connectToSever(serverId);
         }
     }
 
@@ -137,6 +139,7 @@ public class HamRadioServerClient {
     }
 
     public static void sendMessage(String message) throws Exception {
+        String formattedMessage = String.valueOf(Radio.getSelectedTuneFreq()) + "," + String.valueOf(Radio.generateFrequencyRange(Radio.getBand())) + "," + message;
         socketClient.sendMessage(message);
     }
 
@@ -144,4 +147,15 @@ public class HamRadioServerClient {
         isConnected = false;
         socketClient.disconnectWebSocket();
     }
+
+    public static void playOutMessage(String message) throws InterruptedException {
+        String[] messageParts = message.split(",", 3);
+        double frequency = Double.valueOf(messageParts[0]);
+        double range = Double.valueOf(messageParts[1]);
+        String morseMessage = messageParts[2];
+
+        MorsePlayer.playBotMorseString(morseMessage,frequency,range);
+
+    }
+
 }
