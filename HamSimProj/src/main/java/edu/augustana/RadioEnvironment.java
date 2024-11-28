@@ -1,9 +1,8 @@
 package edu.augustana;
 
 import java.util.Random;
-import com.google.gson.annotations.Expose;
 
-public class RadioEnviroment {
+public class RadioEnvironment {
 
     // Environmental factors
     double temperature = 20;   // Degrees Celsius
@@ -34,7 +33,7 @@ public class RadioEnviroment {
     transient Random  random = new Random();
 
 
-    public RadioEnviroment(String name, double solarActivity, double windSpeed, double humidity, double temperature) {
+    public RadioEnvironment(String name, double solarActivity, double windSpeed, double humidity, double temperature) {
         this.nameScenario = name;
         this.solarActivity = solarActivity;
         this.windSpeed = windSpeed;

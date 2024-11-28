@@ -15,7 +15,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class ScenarioBuilController {
+public class ScenarioBuildController {
 
     @FXML
     private Button addBotBtn;
@@ -67,11 +67,11 @@ public class ScenarioBuilController {
 
     private SimScenario scenario;
 
-    private botAdderController adderController;
+    private BotAdderController adderController;
 
     private BotCollection botCollection;
 
-    private RadioEnviroment environment;
+    private RadioEnvironment environment;
 
     private SandboxController parentController;
 
@@ -218,7 +218,7 @@ public class ScenarioBuilController {
 
         if(isNewScenario){
 
-            environment = new RadioEnviroment("scenarioNameField.getText()",
+            environment = new RadioEnvironment("scenarioNameField.getText()",
                     Double.parseDouble(solarIndex.getText()),
                     Double.parseDouble(windSpeedField.getText()),
                     Double.parseDouble(humidityField.getText()),
@@ -231,7 +231,7 @@ public class ScenarioBuilController {
             parentController.displayBots();
         }else{
 
-            environment = new RadioEnviroment("scenarioNameField.getText()",
+            environment = new RadioEnvironment("scenarioNameField.getText()",
                     Double.parseDouble(solarIndex.getText()),
                     Double.parseDouble(windSpeedField.getText()),
                     Double.parseDouble(humidityField.getText()),

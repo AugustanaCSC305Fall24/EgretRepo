@@ -7,7 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class botAdderController {
+public class BotAdderController {
 
     @FXML
     private Button addBtn;
@@ -28,7 +28,7 @@ public class botAdderController {
 
     private BotCollection botCollection;
 
-    private ScenarioBuilController parentController;
+    private ScenarioBuildController parentController;
 
     @FXML
     private Button okBtn;
@@ -42,6 +42,8 @@ public class botAdderController {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
+
+            clearBotAdderTextBoxes();
 
         });
 
@@ -61,7 +63,7 @@ public class botAdderController {
 
     }
 
-    public void setParentController(ScenarioBuilController parentController) {
+    public void setParentController(ScenarioBuildController parentController) {
         this.parentController = parentController;
     }
 
@@ -73,8 +75,13 @@ public class botAdderController {
         ContinuousMessageBot bot = new ContinuousMessageBot(Radio.getBand(), botNameField.getText(), callSignField.getText(), messageField.getText());
         botCollection.addBot(bot);
 
+    }
 
-
+    //Clears the text boxes so that when you add it, it doesn't keep the same info
+    private void clearBotAdderTextBoxes() {
+        botNameField.clear();
+        callSignField.clear();
+        messageField.clear();
     }
 
 

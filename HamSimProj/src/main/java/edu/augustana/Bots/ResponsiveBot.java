@@ -1,33 +1,24 @@
 package edu.augustana.Bots;
 
-public class ResponsiveBot implements Bot{
-    @Override
-    public String getTextBotPhrase() {
-        return "";
+public class ResponsiveBot extends Bot{
+
+
+    public ResponsiveBot(int band) {
+        super(band);
     }
 
     @Override
-    public String getTextCallSign() {
-        return "";
+    public void playSound() {
+
     }
 
     @Override
-    public double getOutputFrequency() {
-        return 0;
+    public void stopSound() {
+
     }
 
     @Override
-    public String getName() {
-        return "";
-    }
-
-    @Override
-    public String getMorseBotPhrase() {
-        return "";
-    }
-
-    @Override
-    public String getMorseCallSign() {
+    public String toString() {
         return "";
     }
 }
