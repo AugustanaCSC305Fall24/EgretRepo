@@ -30,7 +30,7 @@ public class HandleListeningSim {
 
         //load fxml
         FXMLLoader loader = new FXMLLoader(App.class.getResource("BotFinderConfig.fxml"));
-        stage.setTitle("My New Stage Title");
+        stage.setTitle("Bot Config");
         stage.setScene(new Scene(loader.load(), 450, 450));
         stage.show();
     }

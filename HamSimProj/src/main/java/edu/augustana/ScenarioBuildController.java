@@ -157,7 +157,7 @@ public class ScenarioBuildController {
 
     private void openBotAdder() throws IOException {
         Stage scenarioBuildStage = new Stage();
-        FXMLLoader loader = new FXMLLoader(App.class.getResource("botAdder.fxml"));
+        FXMLLoader loader = new FXMLLoader(App.class.getResource("BotAdder.fxml"));
 
         scenarioBuildStage.setTitle("Scenario Builder");
         scenarioBuildStage.setScene(new Scene(loader.load()));
