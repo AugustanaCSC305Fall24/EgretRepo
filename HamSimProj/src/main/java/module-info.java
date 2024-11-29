@@ -14,4 +14,6 @@ module edu.augustana {
     exports edu.augustana;
     exports edu.augustana.Bots;
     opens edu.augustana.Bots;
+    exports edu.augustana.UI;
+    opens edu.augustana.UI;
 }

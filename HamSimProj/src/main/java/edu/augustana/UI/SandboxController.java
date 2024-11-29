@@ -1,11 +1,13 @@
-package edu.augustana;
+package edu.augustana.UI;
 
+import edu.augustana.*;
 import edu.augustana.Bots.ContinuousMessageBot;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -74,15 +76,23 @@ public class SandboxController {
     @FXML
     private Button updateServersBtn;
 
+    @FXML
+    private ListView<?> userList;
 
     @FXML
-    void initialize(){
+    private VBox chatLogVbox;
+
+
+    @FXML
+    void initialize() throws Exception {
 
         ScenarioCollection.addScenario(SimScenario.getDefaultScenario());
         scenarioChoiceBox.getItems().addAll(ScenarioCollection.getCollection());
         scenarioChoiceBox.setValue(ScenarioCollection.getCollection().get(0));
         scenarioDescription.setText(scenarioChoiceBox.getValue().getDescription());
         agentList.getItems().addAll(scenarioChoiceBox.getValue().getBotCollection().getBots());
+
+        updateListOfServer();
 
 
         startStopScenarioBtn.setOnAction(evt -> {
@@ -206,6 +216,10 @@ public class SandboxController {
 
     }
 
+    public void updateChatLog(){
+
+    }
+
     public void setMainUIControllerController(MainUiController controller) {
         mainUIController = controller;
     }
@@ -247,6 +261,7 @@ public class SandboxController {
     }
 
     public void updateListOfServer() throws Exception {
+        serverListView.setStyle("-fx-text-fill: black; -fx-control-inner-background: #cccccc;");
         serverListView.getItems().clear();
         serverListView.getItems().addAll( HamRadioServerClient.getAvailableServers().keySet());
     }

@@ -1,6 +1,9 @@
-package edu.augustana;
+package edu.augustana.UI;
 
+import edu.augustana.BotCollection;
 import edu.augustana.Bots.ContinuousMessageBot;
+import edu.augustana.Radio;
+import edu.augustana.SimScenario;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;

@@ -1,7 +1,11 @@
-package edu.augustana;
+package edu.augustana.UI;
 
 import com.google.gson.Gson;
+import edu.augustana.BotCollection;
 import edu.augustana.Bots.ContinuousMessageBot;
+import edu.augustana.RadioEnvironment;
+import edu.augustana.ScenarioCollection;
+import edu.augustana.SimScenario;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;

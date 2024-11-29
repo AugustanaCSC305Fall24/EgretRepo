@@ -49,7 +49,7 @@ public class HamRadioServerClient {
         }
     }
 
-    public static  Map<String, List<String>> getAvailableServers() throws Exception {
+    public static  Map<String, List<String>> getAvailableServers() {
         Map<String, List<String>> serverClientsMap = new HashMap<>();
         Gson gson = new Gson();
 

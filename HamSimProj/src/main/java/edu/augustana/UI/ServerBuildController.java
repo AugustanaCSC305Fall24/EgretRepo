@@ -1,19 +1,10 @@
-package edu.augustana;
+package edu.augustana.UI;
 
-import com.google.gson.Gson;
-import edu.augustana.Bots.ContinuousMessageBot;
+import edu.augustana.HamRadioServerClient;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
 
 public class ServerBuildController {
 

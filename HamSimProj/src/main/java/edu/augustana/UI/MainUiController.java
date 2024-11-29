@@ -1,7 +1,8 @@
-package edu.augustana;
+package edu.augustana.UI;
 
 import java.io.IOException;
 
+import edu.augustana.*;
 import edu.augustana.Bots.ContinuousMessageBot;
 import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;

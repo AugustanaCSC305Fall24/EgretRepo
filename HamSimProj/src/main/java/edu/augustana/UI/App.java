@@ -1,4 +1,4 @@
-package edu.augustana;
+package edu.augustana.UI;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -8,10 +8,6 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
-
-import static edu.augustana.CWHandler.startTimer;
-import static edu.augustana.CWHandler.stopTimer;
-import static edu.augustana.Radio.*;
 
 /**
  * JavaFX App

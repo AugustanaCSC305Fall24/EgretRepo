@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 
 
-<AnchorPane prefHeight="856.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.ScenarioBuildController">
+<AnchorPane prefHeight="856.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.UI.ScenarioBuildController">
    <children>
       <VBox layoutY="-1.0" prefHeight="884.0" prefWidth="600.0">
          <children>

@@ -1,9 +1,7 @@
-package edu.augustana;
+package edu.augustana.UI;
 
-import java.net.URL;
-import java.util.ResourceBundle;
+import edu.augustana.PaddleHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 
 public class ConfigController {

@@ -2,6 +2,7 @@ package edu.augustana;
 
 
 import edu.augustana.Bots.ContinuousMessageBot;
+import edu.augustana.UI.App;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;

@@ -1,5 +1,7 @@
-package edu.augustana;
+package edu.augustana.UI;
 
+import edu.augustana.CWFlashcards;
+import edu.augustana.HandleListeningSim;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;

@@ -5,10 +5,10 @@ import java.util.Random;
 public class RadioEnvironment {
 
     // Environmental factors
-    double temperature = 20;   // Degrees Celsius
-    double humidity = 0.75;    // Relative humidity (0 to 1)
-    double windSpeed = 10;     // Wind speed in km/h
-    double solarActivity = 100; // Solar activity index (0 to 300)
+    public double temperature = 20;   // Degrees Celsius
+    public double humidity = 0.75;    // Relative humidity (0 to 1)
+    public double windSpeed = 10;     // Wind speed in km/h
+    public double solarActivity = 100; // Solar activity index (0 to 300)
 
     String nameScenario = "";
 

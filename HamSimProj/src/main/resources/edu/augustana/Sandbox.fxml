@@ -5,6 +5,7 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -13,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox style="-fx-background-color: #353538;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.SandboxController">
+<VBox style="-fx-background-color: #353538;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.UI.SandboxController">
    <children>
       <TabPane prefHeight="339.0" prefWidth="400.0" style="-fx-background-color: #353538; -fx-border-color: #353538;" tabClosingPolicy="UNAVAILABLE">
          <tabs>
@@ -154,7 +155,7 @@
                                     </Label>
                                  </children>
                               </HBox>
-                              <ListView fx:id="serverListView" prefHeight="259.0" prefWidth="400.0" style="-fx-background-color: #14173ade;" />
+                              <ListView fx:id="serverListView" prefHeight="259.0" prefWidth="400.0" style="-fx-background-color: #cccccc;" />
                               <HBox alignment="CENTER_LEFT" prefHeight="33.0" prefWidth="400.0" spacing="30.0">
                                  <children>
                                     <Button fx:id="serverJoinLeaveBtn" mnemonicParsing="false" prefHeight="28.0" prefWidth="82.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 2px; -fx-border-radius: 20px;" text="Connect" textFill="WHITE">
@@ -187,7 +188,26 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #606160;">
                      <children>
-                        <VBox prefHeight="305.0" prefWidth="400.0" />
+                        <HBox prefHeight="310.0" prefWidth="400.0">
+                           <children>
+                              <VBox prefHeight="310.0" prefWidth="112.0">
+                                 <children>
+                                    <Label alignment="CENTER" prefHeight="17.0" prefWidth="167.0" text="Users In server" textFill="WHITE" />
+                                    <ListView fx:id="userList" prefHeight="313.0" prefWidth="112.0" />
+                                 </children>
+                              </VBox>
+                              <VBox>
+                                 <children>
+                                    <Label alignment="CENTER" prefHeight="17.0" prefWidth="284.0" text="Chat Log" textFill="WHITE" />
+                                    <ScrollPane prefHeight="293.0" prefWidth="289.0">
+                                       <content>
+                                          <VBox fx:id="chatLogVbox" prefHeight="15.0" prefWidth="96.0" />
+                                       </content>
+                                    </ScrollPane>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
                      </children>
                   </AnchorPane>
                </content>
