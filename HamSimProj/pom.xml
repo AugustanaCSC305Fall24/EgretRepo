@@ -114,7 +114,7 @@
                         <!-- Usage: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>edu.augustana.UI.App</mainClass>
+                            <mainClass>edu.augustana.App</mainClass>
                         </configuration>
                     </execution>
                 </executions>

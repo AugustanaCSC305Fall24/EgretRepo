@@ -5,10 +5,10 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
+import edu.augustana.UI.SandboxController;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
@@ -20,6 +20,11 @@ import java.util.*;
 public class HamRadioServerClient {
 
     private static ArrayList<String> serverList;
+
+    private static SandboxController uiController;
+
+    private static String userName;
+
 
     private static final String API_URL = "http://127.0.0.1:8000"; // Replace with your FastAPI server's URL
     private static final HttpClient httpClient = HttpClient.newHttpClient();
@@ -136,7 +141,7 @@ public class HamRadioServerClient {
     }
 
     public static void sendMessage(String message) throws Exception {
-        String formattedMessage = String.valueOf(Radio.getSelectedTuneFreq()) + "," + String.valueOf(Radio.generateFrequencyRange(Radio.getBand())) + "," + message;
+        String formattedMessage = String.valueOf(Radio.getSelectedTuneFreq()) + "," + String.valueOf(Radio.generateFrequencyRange(Radio.getBand())) + "," + message + "," + getUserName();
         socketClient.sendMessage(formattedMessage);
     }
 
@@ -145,21 +150,29 @@ public class HamRadioServerClient {
         socketClient.disconnectWebSocket();
     }
 
-    public static void playOutMessage(String message) throws InterruptedException {
-        String[] messageParts = message.split(",", 3);
+    public static void handleReceivedMessage(String message) throws InterruptedException {
+
+        String[] messageParts = message.split(",", 4);
         double frequency = Double.valueOf(messageParts[0]);
         double range = Double.valueOf(messageParts[1]);
-        System.out.println(Arrays.toString(messageParts));
+        String user = messageParts[3];
         String morseMessage = messageParts[2];
+
+        String formattedMessage = user + ": " + TextToMorseConverter.morseToText(morseMessage);
+
+        uiController.addMessageToUI(formattedMessage);
 
         MorsePlayer.playBotMorseString(morseMessage,frequency,range);
 
     }
 
-    public static void handleMessageSend(){
-        long lastTimePressed = System.currentTimeMillis();
-
-
+    public static void setUIController(SandboxController controller) {
+        uiController = controller;
     }
 
+    public static void setUserName(String name){
+        userName = name;
+    }
+
+    public static String getUserName(){return userName;}
 }

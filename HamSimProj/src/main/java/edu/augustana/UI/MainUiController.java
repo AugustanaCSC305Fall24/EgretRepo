@@ -285,7 +285,9 @@ public class MainUiController {
         if (!firstLoad) {
             mainHbox.getChildren().remove(mainHbox.getChildren().size() - 1);
         }
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("TrainingScreen.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/augustana/TrainingScreen.fxml"));
+        System.out.println(getClass().getResource("/edu/augustana/TrainingScreen.fxml"));
+
         VBox trainingVbox = loader.load();
         mainHbox.getChildren().add(trainingVbox);
     }
@@ -302,7 +304,7 @@ public class MainUiController {
 
     private void setServerPane() throws IOException {
         mainHbox.getChildren().remove(mainHbox.getChildren().size() - 1);
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("Sandbox.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/augustana/Sandbox.fxml"));
         VBox trainingVbox = loader.load();
         SandboxController controller = loader.getController();
         controller.setMainUIControllerController(this);
@@ -311,7 +313,7 @@ public class MainUiController {
 
     private void setConfigPane() throws IOException {
         mainHbox.getChildren().remove(mainHbox.getChildren().size() - 1);
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("Config.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/augustana/Config.fxml"));
         VBox trainingVbox = loader.load();
         mainHbox.getChildren().add(trainingVbox);
     }

@@ -116,6 +116,7 @@ public class SandboxController {
             serverBuildStage.setTitle("Server Builder");
             try {
                 serverBuildStage.setScene(new Scene(loader.load()));
+                HamRadioServerClient.setUIController(this);
                 ServerBuildController controller = loader.getController();
                 controller.parentController = this;
             } catch (IOException e) {
@@ -268,5 +269,10 @@ public class SandboxController {
 
     public void setCreateServerVisible(boolean bool){
         createServerBtn.setVisible(bool);
+    }
+
+    public void addMessageToUI(String message){
+        Label labelMessage = new Label(message);
+        chatLogVbox.getChildren().add(labelMessage);
     }
 }

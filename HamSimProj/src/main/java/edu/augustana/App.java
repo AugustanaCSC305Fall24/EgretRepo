@@ -1,4 +1,4 @@
-package edu.augustana.UI;
+package edu.augustana;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -20,10 +20,16 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 
-        scene = new Scene(loadFXML("mainUI"), 1280, 720);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/augustana/MainUI.fxml"));
+        System.out.println(getClass().getResource("/edu/augustana/MainUI.fxml") + "<- Resource ");
+        Parent root = loader.load();
+
+        Scene scene = new Scene(root, 1280, 720);
         stage.initStyle(StageStyle.UNDECORATED);
         stage.setScene(scene);
         stage.show();
+
+// Store the stage reference if needed
         windowStage = stage;
     }
 
@@ -32,7 +38,7 @@ public class App extends Application {
     }
 
     private static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/" + fxml + ".fxml"));
         return fxmlLoader.load();
     }
 
