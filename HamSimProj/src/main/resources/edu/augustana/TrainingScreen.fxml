@@ -6,6 +6,7 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.image.Image?>
@@ -119,7 +120,10 @@
         <tabs>
           <Tab text="Instructions">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: white;" />
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: white;">
+                     <children>
+                        <TextArea layoutY="1.0" prefHeight="177.0" prefWidth="393.0" text="1. Turn radio on.&#10;2. Start simulation.&#10;3. Choose number of bots and words per minute. &#10;4. Tune appropriately and listen for bot's call sign and message.&#10;Note: All bots stay on the same bandwidth when starting simulation.&#10;5. Enter bot's call sign and message&#10;6. Click submit.&#10;&#10;" />
+                     </children></AnchorPane>
             </content>
           </Tab>
             <Tab text="Cheat Sheet">
