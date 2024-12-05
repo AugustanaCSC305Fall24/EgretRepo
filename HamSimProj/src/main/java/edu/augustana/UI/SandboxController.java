@@ -28,25 +28,11 @@ public class SandboxController {
     private Button editScenarioBtn;
 
     @FXML
-    private Tab enviromentTab;
-
-    @FXML
-    private Button filterBtn;
-
-    @FXML
     private ChoiceBox<SimScenario> scenarioChoiceBox;
 
     @FXML
     private Label scenarioDescription;
 
-    @FXML
-    private Label scenarioDialog;
-
-    @FXML
-    private Button servInfoBtn;
-
-    @FXML
-    private HBox serverhbox;
 
     @FXML
     private Button startStopScenarioBtn;
@@ -59,8 +45,6 @@ public class SandboxController {
     @FXML
     private Slider wpmSlider;
 
-    @FXML
-    private Button showBotMessageButton;
 
     private MainUiController mainUIController;
 
@@ -99,7 +83,7 @@ public class SandboxController {
         scenarioDescription.setText(scenarioChoiceBox.getValue().getDescription());
         agentList.getItems().addAll(scenarioChoiceBox.getValue().getBotCollection().getBots());
 
-        updateListOfServer();
+//        updateListOfServer();
 
 
         startStopScenarioBtn.setOnAction(evt -> {
@@ -177,8 +161,6 @@ public class SandboxController {
         wpmSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
             MorsePlayer.setWordsPerMinuteMultiplier((int) wpmSlider.getValue());
         });
-
-        showBotMessageButton.setOnAction(evt -> mainUIController.showMessageInTextBox(agentList.getSelectionModel().getSelectedItem()));
 
         MorsePlayer.setWordsPerMinuteMultiplier((int) wpmSlider.getValue());
 

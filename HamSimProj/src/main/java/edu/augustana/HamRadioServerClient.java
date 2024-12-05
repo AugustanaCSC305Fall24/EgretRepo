@@ -22,7 +22,7 @@ public class HamRadioServerClient {
     private static SandboxController uiController;
     private static String userName;
 
-    private static final String API_URL = "http://127.0.0.1:8000"; // Replace with your FastAPI server's URL
+    private static final String API_URL = "http://34.27.101.208:8000"; // Replace with FastAPI server's URL
     private static final HttpClient httpClient = HttpClient.newHttpClient();
     private static HamRadioWebSocketClient socketClient = new HamRadioWebSocketClient();
     public static boolean isConnected = false;

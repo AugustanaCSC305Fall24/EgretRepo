@@ -53,9 +53,6 @@ public class ScenarioBuildController {
     private TextField tempField;
 
     @FXML
-    private TextField timeField;
-
-    @FXML
     private TextArea userMessageField;
 
     @FXML
@@ -131,8 +128,6 @@ public class ScenarioBuildController {
 
 
         userMessageField.setText(scenario.getUserMessage());
-
-        timeField.setText("00:00");
         tempField.setText(String.valueOf(environment.temperature));
         humidityField.setText(String.valueOf(String.valueOf(environment.humidity)));
         windSpeedField.setText(String.valueOf(environment.windSpeed));

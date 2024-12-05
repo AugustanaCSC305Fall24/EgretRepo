@@ -103,11 +103,6 @@ public class MainUiController {
     @FXML
     private Button trainingButton;
 
-    @FXML
-    private Label morseText;
-
-    @FXML
-    private Label englishText;
 
     @FXML
     private Slider frequencyFilterSlider;
@@ -423,14 +418,14 @@ public class MainUiController {
         if (keyEvent.getCode() == KeyCode.J || keyEvent.getCode() == KeyCode.K) {
             CWHandler.sendMessageTimer();
             PaddleHandler.stopPaddlePress();
-            addToMorseBox(PaddleHandler.getCwString()); // stops first paddle press on keyRelease of second paddle if both are held simultaneously
-            addToEnglishBox(PaddleHandler.getCwString());
+//            addToMorseBox(PaddleHandler.getCwString()); // stops first paddle press on keyRelease of second paddle if both are held simultaneously
+//            addToEnglishBox(PaddleHandler.getCwString());
             System.out.println(CWHandler.getCwString());
         } else if (keyEvent.getCode() == KeyCode.L) {
             CWHandler.stopTimer();
             CWHandler.sendMessageTimer();
-            addToMorseBox(CWHandler.getCwString());
-            addToEnglishBox(CWHandler.getCwString());
+//            addToMorseBox(CWHandler.getCwString());
+//            addToEnglishBox(CWHandler.getCwString());
         }
         isPressed = false;
        // System.out.println(CWHandler.getCwString());
@@ -440,19 +435,10 @@ public class MainUiController {
         stage.setFullScreen(!stage.isFullScreen());
     }
 
-    private void addToMorseBox(String morse) {
-        morseText.setText(morse);
-       // System.out.println("Label text: " + morseText.getText());
-    }
-
-    private void addToEnglishBox(String morse) {
-        englishText.setText(TextToMorseConverter.morseToText(morse));
-    }
+//    private void addToMorseBox(String morse) {
+//        morseText.setText(morse);
+//       // System.out.println("Label text: " + morseText.getText());
+//    }
 
 
-    public void showMessageInTextBox(Bot selectedBot) {
-        String fullMessage = selectedBot.getMorseCallSign() + "/*//*/" + selectedBot.getMorseBotPhrase();
-        addToEnglishBox(fullMessage.replace(' ', '/'));
-        addToMorseBox(fullMessage.replace(' ', '/'));
-    }
 }
