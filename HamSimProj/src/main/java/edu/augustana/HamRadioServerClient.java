@@ -92,7 +92,7 @@ public class HamRadioServerClient {
         socketClient.connect(serverId,userID);
         uiController.addMessageToUI("Connected to server: " + serverId);
         uiController.updateUserList(serverId);
-        Radio.setNoiseAmplitud(getServerCondition(serverId));
+        Radio.setNoiseAmplitude(getServerCondition(serverId));
     }
 
     // Method to send a message via WebSocket

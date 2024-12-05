@@ -21,9 +21,6 @@ public class SimScenario {
     private String description ;
 
     @Expose
-    private String expectedMessages;
-
-    @Expose
     private int numBots;
 
     @Expose
@@ -41,10 +38,8 @@ public class SimScenario {
     public boolean isPlaying;
 
 
-    public SimScenario(String name, String description, String expectedMessages, RadioEnvironment environment, BotCollection botCollection, int type){
+    public SimScenario(String name, String description, RadioEnvironment environment, BotCollection botCollection, int type){
         this.scenarioName = name;
-
-        this.expectedMessages = expectedMessages;
         this.description = description;
         this.environment = environment;
         this.botCollection = botCollection;
@@ -61,7 +56,7 @@ public class SimScenario {
         RadioEnvironment defRadioEnvironment = new RadioEnvironment("DEFAULT",0.1,0.1,0.1,0.1);
         ArrayList<Bot> defBotList = new ArrayList<>();
         BotCollection defBotCollection = new BotCollection(defBotList);
-        SimScenario defaultScenario = new SimScenario("DEFAULT",defDescription,defexpectedMessage, defRadioEnvironment, defBotCollection, 0);
+        SimScenario defaultScenario = new SimScenario("DEFAULT",defDescription, defRadioEnvironment, defBotCollection, 0);
 
         return defaultScenario;
 
@@ -84,6 +79,7 @@ public class SimScenario {
     }
 
     public void stopScenario(){
+        Radio.setNoiseAmplitude(0);
         isPlaying = false;
         if(!botCollection.getBots().isEmpty()){
             for(Bot bot: botCollection.getBots()){
@@ -121,10 +117,6 @@ public class SimScenario {
         return this.scenarioName;
     }
 
-    public String getUserMessage(){
-        return expectedMessages;
-    }
-
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -147,10 +139,6 @@ public class SimScenario {
 
     public void setDescription(String newDescription){
         this.description = newDescription;
-    }
-
-    public void setExpectedMessages(String newMessage){
-        this.expectedMessages = newMessage;
     }
 
     public void setScenarioName(String scenarioName) {
@@ -212,10 +200,12 @@ public class SimScenario {
                 }
             }
         }
-
-        if (closestBot.checkMessage(userMessage)) {
-            answerCorrect = true;
+        if (closestBot != null) {
+            if (closestBot.checkMessage(userMessage)) {
+                answerCorrect = true;
+            }
         }
+
 
         if (answerCorrect) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);

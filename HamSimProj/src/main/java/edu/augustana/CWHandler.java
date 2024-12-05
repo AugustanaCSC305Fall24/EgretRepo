@@ -1,10 +1,13 @@
 package edu.augustana;
 
+import javafx.scene.control.Alert;
+
 import java.util.ArrayList;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static edu.augustana.Radio.playTone;
 import static edu.augustana.Radio.stopTone;
@@ -190,8 +193,10 @@ public class CWHandler {
             }, SEND_TIMER_LENGTH, TimeUnit.SECONDS);
         }
 
+        //will delete all of this
         for (SimScenario scenario : ScenarioCollection.getCollection()) {
             if (scenario.isPlaying) {
+
                 // Cancel the previous task if it exists
                 if (scheduledTask != null && !scheduledTask.isDone()) {
                     scheduledTask.cancel(false); // Cancel the current task but do not interrupt if running
