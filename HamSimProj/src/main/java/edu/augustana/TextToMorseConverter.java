@@ -102,7 +102,7 @@ public class TextToMorseConverter {
                 morseCode.append(morseChar).append(" ");
             } else {
                 // Handle characters not in Morse code map
-                morseCode.append("? ");
+                morseCode.append("");
             }
         }
 
@@ -125,7 +125,7 @@ public class TextToMorseConverter {
             if (letter != null) {
                 result.append(letter);
             } else {
-                result.append("?");  // For invalid Morse code
+                result.append("");  // For invalid Morse code
             }
         }
 

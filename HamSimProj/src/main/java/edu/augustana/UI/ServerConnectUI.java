@@ -26,8 +26,9 @@ public class ServerConnectUI {
 
         connectBtn.setOnAction(event -> {
             try {
-                HamRadioServerClient.connectToSever(serverID);
+                HamRadioServerClient.connectToServer(serverID,userCallSign.getText());
                 parentController.setConnected();
+                parentController.setUserName(userCallSign.getText());
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 stage.close();
             } catch (Exception e) {

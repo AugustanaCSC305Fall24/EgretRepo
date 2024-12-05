@@ -29,17 +29,18 @@ public class HamRadioWebSocketClient {
         HamRadioServerClient.handleReceivedMessage(message);
     }
 
-    public void connect(String serverId) {
+    public void connect(String serverId, String userId) {
         try {
-            // Construct the WebSocket URI using the server ID
+            // Construct the WebSocket URI using the server ID and user ID as a query parameter
             String wsUri = HamRadioServerClient.getServerURL() + serverId;
+            String fullUri = String.format("ws://localhost:8000/ws/%s?user_id=%s", serverId, userId);
 
             // Create a WebSocket container
             WebSocketContainer container = ContainerProvider.getWebSocketContainer();
 
             // Connect to the WebSocket server
-            session = container.connectToServer(this, new URI("ws://localhost:8000/ws/"+serverId));
-            System.out.println("Connected to WebSocket server: " + wsUri);
+            session = container.connectToServer(this, new URI(fullUri));
+            System.out.println("Connected to WebSocket server: " + wsUri + " as user " + userId);
 
         } catch (Exception e) {
             System.err.println("Failed to connect to WebSocket server");

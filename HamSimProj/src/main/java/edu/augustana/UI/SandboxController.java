@@ -2,6 +2,7 @@ package edu.augustana.UI;
 
 import edu.augustana.*;
 import edu.augustana.Bots.ContinuousMessageBot;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -11,6 +12,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SandboxController {
 
@@ -77,7 +80,7 @@ public class SandboxController {
     private Button updateServersBtn;
 
     @FXML
-    private ListView<?> userList;
+    private ListView<String> userList;
 
     @FXML
     private VBox chatLogVbox;
@@ -180,6 +183,7 @@ public class SandboxController {
         serverJoinLeaveBtn.setOnAction(event -> {
             if(HamRadioServerClient.isConnected == true){
                 try {
+
                     HamRadioServerClient.disconnectServer();
                     serverJoinLeaveBtn.setText("Connect");
                     updateListOfServer();
@@ -187,6 +191,7 @@ public class SandboxController {
                     throw new RuntimeException(e);
                 }
             }else{
+                HamRadioServerClient.setUIController(this);
                 Stage serverConnectStage = new Stage();
                 FXMLLoader loader = new FXMLLoader(App.class.getResource("serverConnect.fxml"));
                 serverConnectStage.setTitle("Connect To server");
@@ -272,7 +277,22 @@ public class SandboxController {
     }
 
     public void addMessageToUI(String message){
-        Label labelMessage = new Label(message);
-        chatLogVbox.getChildren().add(labelMessage);
+
+        Platform.runLater(() -> {
+            Label labelMessage = new Label(message);
+            chatLogVbox.getChildren().add(labelMessage);
+        });
+
+    }
+
+    public void setUserName(String name){
+        HamRadioServerClient.setUserName(name);
+    }
+
+    public void updateUserList(String serverId){
+
+        List<String> users = HamRadioServerClient.getAvailableServers().get(serverId);
+        userList.getItems().clear();
+        userList.getItems().addAll(users);
     }
 }

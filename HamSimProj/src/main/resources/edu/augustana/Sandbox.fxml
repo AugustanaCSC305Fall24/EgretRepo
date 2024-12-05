@@ -201,7 +201,7 @@
                                     <Label alignment="CENTER" prefHeight="17.0" prefWidth="284.0" text="Chat Log" textFill="WHITE" />
                                     <ScrollPane prefHeight="293.0" prefWidth="289.0">
                                        <content>
-                                          <VBox fx:id="chatLogVbox" prefHeight="15.0" prefWidth="96.0" />
+                                          <VBox fx:id="chatLogVbox" prefHeight="22.0" prefWidth="287.0" />
                                        </content>
                                     </ScrollPane>
                                  </children>
