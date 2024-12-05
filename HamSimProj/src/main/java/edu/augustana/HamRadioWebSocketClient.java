@@ -33,7 +33,7 @@ public class HamRadioWebSocketClient {
         try {
             // Construct the WebSocket URI using the server ID and user ID as a query parameter
             String wsUri = HamRadioServerClient.getServerURL() + serverId;
-            String fullUri = String.format("ws://localhost:8000/ws/%s?user_id=%s", serverId, userId);
+            String fullUri = String.format("ws://"  + HamRadioServerClient.getServerURL() + ":8000/ws/%s?user_id=%s", serverId, userId);
 
             // Create a WebSocket container
             WebSocketContainer container = ContainerProvider.getWebSocketContainer();
