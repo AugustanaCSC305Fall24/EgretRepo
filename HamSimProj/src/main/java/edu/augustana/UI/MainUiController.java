@@ -3,6 +3,7 @@ package edu.augustana.UI;
 import java.io.IOException;
 
 import edu.augustana.*;
+import edu.augustana.Bots.Bot;
 import edu.augustana.Bots.ContinuousMessageBot;
 import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
@@ -410,7 +411,7 @@ public class MainUiController {
     }
 
 
-    public void showMessageInTextBox(ContinuousMessageBot selectedBot) {
+    public void showMessageInTextBox(Bot selectedBot) {
         String fullMessage = selectedBot.getMorseCallSign() + "/*//*/" + selectedBot.getMorseBotPhrase();
         addToEnglishBox(fullMessage.replace(' ', '/'));
         addToMorseBox(fullMessage.replace(' ', '/'));

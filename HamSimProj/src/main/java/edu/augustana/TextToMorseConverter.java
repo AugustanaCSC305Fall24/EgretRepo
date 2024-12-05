@@ -44,6 +44,7 @@ public class TextToMorseConverter {
         morseCodeMap.put("8", "---..");
         morseCodeMap.put("9", "----.");
         morseCodeMap.put("0", "-----");
+        morseCodeMap.put(".", ".-.-.-");
         morseCodeMap.put(" ", "*"); // Space separator in Morse code
     }
 

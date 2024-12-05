@@ -104,24 +104,25 @@ public class MorsePlayer {
                 if(morse[i] == '.'){
 
                     playTone(freq);
-                    startTimer();
+                    //startTimer();
                     try {
                         Thread.sleep(beatLength + randGen2.nextInt( (int) (beatLength * variation)));
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
                     stopTone();
-                    stopTimer();
+                    //stopTimer();
                 }else if(morse[i] == '-'){
 
                     playTone(freq);
-                    startTimer();
+                    //startTimer();
                     try {
                         Thread.sleep((beatLength * 3) + randGen2.nextInt( (int) (beatLength * variation)));
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
-                    stopTone(); stopTimer();
+                    stopTone();
+                    //stopTimer();
                 }else{
                     try {
                         Thread.sleep((long) ((beatLength * 7) * (multiplier) + randGen2.nextInt( (int) (beatLength * (multiplier) * variation))));

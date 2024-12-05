@@ -1,6 +1,6 @@
 package edu.augustana;
 
-import edu.augustana.Bots.ContinuousMessageBot;
+import edu.augustana.Bots.Bot;
 
 import java.util.ArrayList;
 
@@ -8,21 +8,21 @@ public class BotCollection {
 
 
     //Replace this with appropriate classes
-    private ArrayList<ContinuousMessageBot> botCollection;
+    private ArrayList<Bot> botCollection;
 
-    public BotCollection(ArrayList<ContinuousMessageBot> botList){
+    public BotCollection(ArrayList<Bot> botList){
         botCollection = botList;
     }
 
-    public void addBot(ContinuousMessageBot bot){
+    public void addBot(Bot bot){
         botCollection.add(bot);
     }
 
-    public ArrayList<ContinuousMessageBot> getBots(){
+    public ArrayList<Bot> getBots(){
         return botCollection;
     }
 
-    public void deleteBot(ContinuousMessageBot bot){
+    public void deleteBot(Bot bot){
         botCollection.remove(bot);
     }
 
