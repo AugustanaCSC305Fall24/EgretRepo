@@ -134,16 +134,27 @@
       </VBox>
    </center>
    <top>
-      <ToolBar prefHeight="40.0" prefWidth="424.0" BorderPane.alignment="CENTER">
+      <ToolBar fx:id="myToolBar" prefHeight="40.0" prefWidth="424.0" BorderPane.alignment="CENTER">
         <items>
-            <HBox prefHeight="30.0" prefWidth="522.0" />
-            <Button fx:id="sandboxButton" mnemonicParsing="false" text="Sandbox" />
-            <Button fx:id="trainingButton" mnemonicParsing="false" text="Training" />
-            <HBox fx:id="spacingHBox" maxWidth="1.7976931348623157E308" prefHeight="30.0" prefWidth="463.0" />
-            <Button fx:id="configButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="56.0" text="Config" />
-            <Button fx:id="minimizeButton" mnemonicParsing="false" text="-" />
-            <Button fx:id="fullScreenButton" mnemonicParsing="false" text="#" />
-          <Button fx:id="closeButton" mnemonicParsing="false" text="X" />
+            <HBox fx:id="toolBarHbox">
+               <children>
+                  <Button fx:id="sandboxButton" mnemonicParsing="false" text="Sandbox" />
+                  <HBox fx:id="leftSpacingHbox" />
+                  <HBox fx:id="midSpacingHbox">
+                     <children>
+                        <Button fx:id="trainingButton" mnemonicParsing="false" text="Training" />
+                     </children>
+                  </HBox>
+                  <HBox fx:id="rightSpacingHbox">
+                     <children>
+                        <Button fx:id="configButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="56.0" text="Config" />
+                        <Button fx:id="minimizeButton" mnemonicParsing="false" text="-" />
+                        <Button fx:id="fullScreenButton" mnemonicParsing="false" text="#" />
+                      <Button fx:id="closeButton" mnemonicParsing="false" text="X" />
+                     </children>
+                  </HBox>
+               </children>
+            </HBox>
         </items>
          <BorderPane.margin>
             <Insets />

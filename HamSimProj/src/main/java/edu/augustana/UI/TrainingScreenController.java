@@ -7,6 +7,7 @@ import edu.augustana.PaddleHandler;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
@@ -85,6 +86,9 @@ public class TrainingScreenController {
 
     private String[] trainingTypeArray = {"Listening", "Typing"};
 
+    private ImageView cheatSheetImage;
+
+
 
 
     @FXML
@@ -98,6 +102,8 @@ public class TrainingScreenController {
                 throw new RuntimeException(e);
             }
         });
+
+        assert cheatSheetImage != null : "fx:id=\"cheatSheetImage\" was not injected: check your FXML file 'TrainingScreen.fxml'.";
 
         submitGuessButton.setOnAction(evt -> {HandleListeningSim.checkGuess(botCallSignTextField.getText(), botMessageTextField.getText(), guessedMessagesVBox);
             botCallSignTextField.clear();

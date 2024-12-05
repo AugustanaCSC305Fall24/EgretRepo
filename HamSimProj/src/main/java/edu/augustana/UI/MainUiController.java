@@ -8,12 +8,14 @@ import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
 import java.text.DecimalFormat;
@@ -109,6 +111,23 @@ public class MainUiController {
     @FXML
     private Slider frequencyFilterSlider;
 
+    @FXML
+    private ToolBar myToolBar;
+
+    @FXML
+    private HBox toolBarHbox;
+
+    @FXML
+    private HBox leftSpacingHbox;
+
+    @FXML
+    private HBox midSpacingHbox;
+
+    @FXML
+    private HBox rightSpacingHbox;
+
+
+
 
     KnobControl volumeKnob;
     KnobControl filterKnob;
@@ -120,6 +139,18 @@ public class MainUiController {
     @FXML
     void initialize() throws IOException {
         displayLabel.setText("");
+
+        toolBarHbox.setPrefWidth(myToolBar.getWidth());
+
+        HBox.setHgrow(toolBarHbox, Priority.ALWAYS);
+        toolBarHbox.setAlignment(Pos.CENTER_RIGHT);
+
+        HBox.setHgrow(midSpacingHbox, Priority.ALWAYS);
+        midSpacingHbox.setAlignment(Pos.CENTER_LEFT);
+
+        midSpacingHbox.setPrefWidth(toolBarHbox.getWidth()/4);
+
+
 
         assert mainHbox != null : "fx:id=\"mainHbox\" was not injected: check your FXML file 'MainUI.fxml'.";
         assert radioImage != null : "fx:id=\"radioImage\" was not injected: check your FXML file 'MainUI.fxml'.";
