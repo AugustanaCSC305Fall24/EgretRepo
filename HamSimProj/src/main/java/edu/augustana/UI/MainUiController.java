@@ -3,17 +3,20 @@ package edu.augustana.UI;
 import java.io.IOException;
 
 import edu.augustana.*;
+import edu.augustana.Bots.Bot;
 import edu.augustana.Bots.ContinuousMessageBot;
 import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
 import java.text.DecimalFormat;
@@ -28,6 +31,7 @@ import static java.lang.Math.min;
 public class MainUiController {
     private boolean isMuted = false;
     private double savedVolume = 0.0;
+    private boolean isPressed = false;
 
 
     @FXML
@@ -108,6 +112,23 @@ public class MainUiController {
     @FXML
     private Slider frequencyFilterSlider;
 
+    @FXML
+    private ToolBar myToolBar;
+
+    @FXML
+    private HBox toolBarHbox;
+
+    @FXML
+    private HBox leftSpacingHbox;
+
+    @FXML
+    private HBox midSpacingHbox;
+
+    @FXML
+    private HBox rightSpacingHbox;
+
+
+
 
     KnobControl volumeKnob;
     KnobControl filterKnob;
@@ -119,6 +140,18 @@ public class MainUiController {
     @FXML
     void initialize() throws IOException {
         displayLabel.setText("");
+
+        toolBarHbox.setPrefWidth(myToolBar.getWidth());
+
+        HBox.setHgrow(toolBarHbox, Priority.ALWAYS);
+        toolBarHbox.setAlignment(Pos.CENTER_RIGHT);
+
+        HBox.setHgrow(midSpacingHbox, Priority.ALWAYS);
+        midSpacingHbox.setAlignment(Pos.CENTER_LEFT);
+
+        midSpacingHbox.setPrefWidth(toolBarHbox.getWidth()/4);
+
+
 
         assert mainHbox != null : "fx:id=\"mainHbox\" was not injected: check your FXML file 'MainUI.fxml'.";
         assert radioImage != null : "fx:id=\"radioImage\" was not injected: check your FXML file 'MainUI.fxml'.";
@@ -358,27 +391,31 @@ public class MainUiController {
     }
 
     public void handleKeyPress(KeyEvent keyEvent) throws InterruptedException {
-        if (keyEvent.getCode() == KeyCode.J) {
-            new Thread(() -> {
-                try {
-                    PaddleHandler.playContinuousDot();
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-            }).start();
+        if (!isPressed) {
+            isPressed = true;
+          //  System.out.println(System.nanoTime());
+            if (keyEvent.getCode() == KeyCode.J) {
+                new Thread(() -> {
+                    try {
+                        PaddleHandler.playContinuousDot();
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                }).start();
 
-        } else if (keyEvent.getCode() == KeyCode.K) {
-            new Thread(() ->{
-                try {
-                    PaddleHandler.playContinuousDash();
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-            }).start();
-        } else if (keyEvent.getCode() == KeyCode.L) {
-            CWHandler.startTimer();
-        } else if (keyEvent.getCode() == KeyCode.N) {
-            Radio.toggleNoise();
+            } else if (keyEvent.getCode() == KeyCode.K) {
+                new Thread(() ->{
+                    try {
+                        PaddleHandler.playContinuousDash();
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                }).start();
+            } else if (keyEvent.getCode() == KeyCode.L) {
+                CWHandler.startTimer();
+            } else if (keyEvent.getCode() == KeyCode.N) {
+                Radio.toggleNoise();
+            }
         }
     }
 
@@ -388,12 +425,14 @@ public class MainUiController {
             PaddleHandler.stopPaddlePress();
             addToMorseBox(PaddleHandler.getCwString()); // stops first paddle press on keyRelease of second paddle if both are held simultaneously
             addToEnglishBox(PaddleHandler.getCwString());
+            System.out.println(CWHandler.getCwString());
         } else if (keyEvent.getCode() == KeyCode.L) {
             CWHandler.stopTimer();
             addToMorseBox(CWHandler.getCwString());
             addToEnglishBox(CWHandler.getCwString());
         }
-
+        isPressed = false;
+       // System.out.println(CWHandler.getCwString());
     }
 
     private void handleFullScreenButtonPress(Stage stage) {
@@ -410,7 +449,7 @@ public class MainUiController {
     }
 
 
-    public void showMessageInTextBox(ContinuousMessageBot selectedBot) {
+    public void showMessageInTextBox(Bot selectedBot) {
         String fullMessage = selectedBot.getMorseCallSign() + "/*//*/" + selectedBot.getMorseBotPhrase();
         addToEnglishBox(fullMessage.replace(' ', '/'));
         addToMorseBox(fullMessage.replace(' ', '/'));

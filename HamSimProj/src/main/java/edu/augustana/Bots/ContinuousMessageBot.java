@@ -8,13 +8,6 @@ import java.util.Arrays;
 
 public class ContinuousMessageBot extends Bot{
 
-
-    private final String morseBotPhrase;
-    private final String morseCallSign;
-
-    private final String textBotPhrase;
-    private final String textCallSign;
-
     private boolean playSound;
 
 
@@ -43,77 +36,23 @@ public class ContinuousMessageBot extends Bot{
         String selection = botPhraseArray.get(randomGen.nextInt(botPhraseArray.size()));
         botPhraseArray.remove(selection);
         usedBotPhrases.add(selection); //This is so that we can add them back into the array once we stop the sim
-        this.textBotPhrase = selection;
-        this.morseBotPhrase = TextToMorseConverter.textToMorse(selection); //Morse string of their phrase
+        setTextBotPhrase(selection);
+        setMorseBotPhrase(TextToMorseConverter.textToMorse(selection)); //Morse string of their phrase
 
 
         selection = botCallSignArray.get(randomGen.nextInt(botCallSignArray.size()));
         botCallSignArray.remove(selection);
         usedCallSigns.add(selection); //This is so that we can add them back into the array once we stop the sim
-        this.textCallSign = selection;
-        this.morseCallSign = TextToMorseConverter.textToMorse(selection); //Morse string of their callSign
+        setTextCallSign(selection);
+        setMorseCallSign(TextToMorseConverter.textToMorse(selection)); //Morse string of their callSign
         this.playSound = false;
 
 
 
         //testing
-        System.out.println(this.textCallSign + " " + this.textBotPhrase + " " + getOutputFrequency());
+        System.out.println(getTextCallSign() + " " + getTextBotPhrase() + " " + getOutputFrequency());
 
     }
-
-    //bot constructor for scenario bots
-    public ContinuousMessageBot(int band, String name, String callSign, String message) {
-
-        super(band);
-
-        setBehaviorType(new ContinuousPlaying(this));
-
-        setName(name);
-
-        this.textBotPhrase = message;
-        this.morseBotPhrase = TextToMorseConverter.textToMorse(message);
-
-        this.textCallSign = callSign;
-        this.morseCallSign = TextToMorseConverter.textToMorse(callSign);
-
-        this.playSound = false;
-
-        //testing
-        System.out.println(this.textCallSign + " " + this.textBotPhrase + " " + getOutputFrequency());
-
-    }
-
-
-    /**
-     * Accessor method for botPhrase
-     * @return botPhrase
-     */
-    public String getTextBotPhrase() {
-        return textBotPhrase;
-    }
-
-    /**
-     * Accessor method for callSign
-     * @return callSign
-     */
-    public String getTextCallSign() {return textCallSign;}
-
-    /**
-     * Accessor method for morseBotPhrase
-     * @return morseBotPhrase
-     */
-    public String getMorseBotPhrase() {
-        return morseBotPhrase;
-    }
-
-    /**
-     * Accessor method for morseCallSign
-     * @return morseCallSign
-     */
-    public String getMorseCallSign() {
-        return morseCallSign;
-    }
-
 
     @Override
     public void playSound() {
@@ -132,10 +71,4 @@ public class ContinuousMessageBot extends Bot{
         return playSound;
     }
 
-
-
-    //returns string representation of bot
-    public String toString() {
-        return getName() + ", " + textCallSign + ", " + getOutputFrequency();
-    }
 }

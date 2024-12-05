@@ -93,6 +93,7 @@ public class MorsePlayer {
                 if (freq < 50) {
                     freq = 50;
                 }
+
                 System.out.println("Final freq: " + freq);
                 // this is for the tuning slider
                 double freqDiff = Math.abs(getSelectedTuneFreq() -  botFrequency);
@@ -104,24 +105,25 @@ public class MorsePlayer {
                 if(morse[i] == '.'){
 
                     playTone(freq);
-                    startTimer();
+                    //startTimer();
                     try {
                         Thread.sleep(beatLength + randGen2.nextInt( (int) (beatLength * variation)));
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
                     stopTone();
-                    stopTimer();
+                    //stopTimer();
                 }else if(morse[i] == '-'){
 
                     playTone(freq);
-                    startTimer();
+                    //startTimer();
                     try {
                         Thread.sleep((beatLength * 3) + randGen2.nextInt( (int) (beatLength * variation)));
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
-                    stopTone(); stopTimer();
+                    stopTone();
+                    //stopTimer();
                 }else{
                     try {
                         Thread.sleep((long) ((beatLength * 7) * (multiplier) + randGen2.nextInt( (int) (beatLength * (multiplier) * variation))));
@@ -183,17 +185,19 @@ public class MorsePlayer {
         if (botFrequency < userFrequency) {
             tone = 110 * Math.log10(tone);
             return tone;
-        }else {
+        } else {
             tone = 1000 * Math.log10(tone); //if you are about on, it puts out freq of 2500
-            tone = tone - 2300; //so now I am bringing it down to sidetone
-            return tone;
+            double numFix = sideTone - 3100;
+            return tone + numFix;
         }
     }
 
     public static double checkIfHigherThanBot(double botFrequency, double userFrequency, double tone) {
+        double numFix;
         if (botFrequency < userFrequency) {
             double difference = tone - sideTone;
-            tone = sideTone - difference - 100; // subtract by 100 because tone was off, purely an error fixing num
+            numFix = sideTone - 230;
+            tone = sideTone - difference - numFix ; // subtracting by numFix to get tone in correct place.
         }
         return tone;
     }

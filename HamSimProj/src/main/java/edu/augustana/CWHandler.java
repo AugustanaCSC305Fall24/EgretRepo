@@ -117,7 +117,19 @@ public class CWHandler {
         return cwArray;
     }
 
+    public static StringBuilder getCwStringBuilder() {
+        return cwString;
+    }
+
+//    public static void addToCwString(String string) {
+//        cwString.append(string);
+//    }
+
     public static String getCwString () {return cwString.toString();}
+
+    public static void resetCwString() {
+        cwString.delete(0, cwString.toString().length());
+    }
 
 
     /**

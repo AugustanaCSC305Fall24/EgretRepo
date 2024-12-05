@@ -97,10 +97,11 @@ public class HamRadioServerClient {
 
     // Method to send a message via WebSocket
     public static void sendMessage(String message) throws Exception {
-        String formattedMessage = String.valueOf(Radio.getSelectedTuneFreq()) + "," +
-                String.valueOf(Radio.generateFrequencyRange(Radio.getBand())) + "," +
-                message + "," + getUserName();
-        socketClient.sendMessage(formattedMessage);
+
+        if (isConnected) {
+            String formattedMessage = String.valueOf(Radio.getSelectedTuneFreq()) + "," + String.valueOf(Radio.generateFrequencyRange(Radio.getBand())) + "," + message + "," + getUserName();
+            socketClient.sendMessage(formattedMessage);
+        }
     }
 
     // Method to disconnect from the server

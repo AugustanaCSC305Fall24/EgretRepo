@@ -5,7 +5,6 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 
 import static java.lang.Double.valueOf;
 
@@ -260,8 +259,8 @@ public class Radio {
         }
     }
 
-    public static void setNoiseAmplitud(double newAmplitud){
-        noiseAmplitud = newAmplitud;
+    public static void setNoiseAmplitude(double newAmplitude){
+        noiseAmplitud = newAmplitude;
     }
 
     public static double generateFrequencyRange(int band) {
@@ -280,7 +279,7 @@ public class Radio {
 
             case 20:
                 output = .35;
-
+                break;
 
             case 30:
 
@@ -296,6 +295,40 @@ public class Radio {
                 break;
         }
         return output;
+    }
+
+    public static double getMinFreqInBand() {
+
+        double minFreq = 0;
+
+        switch (band){
+            case 10:
+                minFreq = 28.000;
+                break;
+
+            case 17:
+
+                minFreq = 18.068;
+                break;
+
+            case 20:
+                minFreq = 14.000;
+                break;
+
+            case 30:
+
+                minFreq = 10.100;
+                break;
+
+            case 40:
+                minFreq = 7.000;
+                break;
+
+            case 80:
+                minFreq = 3.500;
+                break;
+        }
+        return minFreq;
     }
 
 

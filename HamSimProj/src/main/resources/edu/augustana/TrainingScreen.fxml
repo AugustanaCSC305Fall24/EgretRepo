@@ -2,6 +2,8 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Tab?>
@@ -9,11 +11,12 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
 <VBox prefHeight="678.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.UI.TrainingScreenController">
    <children>
@@ -94,19 +97,57 @@
                      <children>
                         <VBox alignment="CENTER" prefHeight="364.0" prefWidth="399.0" style="-fx-background-color: #606160;">
                            <children>
-                              <Label fx:id="correctIncorrectLabel" text="Incorrect/Correct">
+                              <HBox alignment="TOP_CENTER" prefHeight="38.0" prefWidth="399.0">
+                                 <children>
+                                    <Label fx:id="trainingTypeLabel" prefHeight="26.0" prefWidth="82.0" text="Training Type: " />
+                                    <ChoiceBox fx:id="trainingTypeChoiceBox" accessibleText="Select Training Type" prefWidth="150.0" />
+                                 </children>
+                              </HBox>
+                              <HBox alignment="TOP_CENTER" prefHeight="27.0" prefWidth="399.0">
+                                 <children>
+                                    <Label fx:id="difficultyLabel" text=" Difficulty: " />
+                                    <CheckBox fx:id="lettersCheckBox" mnemonicParsing="false" text="Letters">
+                                       <HBox.margin>
+                                          <Insets left="10.0" right="10.0" />
+                                       </HBox.margin>
+                                    </CheckBox>
+                                    <CheckBox fx:id="numbersCheckBox" mnemonicParsing="false" text="Numbers">
+                                       <HBox.margin>
+                                          <Insets left="10.0" right="10.0" />
+                                       </HBox.margin>
+                                    </CheckBox>
+                                    <CheckBox fx:id="abbrevCheckBox" mnemonicParsing="false" text="Abbreviations">
+                                       <HBox.margin>
+                                          <Insets left="10.0" right="10.0" />
+                                       </HBox.margin>
+                                    </CheckBox>
+                                 </children>
+                              </HBox>
+                              <Button fx:id="startTrainingButton" alignment="CENTER" mnemonicParsing="false" text="Start Training" />
+                              <HBox prefHeight="23.0" prefWidth="399.0" />
+                              <Label fx:id="correctIncorrectLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="231.0" text="Incorrect/Correct">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label fx:id="lettersLabel" text="Letter(s): ">
                                  <padding>
-                                    <Insets bottom="20.0" />
+                                    <Insets bottom="10.0" />
                                  </padding>
                               </Label>
                               <Button fx:id="playLetterButton" mnemonicParsing="false" text="Play Letter" />
                               <HBox alignment="CENTER" prefHeight="58.0" prefWidth="399.0">
                                  <children>
-                                    <Label prefHeight="26.0" prefWidth="41.0" text="Guess: " />
+                                    <Label fx:id="guessLabel" prefHeight="26.0" prefWidth="41.0" text="Guess: " />
                                     <TextField fx:id="guessTextField" />
                                  </children>
                               </HBox>
                               <Button fx:id="submitButton" mnemonicParsing="false" text="Submit Guess" />
+                              <Button fx:id="endButton" mnemonicParsing="false" text="End Training">
+                                 <VBox.margin>
+                                    <Insets top="10.0" />
+                                 </VBox.margin>
+                              </Button>
                            </children>
                         </VBox>
                      </children>
@@ -121,20 +162,19 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: white;">
                      <children>
-                        <HBox prefHeight="292.0" prefWidth="503.0" />
-                     </children>
-                  </AnchorPane>
+                        <TextArea layoutY="1.0" prefHeight="177.0" prefWidth="393.0" text="1. Turn radio on.&#10;2. Start simulation.&#10;3. Choose number of bots and words per minute. &#10;4. Tune appropriately and listen for bot's call sign and message.&#10;Note: All bots stay on the same bandwidth when starting simulation.&#10;5. Enter bot's call sign and message&#10;6. Click submit.&#10;&#10;" />
+                     </children></AnchorPane>
             </content>
           </Tab>
             <Tab text="Cheat Sheet">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="334.0" prefWidth="503.0">
                      <children>
-                        <TextArea layoutX="4.0" layoutY="4.0" prefHeight="182.0" prefWidth="390.0" text="A   •-&#9;N   -•&#9;0   -----&#10;B   -•••&#9;O   ---&#9;1   •----&#10;C   -•-•&#9;P   •--•&#9;2   ••---&#10;D   -••&#9;Q   --•-&#9;3   •••--&#10;E   •&#9;        R   •-•&#9;4   ••••-&#10;F   ••-•&#9;S   •••&#9;5   •••••&#10;G   --•&#9;T   -&#9;        6   -••••&#10;H   ••••&#9;U   ••-&#9;7   --•••&#10;I   ••&#9;        V   •••-&#9;8   ---••&#10;J   •---&#9;W   •--&#9;9   ----•&#10;K   -•-&#9;X   -••-&#9;&#10;L   •-••&#9;Y   -•--&#9;&#10;M   --&#9;Z   --••&#9;&#10;">
-                           <font>
-                              <Font size="15.0" />
-                           </font>
-                        </TextArea>
+                        <ImageView fx:id="cheatSheetImage" fitHeight="169.0" fitWidth="313.0" layoutX="49.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                               <Image url="@../../assets/morse.gif" />
+                           </image>
+                        </ImageView>
                      </children>
                   </AnchorPane>
               </content>

@@ -2,6 +2,7 @@ package edu.augustana.UI;
 
 import com.google.gson.Gson;
 import edu.augustana.*;
+import edu.augustana.Bots.Bot;
 import edu.augustana.Bots.ContinuousMessageBot;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,7 +23,7 @@ public class ScenarioBuildController {
     private Button addBotBtn;
 
     @FXML
-    private ListView<ContinuousMessageBot> botListTable;
+    private ListView<Bot> botListTable;
 
     @FXML
     private Button cancelBtn;
@@ -127,7 +128,10 @@ public class ScenarioBuildController {
         botCollection  = scenario.getBotCollection();
         descripTionField.setText(scenario.getDescription());
         scenarioNameField.setText(scenario.getName());
+
+
         userMessageField.setText(scenario.getUserMessage());
+
         timeField.setText("00:00");
         tempField.setText(String.valueOf(environment.temperature));
         humidityField.setText(String.valueOf(String.valueOf(environment.humidity)));
@@ -148,7 +152,7 @@ public class ScenarioBuildController {
 
     public void deleteBot(){
         if(botListTable.getSelectionModel().getSelectedItem() !=  null){
-            scenario.getBotCollection().deleteBot(botListTable.getSelectionModel().getSelectedItem());
+            this.botCollection.deleteBot(botListTable.getSelectionModel().getSelectedItem());
             updateBotListView();
         }
 
@@ -212,7 +216,7 @@ public class ScenarioBuildController {
     }
 
     public void newScenario(){
-        botCollection = new BotCollection(new ArrayList<ContinuousMessageBot>());
+        botCollection = new BotCollection(new ArrayList<Bot>());
     }
 
     private void createScenario(){
@@ -224,7 +228,7 @@ public class ScenarioBuildController {
                     Double.parseDouble(windSpeedField.getText()),
                     Double.parseDouble(humidityField.getText()),
                     Double.parseDouble(tempField.getText()));
-            SimScenario newScenario = new SimScenario(scenarioNameField.getText(),descripTionField.getText(),userMessageField.getText(),"That is not right!", "You Win!",
+            SimScenario newScenario = new SimScenario(scenarioNameField.getText(),descripTionField.getText(),userMessageField.getText(),
                     environment, botCollection, scenarioTypeChoice.getValue());
 
             ScenarioCollection.addScenario(newScenario);
@@ -241,7 +245,7 @@ public class ScenarioBuildController {
             scenario.setScenarioName(scenarioNameField.getText());
             scenario.setDescription(descripTionField.getText());
             scenario.setEnvironment(environment);
-            scenario.setExpectedMesagge(userMessageField.getText());
+            scenario.setExpectedMessages(userMessageField.getText());
             parentController.updateScenarioChoice();
             parentController.displayBots();
         }

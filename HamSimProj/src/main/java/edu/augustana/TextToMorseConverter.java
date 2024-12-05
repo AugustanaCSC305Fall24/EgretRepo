@@ -44,6 +44,7 @@ public class TextToMorseConverter {
         morseCodeMap.put("8", "---..");
         morseCodeMap.put("9", "----.");
         morseCodeMap.put("0", "-----");
+        morseCodeMap.put(".", ".-.-.-");
         morseCodeMap.put(" ", "*"); // Space separator in Morse code
     }
 
@@ -89,6 +90,7 @@ public class TextToMorseConverter {
         morseToTextMap.put("----.", "9");
         morseToTextMap.put("-----", "0");
         morseToTextMap.put("/", " ");// Space between words
+        morseToTextMap.put("*", " ");
     }
 
 
@@ -97,6 +99,7 @@ public class TextToMorseConverter {
         StringBuilder morseCode = new StringBuilder();
 
         for (char c : text.toUpperCase().toCharArray()) {
+            System.out.println(c);
             String morseChar = morseCodeMap.get(Character.toString(c));
             if (morseChar != null) {
                 morseCode.append(morseChar).append(" ");
