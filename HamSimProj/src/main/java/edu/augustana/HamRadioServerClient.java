@@ -92,7 +92,7 @@ public class HamRadioServerClient {
         socketClient.connect(serverId,userID);
         uiController.addMessageToUI("Connected to server: " + serverId);
         uiController.updateUserList(serverId);
-        Radio.setNoiseAmplitud(getServerCondition(serverId));
+        Radio.setNoiseAmplitude(getServerCondition(serverId));
     }
 
     // Method to send a message via WebSocket
@@ -119,7 +119,7 @@ public class HamRadioServerClient {
         String morseMessage = messageParts[2];
 
         String formattedMessage = user + ": " + TextToMorseConverter.morseToText(morseMessage);
-
+        System.out.println(message);
         MorsePlayer.playBotMorseString(morseMessage, frequency, range);
         uiController.addMessageToUI(formattedMessage);
     }
