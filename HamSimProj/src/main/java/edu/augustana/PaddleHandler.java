@@ -18,7 +18,7 @@ public class PaddleHandler {
     private static long dashDurationPaddle = dotDurationPaddle * 3;
     private static boolean dotPaddlePressed;
     private static boolean dashPaddlePressed;
-    private static StringBuilder cwString = new StringBuilder();
+    private static StringBuilder cwString = CWHandler.getCwStringBuilder();
     private static long paddleReleaseTime;
     private static final int SEND_TIMER_LENGHT = 1;
    // private static Boolean alreadyPressed = true;
@@ -26,23 +26,25 @@ public class PaddleHandler {
     private static ScheduledFuture<?> scheduledTask;
 
     public static void sendMessageTimer() {
-        // Cancel the previous task if it exists
-        if (scheduledTask != null && !scheduledTask.isDone()) {
-            scheduledTask.cancel(false); // Cancel the current task but do not interrupt if running
-        }
-
-        // Schedule the new task
-        scheduledTask = scheduler.schedule(() -> {
-            try {
-                HamRadioServerClient.sendMessage(getCwString());
-                if(cwString.length() > 1){
-                    cwString.delete(0,cwString.length());
-                }
-                System.out.println("Message sent after timer expires");
-            } catch (Exception e) {
-                e.printStackTrace();
+        if (HamRadioServerClient.isConnected) {
+            // Cancel the previous task if it exists
+            if (scheduledTask != null && !scheduledTask.isDone()) {
+                scheduledTask.cancel(false); // Cancel the current task but do not interrupt if running
             }
-        }, SEND_TIMER_LENGHT, TimeUnit.SECONDS);
+
+            // Schedule the new task
+            scheduledTask = scheduler.schedule(() -> {
+                try {
+                    HamRadioServerClient.sendMessage(getCwString());
+                    if(cwString.length() > 1){
+                        cwString.delete(0,cwString.length());
+                    }
+                    System.out.println("Message sent after timer expires");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }, SEND_TIMER_LENGHT, TimeUnit.SECONDS);
+        }
     }
 
 
@@ -54,8 +56,9 @@ public class PaddleHandler {
             while (dotPaddlePressed) {
                 playTone(Radio.getCwToneFreq());
                 try {
+                    //CWHandler.addToCwString(".");
+                    cwString.append(".");
                     Thread.sleep(TimeUnit.NANOSECONDS.toMillis(dotDurationPaddle));
-                    cwString.append('.');
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
@@ -77,8 +80,9 @@ public class PaddleHandler {
             while (dashPaddlePressed) {
                 playTone(Radio.getCwToneFreq());
                 try {
+                   // CWHandler.addToCwString("-");
+                    cwString.append("-");
                     Thread.sleep(TimeUnit.NANOSECONDS.toMillis(dashDurationPaddle));
-                    cwString.append('-');
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }

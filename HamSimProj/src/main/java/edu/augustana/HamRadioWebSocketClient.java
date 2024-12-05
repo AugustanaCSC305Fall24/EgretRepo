@@ -49,10 +49,12 @@ public class HamRadioWebSocketClient {
 
     // Send a message to the WebSocket
     public void sendMessage(String message) throws Exception {
-        if (session != null && session.isOpen()) {
-            session.getBasicRemote().sendText(message);
-        } else {
-            System.out.println("No open WebSocket session to send message.");
+        if (HamRadioServerClient.isConnected) {
+            if (session != null && session.isOpen()) {
+                session.getBasicRemote().sendText(message);
+            } else {
+                System.out.println("No open WebSocket session to send message.");
+            }
         }
     }
 

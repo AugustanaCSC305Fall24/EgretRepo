@@ -28,6 +28,7 @@ import static java.lang.Math.min;
 public class MainUiController {
     private boolean isMuted = false;
     private double savedVolume = 0.0;
+    private boolean isPressed = false;
 
 
     @FXML
@@ -358,27 +359,31 @@ public class MainUiController {
     }
 
     public void handleKeyPress(KeyEvent keyEvent) throws InterruptedException {
-        if (keyEvent.getCode() == KeyCode.J) {
-            new Thread(() -> {
-                try {
-                    PaddleHandler.playContinuousDot();
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-            }).start();
+        if (!isPressed) {
+            isPressed = true;
+          //  System.out.println(System.nanoTime());
+            if (keyEvent.getCode() == KeyCode.J) {
+                new Thread(() -> {
+                    try {
+                        PaddleHandler.playContinuousDot();
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                }).start();
 
-        } else if (keyEvent.getCode() == KeyCode.K) {
-            new Thread(() ->{
-                try {
-                    PaddleHandler.playContinuousDash();
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-            }).start();
-        } else if (keyEvent.getCode() == KeyCode.L) {
-            CWHandler.startTimer();
-        } else if (keyEvent.getCode() == KeyCode.N) {
-            Radio.toggleNoise();
+            } else if (keyEvent.getCode() == KeyCode.K) {
+                new Thread(() ->{
+                    try {
+                        PaddleHandler.playContinuousDash();
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                }).start();
+            } else if (keyEvent.getCode() == KeyCode.L) {
+                CWHandler.startTimer();
+            } else if (keyEvent.getCode() == KeyCode.N) {
+                Radio.toggleNoise();
+            }
         }
     }
 
@@ -388,12 +393,14 @@ public class MainUiController {
             PaddleHandler.stopPaddlePress();
             addToMorseBox(PaddleHandler.getCwString()); // stops first paddle press on keyRelease of second paddle if both are held simultaneously
             addToEnglishBox(PaddleHandler.getCwString());
+            System.out.println(CWHandler.getCwString());
         } else if (keyEvent.getCode() == KeyCode.L) {
             CWHandler.stopTimer();
             addToMorseBox(CWHandler.getCwString());
             addToEnglishBox(CWHandler.getCwString());
         }
-
+        isPressed = false;
+       // System.out.println(CWHandler.getCwString());
     }
 
     private void handleFullScreenButtonPress(Stage stage) {
