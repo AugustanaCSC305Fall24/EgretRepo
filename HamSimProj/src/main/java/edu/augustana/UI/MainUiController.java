@@ -421,13 +421,14 @@ public class MainUiController {
 
     public void handleKeyRelease(KeyEvent keyEvent) throws Exception {
         if (keyEvent.getCode() == KeyCode.J || keyEvent.getCode() == KeyCode.K) {
-            PaddleHandler.sendMessageTimer();
+            CWHandler.sendMessageTimer();
             PaddleHandler.stopPaddlePress();
             addToMorseBox(PaddleHandler.getCwString()); // stops first paddle press on keyRelease of second paddle if both are held simultaneously
             addToEnglishBox(PaddleHandler.getCwString());
             System.out.println(CWHandler.getCwString());
         } else if (keyEvent.getCode() == KeyCode.L) {
             CWHandler.stopTimer();
+            CWHandler.sendMessageTimer();
             addToMorseBox(CWHandler.getCwString());
             addToEnglishBox(CWHandler.getCwString());
         }

@@ -109,13 +109,6 @@ public class BotAdderController {
         }
 
 
-//        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//        alert.setTitle("Information Dialog");
-//        alert.setHeaderText("Look, an Information Dialog");
-//        alert.setContentText("This is an alert message.");
-//        alert.showAndWait();
-
-
         ResponsiveBot bot = new ResponsiveBot(Radio.getBand(), botNameField.getText(), callSignField.getText(), messageField.getText(), Double.parseDouble(answerFreqField.getText()), expectedAnswerField.getText());
         botCollection.addBot(bot);
 
