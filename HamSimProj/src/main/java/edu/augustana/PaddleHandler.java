@@ -7,7 +7,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
-import static edu.augustana.CWHandler.startTimer;
+
 import static edu.augustana.CWHandler.stopTimer;
 import static edu.augustana.Radio.*;
 import static edu.augustana.Radio.stopTone;

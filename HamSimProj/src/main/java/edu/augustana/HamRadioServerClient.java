@@ -19,12 +19,8 @@ import java.util.*;
 
 public class HamRadioServerClient {
 
-    private static ArrayList<String> serverList;
-
     private static SandboxController uiController;
-
     private static String userName;
-
 
     private static final String API_URL = "http://127.0.0.1:8000"; // Replace with your FastAPI server's URL
     private static final HttpClient httpClient = HttpClient.newHttpClient();
@@ -32,74 +28,54 @@ public class HamRadioServerClient {
     public static boolean isConnected = false;
 
     // Method to create a server by sending a POST request
-    public static void createServer(String serverId, double noiseLevel, double signalStrength) throws Exception {
-        // Construct the URL with query parameters
-        String url = String.format("%s/server/%s?noise_level=%.2f&signal_strength=%.2f",
-                API_URL, serverId, noiseLevel, signalStrength);
+    public static void createServer(String serverId, double noiseLevel) throws Exception {
+        String url = String.format("%s/server/%s?noise_level=%.2f", API_URL, serverId, noiseLevel);
 
-        // Create an HTTP POST request
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))
-                .POST(HttpRequest.BodyPublishers.noBody()) // No request body required for this API
+                .POST(HttpRequest.BodyPublishers.noBody()) // POST with no body
                 .build();
 
-        // Send the request and capture the response
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
-        // Handle the response
         if (response.statusCode() != 200) {
             throw new RuntimeException("Failed to create server: " + response.body());
-        }else{
-            connectToSever(serverId);
         }
     }
 
-    public static  Map<String, List<String>> getAvailableServers() {
+    // Method to retrieve the list of available servers and their connected clients
+    public static Map<String, List<String>> getAvailableServers() {
         Map<String, List<String>> serverClientsMap = new HashMap<>();
         Gson gson = new Gson();
 
         try {
-            // Step 1: Get the list of active servers
             HttpRequest serverRequest = HttpRequest.newBuilder()
-                    .uri(new URI(API_URL + "/servers")) // Correct the URL for the /servers endpoint
+                    .uri(URI.create(API_URL + "/servers"))
                     .GET()
                     .build();
             HttpResponse<String> serverResponse = httpClient.send(serverRequest, HttpResponse.BodyHandlers.ofString());
 
-            // Parse the response from FastAPI
             JsonObject jsonResponse = gson.fromJson(serverResponse.body(), JsonObject.class);
             JsonArray activeServersArray = jsonResponse.getAsJsonArray("active_servers");
 
-            System.out.println(activeServersArray.toString());
-
-            // Step 2: If there are no active servers, return an empty map
             if (activeServersArray == null || activeServersArray.size() == 0) {
                 System.out.println("No servers available");
                 return serverClientsMap;
             }
 
-            // Step 3: Fetch clients for each active server
             for (int i = 0; i < activeServersArray.size(); i++) {
                 String serverId = activeServersArray.get(i).getAsString();
 
-                // Fetch the list of clients for the server
                 HttpRequest clientRequest = HttpRequest.newBuilder()
-                        .uri(new URI(API_URL + "/server/" + serverId + "/clients"))
+                        .uri(URI.create(API_URL + "/server/" + serverId + "/clients"))
                         .GET()
                         .build();
                 HttpResponse<String> clientResponse = httpClient.send(clientRequest, HttpResponse.BodyHandlers.ofString());
 
-                // Assuming the response returns a JSON object with the "clients" field containing the list of client IDs
                 JsonObject clientResponseJson = gson.fromJson(clientResponse.body(), JsonObject.class);
+                JsonArray clientsArray = clientResponseJson.getAsJsonArray("clients");
 
-
-                //It crashes here because it receives a one
-               JsonArray clientsArray = clientResponseJson.getAsJsonArray("clients");
-
-                // Convert the client list to a List<String>
                 List<String> clients = gson.fromJson(clientsArray, new TypeToken<List<String>>() {}.getType());
-
-                // Map the server ID to its list of clients
                 serverClientsMap.put(serverId, clients);
             }
 
@@ -110,50 +86,32 @@ public class HamRadioServerClient {
         return serverClientsMap;
     }
 
-    // Method to retrieve server conditions
-    public static void getServerConditions(String serverId) throws Exception {
-        URL url = new URL(API_URL + serverId + "/conditions");
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setRequestMethod("GET");
-        connection.setRequestProperty("Accept", "application/json");
-
-        BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-        String inputLine;
-        StringBuilder content = new StringBuilder();
-
-        while ((inputLine = in.readLine()) != null) {
-            content.append(inputLine);
-        }
-
-        in.close();
-        connection.disconnect();
-
-        System.out.println("Server conditions: " + content.toString());
-    }
-
-    public static String getServerURL(){
-        return API_URL;
-    }
-
-    public static void connectToSever(String serverId) throws Exception {
+    // Method to connect to a server
+    public static void connectToServer(String serverId, String userID) throws Exception {
         isConnected = true;
-       socketClient.connect(serverId);
+        socketClient.connect(serverId,userID);
+        uiController.addMessageToUI("Connected to server: " + serverId);
+        uiController.updateUserList(serverId);
+        Radio.setNoiseAmplitud(getServerCondition(serverId));
     }
 
+    // Method to send a message via WebSocket
     public static void sendMessage(String message) throws Exception {
+
         if (isConnected) {
             String formattedMessage = String.valueOf(Radio.getSelectedTuneFreq()) + "," + String.valueOf(Radio.generateFrequencyRange(Radio.getBand())) + "," + message + "," + getUserName();
             socketClient.sendMessage(formattedMessage);
         }
     }
 
+    // Method to disconnect from the server
     public static void disconnectServer() throws Exception {
         isConnected = false;
         socketClient.disconnectWebSocket();
     }
 
+    // Method to handle incoming messages
     public static void handleReceivedMessage(String message) throws InterruptedException {
-
         String[] messageParts = message.split(",", 4);
         double frequency = Double.valueOf(messageParts[0]);
         double range = Double.valueOf(messageParts[1]);
@@ -162,10 +120,31 @@ public class HamRadioServerClient {
 
         String formattedMessage = user + ": " + TextToMorseConverter.morseToText(morseMessage);
 
+        MorsePlayer.playBotMorseString(morseMessage, frequency, range);
         uiController.addMessageToUI(formattedMessage);
+    }
 
-        MorsePlayer.playBotMorseString(morseMessage,frequency,range);
+    public static String getServerURL() {
+        return API_URL;
+    }
 
+    public static double getServerCondition(String serverId) throws Exception {
+        String url = API_URL + "/server/" + serverId + "/conditions";
+        Gson gson = new Gson();
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .GET()
+                .build();
+
+        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() == 200) {
+            JsonObject jsonResponse = gson.fromJson(response.body(), JsonObject.class);
+            return jsonResponse.get("noise_level").getAsDouble(); // Extract and return only the noise level
+        } else {
+            throw new RuntimeException("Failed to retrieve server condition: " + response.body());
+        }
     }
 
     public static void setUIController(SandboxController controller) {
