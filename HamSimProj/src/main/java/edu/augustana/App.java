@@ -20,7 +20,8 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/augustana/MainUI.fxml"));
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/edu/augustana/Instructions.fxml"));
         System.out.println(getClass().getResource("/edu/augustana/MainUI.fxml") + "<- Resource ");
         Parent root = loader.load();
 
@@ -33,7 +34,7 @@ public class App extends Application {
         windowStage = stage;
     }
 
-    static void setRoot(String fxml) throws IOException {
+    public static void setRoot(String fxml) throws IOException {
         scene.setRoot(loadFXML(fxml));
     }
 

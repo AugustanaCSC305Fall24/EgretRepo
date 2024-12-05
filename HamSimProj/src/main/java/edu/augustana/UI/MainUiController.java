@@ -9,6 +9,8 @@ import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -21,6 +23,7 @@ import javafx.scene.layout.VBox;
 import java.text.DecimalFormat;
 import javafx.beans.value.ChangeListener;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import javax.sound.sampled.LineUnavailableException;
 
@@ -138,6 +141,8 @@ public class MainUiController {
 
     @FXML
     void initialize() throws IOException {
+
+
         displayLabel.setText("");
 
         toolBarHbox.setPrefWidth(myToolBar.getWidth());
@@ -424,14 +429,12 @@ public class MainUiController {
             PaddleHandler.stopPaddlePress();
             addToMorseBox(PaddleHandler.getCwString()); // stops first paddle press on keyRelease of second paddle if both are held simultaneously
             addToEnglishBox(PaddleHandler.getCwString());
-            System.out.println(CWHandler.getCwString());
         } else if (keyEvent.getCode() == KeyCode.L) {
             CWHandler.stopTimer();
             addToMorseBox(CWHandler.getCwString());
             addToEnglishBox(CWHandler.getCwString());
         }
         isPressed = false;
-       // System.out.println(CWHandler.getCwString());
     }
 
     private void handleFullScreenButtonPress(Stage stage) {
