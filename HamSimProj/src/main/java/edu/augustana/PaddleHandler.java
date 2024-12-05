@@ -20,32 +20,10 @@ public class PaddleHandler {
     private static boolean dashPaddlePressed;
     private static StringBuilder cwString = CWHandler.getCwStringBuilder();
     private static long paddleReleaseTime;
-    private static final int SEND_TIMER_LENGHT = 1;
    // private static Boolean alreadyPressed = true;
-   private static final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
-    private static ScheduledFuture<?> scheduledTask;
 
-    public static void sendMessageTimer() {
-        if (HamRadioServerClient.isConnected) {
-            // Cancel the previous task if it exists
-            if (scheduledTask != null && !scheduledTask.isDone()) {
-                scheduledTask.cancel(false); // Cancel the current task but do not interrupt if running
-            }
 
-            // Schedule the new task
-            scheduledTask = scheduler.schedule(() -> {
-                try {
-                    HamRadioServerClient.sendMessage(getCwString());
-                    if(cwString.length() > 1){
-                        cwString.delete(0,cwString.length());
-                    }
-                    System.out.println("Message sent after timer expires");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }, SEND_TIMER_LENGHT, TimeUnit.SECONDS);
-        }
-    }
+
 
 
     public static void playContinuousDot() throws Exception {

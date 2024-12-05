@@ -26,7 +26,7 @@
                   <HBox prefHeight="100.0" prefWidth="200.0">
                      <children>
                         <Label prefHeight="40.0" prefWidth="94.0" text="Name:" />
-                        <TextField fx:id="botNameField" prefHeight="43.0" prefWidth="121.0" />
+                        <TextField fx:id="botNameField" prefHeight="43.0" prefWidth="121.0" promptText="Steven" />
                      </children>
                      <padding>
                         <Insets left="20.0" />
@@ -35,7 +35,7 @@
                   <HBox prefHeight="100.0" prefWidth="200.0">
                      <children>
                         <Label prefHeight="40.0" prefWidth="94.0" text="Call Sign:" />
-                        <TextField fx:id="callSignField" prefHeight="43.0" prefWidth="121.0" />
+                        <TextField fx:id="callSignField" prefHeight="43.0" prefWidth="121.0" promptText="K5AA" />
                      </children>
                      <padding>
                         <Insets left="20.0" />
@@ -44,7 +44,7 @@
                   <HBox prefHeight="100.0" prefWidth="200.0">
                      <children>
                         <Label prefHeight="40.0" prefWidth="94.0" text="Message:" />
-                        <TextField fx:id="messageField" prefHeight="43.0" prefWidth="121.0" />
+                        <TextField fx:id="messageField" prefHeight="43.0" prefWidth="121.0" promptText="say hello at 28.000" />
                      </children>
                      <padding>
                         <Insets left="20.0" />
@@ -75,7 +75,7 @@
                   <HBox prefHeight="100.0" prefWidth="200.0">
                      <children>
                         <Label prefHeight="30.0" prefWidth="102.0" text="Answer Frequency:" />
-                        <TextField fx:id="answerFreqField" prefHeight="43.0" prefWidth="121.0" />
+                        <TextField fx:id="answerFreqField" prefHeight="43.0" prefWidth="121.0" promptText="28.000" />
                      </children>
                      <padding>
                         <Insets left="20.0" />
@@ -84,7 +84,7 @@
                   <HBox prefHeight="100.0" prefWidth="200.0">
                      <children>
                         <Label prefHeight="30.0" prefWidth="102.0" text="Expected Answer:" />
-                        <TextField fx:id="expectedAnswerField" prefHeight="43.0" prefWidth="121.0" />
+                        <TextField fx:id="expectedAnswerField" prefHeight="43.0" prefWidth="121.0" promptText="hello" />
                      </children>
                      <padding>
                         <Insets left="20.0" />
@@ -95,7 +95,7 @@
                         <Insets left="20.0" />
                      </padding>
                      <children>
-                        <Label minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="223.0" text="Note: Make the bot message tell the user to say the answer at a certain frequency" wrapText="true">
+                        <Label minHeight="-Infinity" minWidth="-Infinity" prefHeight="76.0" prefWidth="223.0" text="Notes: Make the bot message tell the user to say the answer at a certain frequency. Avoid special characters except period." wrapText="true">
                            <padding>
                               <Insets left="20.0" />
                            </padding>

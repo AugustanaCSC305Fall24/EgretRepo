@@ -1,9 +1,9 @@
 package edu.augustana;
 
-import javafx.scene.input.KeyCode;
-
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 import static edu.augustana.Radio.playTone;
@@ -29,6 +29,10 @@ public class CWHandler {
     private static long letterSpaceDuration;
     private static long wordSpaceDuration;
     private static double marginOfError;
+
+    private static final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
+    private static ScheduledFuture<?> scheduledTask;
+    private static final int SEND_TIMER_LENGTH = 2;
 
     /**
      * Starts the timer when the key is pressed
@@ -165,4 +169,47 @@ public class CWHandler {
     }
 
 
+    public static void sendMessageTimer() {
+        if (HamRadioServerClient.isConnected) {
+            // Cancel the previous task if it exists
+            if (scheduledTask != null && !scheduledTask.isDone()) {
+                scheduledTask.cancel(false); // Cancel the current task but do not interrupt if running
+            }
+
+            // Schedule the new task
+            scheduledTask = scheduler.schedule(() -> {
+                try {
+                    HamRadioServerClient.sendMessage(getCwString());
+                    if(cwString.length() > 1){
+                        cwString.delete(0,cwString.length());
+                    }
+                    System.out.println("Message sent after timer expires");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }, SEND_TIMER_LENGTH, TimeUnit.SECONDS);
+        }
+
+        for (SimScenario scenario : ScenarioCollection.getCollection()) {
+            if (scenario.isPlaying) {
+                // Cancel the previous task if it exists
+                if (scheduledTask != null && !scheduledTask.isDone()) {
+                    scheduledTask.cancel(false); // Cancel the current task but do not interrupt if running
+                }
+
+                // Schedule the new task
+                scheduledTask = scheduler.schedule(() -> {
+                    try {
+                        scenario.checkMessage(getCwString());
+                        if(cwString.length() > 1){
+                            cwString.delete(0,cwString.length());
+                        }
+                        System.out.println("Message sent after timer expires");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }, SEND_TIMER_LENGTH, TimeUnit.SECONDS);
+            }
+        }
+    }
 }

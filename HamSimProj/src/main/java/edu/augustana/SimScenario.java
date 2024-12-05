@@ -186,44 +186,6 @@ public class SimScenario {
         }
     }
 
-//    public int responseCorrectnessLevel(String userMessage){
-//
-//
-//
-//
-//        //Turn user message String into an ArrayList to be able to check for existence of individual characters in user message
-//        userMessage = userMessage.strip();
-//        char[] userCharArray = userMessage.toCharArray();
-//        ArrayList<Character> userCharList =  new ArrayList<>();
-//        for(char character: userCharArray){
-//            userCharList.add(character);
-//        }
-//        //Turn expected message String into an ArrayList to be able to check for existence of individual characters in user message
-//        char[] scenarioCharArray = expectedMessages.toCharArray();
-//        ArrayList<Character> scenarioCharList =  new ArrayList<>();
-//        for(char character: scenarioCharArray){
-//            scenarioCharList.add(character);
-//        }
-//
-//        int level1 = expectedMessages.length() / 3;
-//        int level2 = level1 * 2;
-//        int level3 = scenarioCharList.size() - 1;
-//        int messageScore = 0;
-//
-//        //Increments the score by one every time the user had the same character in the right place
-//        for(char character: scenarioCharList){
-//            if(userCharList.contains(character)){
-//                messageScore++;
-//            }
-//        }
-//
-//
-//
-//        return 0;
-//
-//
-//    }
-
 
     public void checkMessage(String userMessage) {
 
