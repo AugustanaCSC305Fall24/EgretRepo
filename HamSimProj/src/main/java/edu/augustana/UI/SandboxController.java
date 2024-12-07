@@ -83,7 +83,7 @@ public class SandboxController {
         scenarioDescription.setText(scenarioChoiceBox.getValue().getDescription());
         agentList.getItems().addAll(scenarioChoiceBox.getValue().getBotCollection().getBots());
 
-//        updateListOfServer();
+        updateListOfServer();
 
 
         startStopScenarioBtn.setOnAction(evt -> {
