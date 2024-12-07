@@ -3,44 +3,27 @@ package edu.augustana;
 import javafx.scene.control.SkinBase;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.scene.transform.Rotate;
 
-import java.net.URI;
-
 public class KnobControlSkin extends SkinBase<KnobControl> {
-    private ImageView knobImageView;
-    private Rotate rotate;
+    private final ImageView knobImageView;
+    private final Rotate rotate;
     private double lastAngle;
     private boolean dragging;
+    private final Pane dragOverlay;
 
-
-
-    public void rotateToPosition(int newPos) {
-//        int angle = 0;
-//        long tempTime = System.currentTimeMillis();
-//        while(angle < (newPos/100)*225){
-//            if((System.currentTimeMillis() - tempTime)> 16){
-//                tempTime = System.currentTimeMillis();
-//                rotate.setAngle((rotate.getAngle() + 1));
-//                angle++;
-//            }
-//
-//        }
-    }
-
-
-
-
+    private static final double MAX_ANGLE = 225;
+    private static final double MIN_ANGLE = 0;
 
     public KnobControlSkin(KnobControl control) {
         super(control);
-
 
         // Load the knob image
         Image knobImage = new Image(getClass().getResourceAsStream("/assets/knob.png"));
         knobImageView = new ImageView(knobImage);
 
-        // Adjust size and scaling if needed
+        // Adjust size and scaling
         knobImageView.setFitWidth(50);
         knobImageView.setFitHeight(50);
 
@@ -48,72 +31,78 @@ public class KnobControlSkin extends SkinBase<KnobControl> {
         rotate = new Rotate(0, knobImageView.getFitWidth() / 2, knobImageView.getFitHeight() / 2);
         knobImageView.getTransforms().add(rotate);
 
-        // Initialize rotation transformation
-        rotate = new Rotate(0, knobImageView.getFitWidth() / 2, knobImageView.getFitHeight() / 2);
-        knobImageView.getTransforms().add(rotate);
+        // Create overlay pane
+        dragOverlay = new Pane();
+        dragOverlay.setStyle("-fx-background-color: transparent;");
+        dragOverlay.setMouseTransparent(false); // Capture mouse events
+        dragOverlay.setPickOnBounds(true);
 
+        // Add the knob image and overlay to the skin
+        getChildren().addAll(knobImageView, dragOverlay);
+
+        // Handle mouse events
+        setupMouseHandlers();
+
+        // Handle scroll events
+        setupScrollHandlers();
+    }
+
+    private void setupMouseHandlers() {
         double centerX = knobImageView.getFitWidth() / 2;
         double centerY = knobImageView.getFitHeight() / 2;
-        double maxRotationAngle = 225; // Set maximum rotation limit
-        double minRotationAngle = 0;   // Set minimum rotation limit
 
-        knobImageView.setOnMousePressed(event -> {
+        dragOverlay.setOnMousePressed(event -> {
             dragging = true;
-            lastAngle = Math.toDegrees(Math.atan2(event.getY() - centerY, event.getX() - centerX));
+            double mouseX = event.getX() - (knobImageView.getLayoutX() + centerX);
+            double mouseY = event.getY() - (knobImageView.getLayoutY() + centerY);
+            lastAngle = Math.toDegrees(Math.atan2(mouseY, mouseX));
         });
 
-        knobImageView.setOnMouseDragged(event -> {
+        dragOverlay.setOnMouseDragged(event -> {
             if (dragging) {
+                // Calculate mouse position relative to knob center
+                double mouseX = event.getX() - (knobImageView.getLayoutX() + centerX);
+                double mouseY = event.getY() - (knobImageView.getLayoutY() + centerY);
 
+                // Calculate the current angle
+                double currentAngle = Math.toDegrees(Math.atan2(mouseY, mouseX));
 
-                double currentAngle = Math.toDegrees(Math.atan2(event.getY() - centerY, event.getX() - centerX));
-                System.out.println("Current Angle = " + currentAngle);
+                // Compute the delta angle while handling 0/360 boundary
                 double deltaAngle = currentAngle - lastAngle;
-                rotate.setAngle((rotate.getAngle() + deltaAngle + 360) % 360); // Normalize to 0-360
-                lastAngle = currentAngle;
+                if (deltaAngle > 180) {
+                    deltaAngle -= 360;
+                } else if (deltaAngle < -180) {
+                    deltaAngle += 360;
+                }
 
-                // Optionally update the control's value property based on the rotation
-                double normalizedValue = (rotate.getAngle() / 360) * 100; // Example normalization
+                // Update the rotation angle with limits
+                double newAngle = Math.min(MAX_ANGLE, Math.max(MIN_ANGLE, rotate.getAngle() + deltaAngle));
+                rotate.setAngle(newAngle);
 
+                // Update the control's value property
+                double normalizedValue = (newAngle / MAX_ANGLE) * 100;
                 getSkinnable().setValue(normalizedValue);
 
-
-
+                // Update the last angle
+                lastAngle = currentAngle;
             }
         });
 
-
-
-        knobImageView.setOnMouseReleased(event -> {
-            dragging = false;
-        });
-
-        knobImageView.setOnMouseExited(event -> {
-            dragging = false;
-        });
-
-        // Handle mouse wheel rotation with clamping
-        knobImageView.setOnScroll(event -> {
-            double deltaY = event.getDeltaY();
-            double angleChange = deltaY > 0 ? 10 : -10;
-
-            // Calculate the new angle with clamping
-            double newAngle = rotate.getAngle() + angleChange;
-            newAngle = Math.max(minRotationAngle, Math.min(newAngle, maxRotationAngle)); // Clamp between 0 and 225
-
-            rotate.setAngle(newAngle);
-
-            // Normalize to max angle of 225 degrees for 100% value
-            double normalizedValue = (rotate.getAngle() / maxRotationAngle) * 100;
-
-            getSkinnable().setValue(normalizedValue);
-
-
-            event.consume();
-        });
-
-        getChildren().add(knobImageView); // Add knobImageView to the skin's children
+        dragOverlay.setOnMouseReleased(event -> dragging = false);
     }
 
+    private void setupScrollHandlers() {
+        dragOverlay.setOnScroll(event -> {
+            double deltaAngle = event.getDeltaY() > 0 ? 5 : -5; // Adjust rotation step (scroll sensitivity)
+            double newAngle = Math.min(MAX_ANGLE, Math.max(MIN_ANGLE, rotate.getAngle() + deltaAngle));
+            rotate.setAngle(newAngle);
 
+            // Update the control's value property
+            double normalizedValue = (newAngle / MAX_ANGLE) * 100;
+            getSkinnable().setValue(normalizedValue);
+        });
+    }
+
+    public void rotateToPosition(int i) {
+    }
 }

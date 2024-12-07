@@ -112,6 +112,7 @@ public class SandboxController {
             try {
 
                 HamRadioServerClient.sendMessage(TextToMorseConverter.textToMorse(serverMessageField.getText()));
+                serverMessageField.setText("");
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -363,6 +364,10 @@ public class SandboxController {
         List<String> users = HamRadioServerClient.getAvailableServers().get(serverId);
         userList.getItems().clear();
         userList.getItems().addAll(users);
+    }
+
+    public boolean isTextFieldActive() {
+        return serverMessageField.isFocused();
     }
 
 }

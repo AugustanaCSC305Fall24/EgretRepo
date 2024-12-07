@@ -33,6 +33,7 @@ public class MainUiController {
     private double savedVolume = 0.0;
     private boolean isPressed = false;
 
+    private SandboxController sandboxController;
 
     @FXML
     private Label displayLabel;
@@ -335,6 +336,7 @@ public class MainUiController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/augustana/Sandbox.fxml"));
         VBox trainingVbox = loader.load();
         SandboxController controller = loader.getController();
+        sandboxController = controller;
         controller.setMainUIControllerController(this);
         mainHbox.getChildren().add(trainingVbox);
     }
@@ -386,7 +388,7 @@ public class MainUiController {
     }
 
     public void handleKeyPress(KeyEvent keyEvent) throws InterruptedException {
-        if (!isPressed) {
+        if (!isPressed && !sandboxController.isTextFieldActive()) {
             isPressed = true;
           //  System.out.println(System.nanoTime());
             if (keyEvent.getCode() == KeyCode.J) {
@@ -415,19 +417,22 @@ public class MainUiController {
     }
 
     public void handleKeyRelease(KeyEvent keyEvent) throws Exception {
-        if (keyEvent.getCode() == KeyCode.J || keyEvent.getCode() == KeyCode.K) {
-            CWHandler.sendMessageTimer();
-            PaddleHandler.stopPaddlePress();
+        if(!sandboxController.isTextFieldActive()){
+            if (keyEvent.getCode() == KeyCode.J || keyEvent.getCode() == KeyCode.K) {
+                CWHandler.sendMessageTimer();
+                PaddleHandler.stopPaddlePress();
 //            addToMorseBox(PaddleHandler.getCwString()); // stops first paddle press on keyRelease of second paddle if both are held simultaneously
 //            addToEnglishBox(PaddleHandler.getCwString());
-            System.out.println(CWHandler.getCwString());
-        } else if (keyEvent.getCode() == KeyCode.L) {
-            CWHandler.stopTimer();
-            CWHandler.sendMessageTimer();
+                System.out.println(CWHandler.getCwString());
+            } else if (keyEvent.getCode() == KeyCode.L) {
+                CWHandler.stopTimer();
+                CWHandler.sendMessageTimer();
 //            addToMorseBox(CWHandler.getCwString());
 //            addToEnglishBox(CWHandler.getCwString());
+            }
+            isPressed = false;
         }
-        isPressed = false;
+
        // System.out.println(CWHandler.getCwString());
     }
 
