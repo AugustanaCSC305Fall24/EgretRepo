@@ -83,6 +83,7 @@ public class HamRadioServerClient {
             e.printStackTrace();
         }
 
+
         return serverClientsMap;
     }
 
@@ -93,6 +94,7 @@ public class HamRadioServerClient {
         uiController.addMessageToUI("Connected to server: " + serverId);
         uiController.updateUserList(serverId);
         Radio.setNoiseAmplitude(getServerCondition(serverId));
+        uiController.updateListOfServer();
     }
 
     // Method to send a message via WebSocket
@@ -118,7 +120,7 @@ public class HamRadioServerClient {
         String user = messageParts[3];
         String morseMessage = messageParts[2];
 
-        String formattedMessage = user + ": " + TextToMorseConverter.morseToText(morseMessage);
+        String formattedMessage = user + ": " + TextToMorseConverter.spacedMorseToText(morseMessage);
         System.out.println(message);
         MorsePlayer.playBotMorseString(morseMessage, frequency, range);
         uiController.addMessageToUI(formattedMessage);

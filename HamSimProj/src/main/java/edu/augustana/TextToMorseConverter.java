@@ -90,6 +90,7 @@ public class TextToMorseConverter {
         morseToTextMap.put("----.", "9");
         morseToTextMap.put("-----", "0");
         morseToTextMap.put("/", " ");// Space between words
+        morseToTextMap.put(" ", " ");// Space between words
         morseToTextMap.put("*", " ");
     }
 
@@ -134,6 +135,30 @@ public class TextToMorseConverter {
 
         return result.toString();
     }
+
+    public static String spacedMorseToText(String morseString) {
+        if(Objects.equals(morseString, "")){
+            return morseString;
+        }
+        String[] morseCodeArray = morseString.split(" ");
+        StringBuilder result = new StringBuilder();
+        for (String morseCode : morseCodeArray) {
+            morseCode = morseCode.trim();
+
+            // Get the corresponding letter from the map
+            String letter = morseToTextMap.get(morseCode);
+
+            // If the Morse code is valid, append the letter
+            if (letter != null) {
+                result.append(letter);
+            } else {
+                result.append("");  // For invalid Morse code
+            }
+        }
+
+        return result.toString();
+    }
+
 
     public static HashMap<String, String> getMorseToTextMap() {
         return morseToTextMap;

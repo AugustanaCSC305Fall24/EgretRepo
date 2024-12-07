@@ -9,12 +9,13 @@
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox style="-fx-background-color: #353538;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.UI.SandboxController">
+<VBox fx:id="mainVbox" style="-fx-background-color: #353538;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.UI.SandboxController">
    <children>
       <TabPane prefHeight="339.0" prefWidth="400.0" style="-fx-background-color: #353538; -fx-border-color: #353538;" tabClosingPolicy="UNAVAILABLE">
          <tabs>
@@ -164,6 +165,20 @@
                                           <VBox fx:id="chatLogVbox" prefHeight="22.0" prefWidth="287.0" />
                                        </content>
                                     </ScrollPane>
+                                    <HBox alignment="CENTER" prefHeight="75.0" prefWidth="289.0">
+                                       <children>
+                                          <TextField fx:id="serverMessageField" prefHeight="25.0" prefWidth="200.0" promptText="Write message to send in English">
+                                             <HBox.margin>
+                                                <Insets left="10.0" />
+                                             </HBox.margin>
+                                          </TextField>
+                                          <Button fx:id="sendMessageSeverButton" mnemonicParsing="false" text="Send">
+                                             <HBox.margin>
+                                                <Insets left="20.0" />
+                                             </HBox.margin>
+                                          </Button>
+                                       </children>
+                                    </HBox>
                                  </children>
                               </VBox>
                            </children>
