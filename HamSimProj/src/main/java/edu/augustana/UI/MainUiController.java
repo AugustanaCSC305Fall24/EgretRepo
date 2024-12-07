@@ -209,14 +209,16 @@ public class MainUiController {
         freqSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
            int band = Radio.getBand();
            updateRadioFrequency(Radio.getBand(), newValue.doubleValue());
-           updateDisplayText(Radio.getTime(), Radio.getSelectedTuneFreq(), Radio.getCwToneFreq(), band);
+           updateDisplayText( Radio.getSelectedTuneFreq(), Radio.getCwToneFreq(), band);
 
         });
 
         volumeKnob.valueProperty().addListener((observable, oldValue, newValue) -> {
-            System.out.println("Volume value changed: " + newValue);
-            Radio.updateGain(((newValue.doubleValue()/100) * 4));
+            System.out.println("Volume knob value changed: " + newValue);
 
+            double scaledValue = (newValue.doubleValue() / 100);
+            System.out.println("Volume scale value changed: " + scaledValue);
+            Radio.updateGain(scaledValue);
         });
 
 
@@ -232,7 +234,7 @@ public class MainUiController {
             double angle = (newValue.doubleValue() / 100)*360;
             Radio.setBand(chooseBand(angle));
             updateRadioFrequency(Radio.getBand(), freqSlider.getValue());
-            updateDisplayText(Radio.getTime(), Radio.getSelectedTuneFreq(), Radio.getCwToneFreq(), chooseBand(angle));
+            updateDisplayText( Radio.getSelectedTuneFreq(), Radio.getCwToneFreq(), chooseBand(angle));
         });
 
 
@@ -246,7 +248,7 @@ public class MainUiController {
             Radio.setCwToneFreq(newFreq);
             MorsePlayer.setSideTone();
 
-            updateDisplayText(Radio.getTime(), Radio.getSelectedTuneFreq(), Radio.getCwToneFreq(), Radio.getBand());
+            updateDisplayText( Radio.getSelectedTuneFreq(), Radio.getCwToneFreq(), Radio.getBand());
 
         });
 
@@ -359,13 +361,14 @@ public class MainUiController {
         volumeKnob.setValue((Radio.getSoundAmplitud()/4)*100);
     }
 
-    void updateDisplayText(int time, double rFrequency, double tFrequency, int band){
+    void updateDisplayText(double rFrequency, double tFrequency, int band) {
+        DecimalFormat dfRFrequency = new DecimalFormat("#.####"); // Up to four decimal places for rFrequency
+        DecimalFormat dfTFrequency = new DecimalFormat("#"); // No decimal places for tFrequency
 
-        DecimalFormat df = new DecimalFormat("#.####"); // For one decimal place
-        String formattedTFrequency = df.format(tFrequency);
-        String formattedRFrequency = df.format(rFrequency);
+        String formattedTFrequency = dfTFrequency.format(tFrequency);
+        String formattedRFrequency = dfRFrequency.format(rFrequency);
 
-        displayLabel.setText(formattedTFrequency + "Hz  "+ formattedRFrequency + "Mhz  " + time + "  " + band + "m ");
+        displayLabel.setText(formattedTFrequency + "Hz  " + formattedRFrequency + "Mhz  " + band + "m ");
     }
 
     int chooseBand(double angle){
