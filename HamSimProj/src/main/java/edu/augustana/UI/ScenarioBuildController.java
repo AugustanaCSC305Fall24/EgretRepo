@@ -53,9 +53,6 @@ public class ScenarioBuildController {
     private TextField tempField;
 
     @FXML
-    private TextArea userMessageField;
-
-    @FXML
     private TextField windSpeedField;
 
     @FXML
@@ -125,11 +122,8 @@ public class ScenarioBuildController {
         botCollection  = scenario.getBotCollection();
         descripTionField.setText(scenario.getDescription());
         scenarioNameField.setText(scenario.getName());
-
-
-        userMessageField.setText(scenario.getUserMessage());
         tempField.setText(String.valueOf(environment.temperature));
-        humidityField.setText(String.valueOf(String.valueOf(environment.humidity)));
+        humidityField.setText(String.valueOf(environment.humidity));
         windSpeedField.setText(String.valueOf(environment.windSpeed));
         solarIndex.setText(String.valueOf(environment.solarActivity));
         scenarioTypeChoice.setValue(scenario.getType());
@@ -223,7 +217,7 @@ public class ScenarioBuildController {
                     Double.parseDouble(windSpeedField.getText()),
                     Double.parseDouble(humidityField.getText()),
                     Double.parseDouble(tempField.getText()));
-            SimScenario newScenario = new SimScenario(scenarioNameField.getText(),descripTionField.getText(),userMessageField.getText(),
+                    SimScenario newScenario = new SimScenario(scenarioNameField.getText(),descripTionField.getText(),
                     environment, botCollection, scenarioTypeChoice.getValue());
 
             ScenarioCollection.addScenario(newScenario);
@@ -240,7 +234,6 @@ public class ScenarioBuildController {
             scenario.setScenarioName(scenarioNameField.getText());
             scenario.setDescription(descripTionField.getText());
             scenario.setEnvironment(environment);
-            scenario.setExpectedMessages(userMessageField.getText());
             parentController.updateScenarioChoice();
             parentController.displayBots();
         }

@@ -6,7 +6,7 @@ public class ResponsivePlaying implements PlayingBehavior {
 
     private final ResponsiveBot bot;
 
-    private int stageNumber = 1; //This variable shows what the bot should be playing. So 1 means that the bot will play its call sign, 2 means it should play its message, and higher means that it is done playing.
+    private int stageNumber = 0; //This variable shows what the bot should be playing. So 1 means that the bot will play its call sign, 2 means it should play its message, and higher means that it is done playing.
 
     public ResponsivePlaying(ResponsiveBot bot) {
         this.bot = bot;
@@ -31,6 +31,9 @@ public class ResponsivePlaying implements PlayingBehavior {
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
+
+                //testing
+                System.out.println(bot.getTextCallSign());
             }
 
             while (stageNumber == 2) {
@@ -47,6 +50,9 @@ public class ResponsivePlaying implements PlayingBehavior {
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
+
+                //testing
+                System.out.println(bot.getTextBotPhrase());
             }
 
             //note: basically just do the continuous playing but seperate the message and the call sign. And then wait for much longer in between the repeated messages to make time for the users message.
@@ -57,6 +63,10 @@ public class ResponsivePlaying implements PlayingBehavior {
 
     public void increaseStage() {
         stageNumber++;
+    }
+
+    public void resetStageNumber() {
+        stageNumber = 0;
     }
     public int getStageNumber() {
         return stageNumber;

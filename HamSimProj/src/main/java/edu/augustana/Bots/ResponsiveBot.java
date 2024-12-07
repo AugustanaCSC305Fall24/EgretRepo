@@ -33,18 +33,23 @@ public class ResponsiveBot extends Bot{
 
     @Override
     public void playSound() {
+        updateStage();
         playBehavior();
     }
 
     @Override
     public void stopSound() {
-        updateStage();
-        updateStage();
+        resetStage();
     }
 
     private void updateStage() {
         ResponsivePlaying playingBehavior = (ResponsivePlaying) getBehaviorType();
         playingBehavior.increaseStage();
+    }
+
+    private void resetStage() {
+        ResponsivePlaying playingBehavior = (ResponsivePlaying) getBehaviorType();
+        playingBehavior.resetStageNumber();
     }
 
     public int getStage() {
