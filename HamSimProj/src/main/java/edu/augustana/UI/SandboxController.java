@@ -127,7 +127,7 @@ public class SandboxController {
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
-            }else{
+            }else if (Radio.isRadioOn()){
                 scenarioChoiceBox.getValue().stopScenario();
                 startStopScenarioBtn.textProperty().set("Start");
             }
@@ -209,7 +209,7 @@ public class SandboxController {
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
-            }else if(serverListView.getSelectionModel().getSelectedItem() !=  null){
+            }else if(serverListView.getSelectionModel().getSelectedItem() !=  null && Radio.isRadioOn()){
                 HamRadioServerClient.setUIController(this);
                 Stage serverConnectStage = new Stage();
                 FXMLLoader loader = new FXMLLoader(App.class.getResource("serverConnect.fxml"));
