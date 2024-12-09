@@ -7,6 +7,8 @@ module edu.augustana {
     requires com.google.gson;
     requires java.sql;
     requires java.net.http;
+    requires swiss.ameri.gemini.api;
+    requires swiss.ameri.gemini.gson;
 
     // Ensure Gson is required
     opens edu.augustana;// Opens the package to Gson

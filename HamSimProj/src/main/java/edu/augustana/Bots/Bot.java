@@ -30,7 +30,6 @@ public abstract class Bot {
         //assigns the random output frequency depending on the band
         generateOutputFreqAndRange(band);
 
-
     }
 
     //Helper method for the constructors to get the random output frequency and frequency range

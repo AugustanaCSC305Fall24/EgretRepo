@@ -11,6 +11,16 @@
     </properties>
     <dependencies>
         <dependency>
+            <groupId>swiss.ameri</groupId>
+            <artifactId>gemini-api</artifactId>
+            <version>1beta.0.2.4</version>
+        </dependency>
+        <dependency>
+            <groupId>swiss.ameri</groupId>
+            <artifactId>gemini-gson</artifactId>
+            <version>1beta.0.2.4</version>
+        </dependency>
+        <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
             <version>21.0.4</version>

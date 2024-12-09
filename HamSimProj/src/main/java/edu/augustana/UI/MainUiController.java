@@ -33,6 +33,7 @@ public class MainUiController {
     private double savedVolume = 0.0;
     private boolean isPressed = false;
 
+    private SandboxController sandboxController;
 
     @FXML
     private Label displayLabel;
@@ -208,35 +209,32 @@ public class MainUiController {
         freqSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
            int band = Radio.getBand();
            updateRadioFrequency(Radio.getBand(), newValue.doubleValue());
-           updateDisplayText(Radio.getTime(), Radio.getSelectedTuneFreq(), Radio.getCwToneFreq(), band);
+           updateDisplayText( Radio.getSelectedTuneFreq(), Radio.getCwToneFreq(), band);
 
         });
 
         volumeKnob.valueProperty().addListener((observable, oldValue, newValue) -> {
-            System.out.println("Volume value changed: " + newValue);
-            Radio.updateGain(((newValue.doubleValue()/100) * 4));
 
+            double scaledValue = (newValue.doubleValue() / 100);
+            Radio.updateGain(scaledValue);
         });
 
 
         filterKnob.valueProperty().addListener((observable, oldValue, newValue) -> {
             int val = (int)((newValue.doubleValue()/100)*6379);
-            System.out.println("Filter value changed: " + val + 10);
             Radio.changeFilterValue(val + 10);
 
         });
 
         bandKnob.valueProperty().addListener((observable, oldValue, newValue) -> {
-            System.out.println("Band value changed: " + newValue);
             double angle = (newValue.doubleValue() / 100)*360;
             Radio.setBand(chooseBand(angle));
             updateRadioFrequency(Radio.getBand(), freqSlider.getValue());
-            updateDisplayText(Radio.getTime(), Radio.getSelectedTuneFreq(), Radio.getCwToneFreq(), chooseBand(angle));
+            updateDisplayText( Radio.getSelectedTuneFreq(), Radio.getCwToneFreq(), chooseBand(angle));
         });
 
 
         toneKnob.valueProperty().addListener((observable, oldValue, newValue) -> {
-            System.out.println("Tone value changed: " + newValue);
 
             double newFreq = (((newValue.doubleValue() / 100)*400) + 400);
 
@@ -245,7 +243,7 @@ public class MainUiController {
             Radio.setCwToneFreq(newFreq);
             MorsePlayer.setSideTone();
 
-            updateDisplayText(Radio.getTime(), Radio.getSelectedTuneFreq(), Radio.getCwToneFreq(), Radio.getBand());
+            updateDisplayText( Radio.getSelectedTuneFreq(), Radio.getCwToneFreq(), Radio.getBand());
 
         });
 
@@ -262,7 +260,6 @@ public class MainUiController {
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
-                    System.out.println("RadioButton is selected (toggled on)");
                 } else {
                     System.out.println("RadioButton is deselected (toggled off)");
                 }
@@ -335,6 +332,7 @@ public class MainUiController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/augustana/Sandbox.fxml"));
         VBox trainingVbox = loader.load();
         SandboxController controller = loader.getController();
+        sandboxController = controller;
         controller.setMainUIControllerController(this);
         mainHbox.getChildren().add(trainingVbox);
     }
@@ -357,13 +355,14 @@ public class MainUiController {
         volumeKnob.setValue((Radio.getSoundAmplitud()/4)*100);
     }
 
-    void updateDisplayText(int time, double rFrequency, double tFrequency, int band){
+    void updateDisplayText(double rFrequency, double tFrequency, int band) {
+        DecimalFormat dfRFrequency = new DecimalFormat("#.####"); // Up to four decimal places for rFrequency
+        DecimalFormat dfTFrequency = new DecimalFormat("#"); // No decimal places for tFrequency
 
-        DecimalFormat df = new DecimalFormat("#.####"); // For one decimal place
-        String formattedTFrequency = df.format(tFrequency);
-        String formattedRFrequency = df.format(rFrequency);
+        String formattedTFrequency = dfTFrequency.format(tFrequency);
+        String formattedRFrequency = dfRFrequency.format(rFrequency);
 
-        displayLabel.setText(formattedTFrequency + "Hz  "+ formattedRFrequency + "Mhz  " + time + "  " + band + "m ");
+        displayLabel.setText(formattedTFrequency + "Hz  " + formattedRFrequency + "Mhz  " + band + "m ");
     }
 
     int chooseBand(double angle){
@@ -387,34 +386,54 @@ public class MainUiController {
 
     public void handleKeyPress(KeyEvent keyEvent) throws InterruptedException {
         if (!isPressed) {
-            isPressed = true;
-          //  System.out.println(System.nanoTime());
-            if (keyEvent.getCode() == KeyCode.J) {
-                new Thread(() -> {
-                    try {
-                        PaddleHandler.playContinuousDot();
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
-                }).start();
-
-            } else if (keyEvent.getCode() == KeyCode.K) {
-                new Thread(() ->{
-                    try {
-                        PaddleHandler.playContinuousDash();
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
-                }).start();
-            } else if (keyEvent.getCode() == KeyCode.L) {
-                CWHandler.startTimer();
-            } else if (keyEvent.getCode() == KeyCode.N) {
-                Radio.toggleNoise();
+            if(sandboxController == null){
+                handleKeyPressHelper(keyEvent);
+            }else if(!sandboxController.isTextFieldActive()){
+                handleKeyPressHelper(keyEvent);
             }
+
+        }
+    }
+
+    private void handleKeyPressHelper(KeyEvent keyEvent){
+        isPressed = true;
+        //  System.out.println(System.nanoTime());
+        if (keyEvent.getCode() == KeyCode.J) {
+            new Thread(() -> {
+                try {
+                    PaddleHandler.playContinuousDot();
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }).start();
+
+        } else if (keyEvent.getCode() == KeyCode.K) {
+            new Thread(() ->{
+                try {
+                    PaddleHandler.playContinuousDash();
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }).start();
+        } else if (keyEvent.getCode() == KeyCode.L) {
+            CWHandler.startTimer();
+        } else if (keyEvent.getCode() == KeyCode.N) {
+            Radio.toggleNoise();
         }
     }
 
     public void handleKeyRelease(KeyEvent keyEvent) throws Exception {
+            if(sandboxController == null){
+                handleKeyReleaseHelper(keyEvent);
+            }else if(!sandboxController.isTextFieldActive()){
+                handleKeyReleaseHelper(keyEvent);
+            }
+
+
+       // System.out.println(CWHandler.getCwString());
+    }
+
+    private void handleKeyReleaseHelper(KeyEvent keyEvent) throws Exception {
         if (keyEvent.getCode() == KeyCode.J || keyEvent.getCode() == KeyCode.K) {
             CWHandler.sendMessageTimer();
             PaddleHandler.stopPaddlePress();
@@ -428,7 +447,6 @@ public class MainUiController {
 //            addToEnglishBox(CWHandler.getCwString());
         }
         isPressed = false;
-       // System.out.println(CWHandler.getCwString());
     }
 
     private void handleFullScreenButtonPress(Stage stage) {
