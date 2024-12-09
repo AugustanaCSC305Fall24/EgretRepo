@@ -12,10 +12,11 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="mainVbox" style="-fx-background-color: #353538;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.UI.SandboxController">
+<VBox fx:id="mainVbox" style="-fx-background-color: #353538;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.UI.SandboxController">
    <children>
       <TabPane prefHeight="339.0" prefWidth="400.0" style="-fx-background-color: #353538; -fx-border-color: #353538;" tabClosingPolicy="UNAVAILABLE">
          <tabs>
@@ -50,26 +51,33 @@
                                     </Button>
                                  </children>
                               </HBox>
-                              <Label prefHeight="18.0" prefWidth="413.0" text="Scenario Description" textFill="WHITE">
-                                 <padding>
-                                    <Insets left="20.0" />
-                                 </padding>
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="scenarioDescription" prefHeight="68.0" prefWidth="400.0" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,  aliquip ex ea commodo consequat." textFill="WHITE" textOverrun="CLIP" wrapText="true">
-                                 <padding>
-                                    <Insets left="20.0" />
-                                 </padding>
-                              </Label>
-                              <Label prefHeight="22.0" prefWidth="400.0" text="Agent List" textFill="WHITE">
-                                 <padding>
-                                    <Insets left="20.0" />
-                                 </padding>
-                              </Label>
-                              <ListView fx:id="agentList" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="150.0" prefWidth="366.0" />
                               <HBox />
+                              <VBox>
+                                 <children>
+                                    <Label alignment="CENTER" prefHeight="18.0" prefWidth="399.0" text="Scenario Chat Log" textFill="WHITE" />
+                                    <ScrollPane prefHeight="178.0" prefWidth="390.0">
+                                       <content>
+                                          <VBox fx:id="scenarioChatLog" />
+                                       </content>
+                                       <VBox.margin>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </VBox.margin>
+                                    </ScrollPane>
+                                 </children>
+                              </VBox>
+                              <HBox>
+                                 <children>
+                                    <TextField fx:id="scenarioSendMessageField" prefHeight="26.0" prefWidth="241.0">
+                                       <HBox.margin>
+                                          <Insets left="5.0" right="50.0" />
+                                       </HBox.margin>
+                                    </TextField>
+                                    <Button fx:id="scenarioSendMessageButton" mnemonicParsing="false" text="Button" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets top="5.0" />
+                                 </VBox.margin>
+                              </HBox>
                            </children>
                         </VBox>
                      </children>
@@ -84,7 +92,7 @@
                            <children>
                               <Label text="WPM">
                                  <VBox.margin>
-                                    <Insets top="20.0" />
+                                    <Insets top="10.0" />
                                  </VBox.margin>
                               </Label>
                               <Slider fx:id="wpmSlider" majorTickUnit="1.0" max="25.0" maxHeight="-Infinity" maxWidth="-Infinity" min="10.0" minorTickCount="0" prefHeight="38.0" prefWidth="263.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="10.0">
@@ -92,6 +100,28 @@
                                     <Insets top="10.0" />
                                  </VBox.margin>
                               </Slider>
+                              <Label prefHeight="18.0" prefWidth="413.0" text="Scenario Description" textFill="WHITE">
+                                 <padding>
+                                    <Insets left="20.0" />
+                                 </padding>
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label fx:id="scenarioDescription" prefHeight="68.0" prefWidth="400.0" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,  aliquip ex ea commodo consequat." textFill="WHITE" textOverrun="CLIP" wrapText="true">
+                                 <padding>
+                                    <Insets left="20.0" />
+                                 </padding>
+                              </Label>
+                              <Label prefHeight="22.0" prefWidth="400.0" text="Agent List" textFill="WHITE">
+                                 <padding>
+                                    <Insets left="20.0" />
+                                 </padding>
+                              </Label>
+                              <ListView fx:id="agentList" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="103.0" prefWidth="368.0" />
                            </children></VBox>
                      </children>
                   </AnchorPane>
@@ -186,6 +216,19 @@
                      </children>
                   </AnchorPane>
                </content>
+            </Tab>
+            <Tab text="WPM">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Pane layoutX="-3.0" prefHeight="308.0" prefWidth="406.0" style="-fx-background-color: white;">
+                           <children>
+                              <Slider fx:id="morsePlayerSlider" blockIncrement="1.0" layoutX="34.0" layoutY="146.0" majorTickUnit="1.0" max="25.0" min="10.0" minorTickCount="1" prefHeight="15.0" prefWidth="341.0" showTickLabels="true" showTickMarks="true" value="10.0" />
+                           </children>
+                        </Pane>
+                     </children>
+                  </AnchorPane>
+              </content>
             </Tab>
          </tabs>
       </TabPane>

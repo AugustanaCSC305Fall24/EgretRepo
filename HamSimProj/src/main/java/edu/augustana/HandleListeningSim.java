@@ -1,6 +1,7 @@
 package edu.augustana;
 
 
+import edu.augustana.Bots.Bot;
 import edu.augustana.Bots.ContinuousMessageBot;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -96,9 +97,11 @@ public class HandleListeningSim {
         if (guessedCorrectly) {
             //Add guess as green into the listview
             label.setTextFill(Color.GREEN);
+            label.setText(label.getText() + " Guessed correctly!");
 
         } else { //Guessed incorrectly
             label.setTextFill(Color.RED);
+            label.setText(label.getText() + " The call sign or message is incorrect");
 
         }
 
@@ -129,6 +132,7 @@ public class HandleListeningSim {
     public static boolean getSimActive() {
         return simActive;
     }
+
 
 
 

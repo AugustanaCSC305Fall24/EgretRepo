@@ -129,7 +129,6 @@ public class MainUiController {
 
 
 
-
     KnobControl volumeKnob;
     KnobControl filterKnob;
     KnobControl bandKnob;
@@ -150,8 +149,6 @@ public class MainUiController {
         midSpacingHbox.setAlignment(Pos.CENTER_LEFT);
 
         midSpacingHbox.setPrefWidth(toolBarHbox.getWidth()/4);
-
-
 
         assert mainHbox != null : "fx:id=\"mainHbox\" was not injected: check your FXML file 'MainUI.fxml'.";
         assert radioImage != null : "fx:id=\"radioImage\" was not injected: check your FXML file 'MainUI.fxml'.";
@@ -218,23 +215,19 @@ public class MainUiController {
         });
 
         volumeKnob.valueProperty().addListener((observable, oldValue, newValue) -> {
-            System.out.println("Volume knob value changed: " + newValue);
 
             double scaledValue = (newValue.doubleValue() / 100);
-            System.out.println("Volume scale value changed: " + scaledValue);
             Radio.updateGain(scaledValue);
         });
 
 
         filterKnob.valueProperty().addListener((observable, oldValue, newValue) -> {
             int val = (int)((newValue.doubleValue()/100)*6379);
-            System.out.println("Filter value changed: " + val + 10);
             Radio.changeFilterValue(val + 10);
 
         });
 
         bandKnob.valueProperty().addListener((observable, oldValue, newValue) -> {
-            System.out.println("Band value changed: " + newValue);
             double angle = (newValue.doubleValue() / 100)*360;
             Radio.setBand(chooseBand(angle));
             updateRadioFrequency(Radio.getBand(), freqSlider.getValue());
@@ -243,7 +236,6 @@ public class MainUiController {
 
 
         toneKnob.valueProperty().addListener((observable, oldValue, newValue) -> {
-            System.out.println("Tone value changed: " + newValue);
 
             double newFreq = (((newValue.doubleValue() / 100)*400) + 400);
 
@@ -269,7 +261,6 @@ public class MainUiController {
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
-                    System.out.println("RadioButton is selected (toggled on)");
                 } else {
                     System.out.println("RadioButton is deselected (toggled off)");
                 }
@@ -395,52 +386,65 @@ public class MainUiController {
     }
 
     public void handleKeyPress(KeyEvent keyEvent) throws InterruptedException {
-        if (!isPressed && !sandboxController.isTextFieldActive()) {
-            isPressed = true;
-          //  System.out.println(System.nanoTime());
-            if (keyEvent.getCode() == KeyCode.J) {
-                new Thread(() -> {
-                    try {
-                        PaddleHandler.playContinuousDot();
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
-                }).start();
-
-            } else if (keyEvent.getCode() == KeyCode.K) {
-                new Thread(() ->{
-                    try {
-                        PaddleHandler.playContinuousDash();
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
-                }).start();
-            } else if (keyEvent.getCode() == KeyCode.L) {
-                CWHandler.startTimer();
-            } else if (keyEvent.getCode() == KeyCode.N) {
-                Radio.toggleNoise();
+        if (!isPressed) {
+            if(sandboxController == null){
+                handleKeyPressHelper(keyEvent);
+            }else if(!sandboxController.isTextFieldActive()){
+                handleKeyPressHelper(keyEvent);
             }
+
+        }
+    }
+
+    private void handleKeyPressHelper(KeyEvent keyEvent){
+        isPressed = true;
+        //  System.out.println(System.nanoTime());
+        if (keyEvent.getCode() == KeyCode.J) {
+            new Thread(() -> {
+                try {
+                    PaddleHandler.playContinuousDot();
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }).start();
+
+        } else if (keyEvent.getCode() == KeyCode.K) {
+            new Thread(() ->{
+                try {
+                    PaddleHandler.playContinuousDash();
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }).start();
+        } else if (keyEvent.getCode() == KeyCode.L) {
+            CWHandler.startTimer();
+        } else if (keyEvent.getCode() == KeyCode.N) {
+            Radio.toggleNoise();
         }
     }
 
     public void handleKeyRelease(KeyEvent keyEvent) throws Exception {
+            if(sandboxController == null){
+                handleKeyReleaseHelper(keyEvent);
+            }else if(!sandboxController.isTextFieldActive()){
+                handleKeyReleaseHelper(keyEvent);
+            }
+    }
 
-        if(!sandboxController.isTextFieldActive()){
-            if (keyEvent.getCode() == KeyCode.J || keyEvent.getCode() == KeyCode.K) {
-                CWHandler.sendMessageTimer();
-                PaddleHandler.stopPaddlePress();
+    private void handleKeyReleaseHelper(KeyEvent keyEvent) throws Exception {
+        if (keyEvent.getCode() == KeyCode.J || keyEvent.getCode() == KeyCode.K) {
+            CWHandler.sendMessageTimer();
+            PaddleHandler.stopPaddlePress();
 //            addToMorseBox(PaddleHandler.getCwString()); // stops first paddle press on keyRelease of second paddle if both are held simultaneously
 //            addToEnglishBox(PaddleHandler.getCwString());
-                System.out.println(CWHandler.getCwString());
-            } else if (keyEvent.getCode() == KeyCode.L) {
-                CWHandler.stopTimer();
-                CWHandler.sendMessageTimer();
+            System.out.println(CWHandler.getCwString());
+        } else if (keyEvent.getCode() == KeyCode.L) {
+            CWHandler.stopTimer();
+            CWHandler.sendMessageTimer();
 //            addToMorseBox(CWHandler.getCwString());
 //            addToEnglishBox(CWHandler.getCwString());
-            }
-            isPressed = false;
         }
-       // System.out.println(CWHandler.getCwString());
+        isPressed = false;
     }
 
     private void handleFullScreenButtonPress(Stage stage) {

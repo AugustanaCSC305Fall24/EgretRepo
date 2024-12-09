@@ -2,12 +2,12 @@ package edu.augustana.UI;
 
 import edu.augustana.*;
 import edu.augustana.Bots.Bot;
-import edu.augustana.Bots.ContinuousMessageBot;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.Region;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -16,7 +16,6 @@ import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -78,6 +77,15 @@ public class SandboxController {
     @FXML
     private VBox chatLogVbox;
 
+    @FXML
+    private Button scenarioSendMessageButton;
+
+    @FXML
+    private TextField scenarioSendMessageField;
+
+    @FXML
+    private VBox scenarioChatLog;
+
 
     @FXML
     private Button sendMessageSeverButton;
@@ -85,6 +93,11 @@ public class SandboxController {
     @FXML
     private TextField serverMessageField;
 
+    @FXML
+    private Tab WPMTab;
+
+    @FXML
+    private Slider morsePlayerSlider;
 
     @FXML
     void initialize() throws Exception {
@@ -96,6 +109,11 @@ public class SandboxController {
         agentList.getItems().addAll(scenarioChoiceBox.getValue().getBotCollection().getBots());
 
         updateListOfServer();
+
+        morsePlayerSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+            int wpm = newValue.intValue();
+            MorsePlayer.setWordsPerMinuteMultiplier(wpm);
+        });
 
 
         sendMessageSeverButton.setStyle(
@@ -124,10 +142,11 @@ public class SandboxController {
                 try {
                     scenarioChoiceBox.getValue().startScenario();
                     startStopScenarioBtn.textProperty().set("Stop");
+                    scenarioChoiceBox.getValue().setParentController(this);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
-            }else{
+            }else if (Radio.isRadioOn()){
                 scenarioChoiceBox.getValue().stopScenario();
                 startStopScenarioBtn.textProperty().set("Start");
             }
@@ -209,7 +228,7 @@ public class SandboxController {
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
-            }else if(serverListView.getSelectionModel().getSelectedItem() !=  null){
+            }else if(serverListView.getSelectionModel().getSelectedItem() !=  null && Radio.isRadioOn()){
                 HamRadioServerClient.setUIController(this);
                 Stage serverConnectStage = new Stage();
                 FXMLLoader loader = new FXMLLoader(App.class.getResource("serverConnect.fxml"));
@@ -255,6 +274,28 @@ public class SandboxController {
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
+        });
+
+        //This checks if the message in the box is either in english or morse, and then adds the morse variation
+        //of the message to the chat log
+        scenarioSendMessageButton.setOnAction(evt -> {
+            if (scenarioChoiceBox.getValue().isPlaying) {
+                if (scenarioSendMessageField.getText() != null) {
+                    String message = scenarioSendMessageField.getText();
+
+                    addMessageToScenarioUI(message);
+                    scenarioSendMessageField.clear();
+
+                    //actually checks if the message is correct
+                    scenarioChoiceBox.getValue().checkMessage(TextToMorseConverter.textToMorse(message));
+
+                }
+            }
+
+
+
+
+
         });
 
     }
@@ -346,13 +387,26 @@ public class SandboxController {
         createServerBtn.setVisible(bool);
     }
 
-    public void addMessageToUI(String message){
+    public void addMessageToServerUI(String message){
 
         Platform.runLater(() -> {
             Label labelMessage = new Label(message);
+            labelMessage.setWrapText(true);
+            labelMessage.setPrefWidth(275);
+            labelMessage.setPrefHeight(Region.USE_COMPUTED_SIZE);
             chatLogVbox.getChildren().add(labelMessage);
         });
+    }
 
+    public void addMessageToScenarioUI(String message){
+
+        Platform.runLater(() -> {
+            Label labelMessage = new Label(message);
+            labelMessage.setWrapText(true);
+            labelMessage.setPrefWidth(380);
+            labelMessage.setPrefHeight(Region.USE_COMPUTED_SIZE);
+            scenarioChatLog.getChildren().add(labelMessage);
+        });
     }
 
     public void setUserName(String name){

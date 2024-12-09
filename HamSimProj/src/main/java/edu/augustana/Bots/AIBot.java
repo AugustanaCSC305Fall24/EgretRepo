@@ -17,10 +17,10 @@ public class AIBot extends Bot{
         setName(name);
         setTextCallSign(callSign);
         this.systemPromptText = systemPromptText;
+        this.genAi = new GenAi("AIzaSyBdtDb5rL_wP8aXegcVpRo-bZIWjalQNQw", new GsonJsonParser());
     }
 
     public void requestMessage(String message){
-
         String fullPrompt = systemPromptText + "\n" +
                 "Your name is: " + getName() + "\n" +
                 "You are the chat bot. Act like a person talking through a HAM radio. Respond to this message.\n"
@@ -31,7 +31,7 @@ public class AIBot extends Bot{
         genAi.generateContent(model)
                 .thenAccept(gcr -> {
                     String geminiResponse = gcr.text();
-                    System.out.println("Debug: GeminiBirdBot received response: " + geminiResponse);
+                    System.out.println("Debug: AIBot received response: " + geminiResponse);
                 });
 
     }
@@ -71,5 +71,17 @@ public class AIBot extends Bot{
     @Override
     public String toString() {
         return "";
+    }
+
+    public static void main(String[] args) {
+        AIBot aiBot = new AIBot(1, "AI Bot", "AI", "System Prompt");
+        aiBot.requestMessage("");
+        try {
+            // Wait for the asynchronous task to complete
+            Thread.sleep(5000); // Adjust the duration as needed
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
     }
 }

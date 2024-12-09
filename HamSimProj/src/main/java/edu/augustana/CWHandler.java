@@ -198,7 +198,6 @@ public class CWHandler {
         //will delete all of this
         for (SimScenario scenario : ScenarioCollection.getCollection()) {
             if (scenario.isPlaying) {
-
                 // Cancel the previous task if it exists
                 if (scheduledTask != null && !scheduledTask.isDone()) {
                     scheduledTask.cancel(false); // Cancel the current task but do not interrupt if running
