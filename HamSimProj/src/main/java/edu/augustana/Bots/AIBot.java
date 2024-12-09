@@ -23,7 +23,7 @@ public class AIBot extends Bot{
     public void requestMessage(String message){
         String fullPrompt = systemPromptText + "\n" +
                 "Your name is: " + getName() + "\n" +
-                "You are the chat bot. Act like a person talking through a HAM radio. Respond to this message.\n"
+                "You are the chat bot. Read the following past history/transcript, and reply like a person talking through a HAM radio. Respond to this message.\n"
                 + message;
 
         var model = createBotModel(fullPrompt);
@@ -75,7 +75,7 @@ public class AIBot extends Bot{
 
     public static void main(String[] args) {
         AIBot aiBot = new AIBot(1, "AI Bot", "AI", "System Prompt");
-        aiBot.requestMessage("");
+        aiBot.requestMessage("Hello, how are you?");
         try {
             // Wait for the asynchronous task to complete
             Thread.sleep(5000); // Adjust the duration as needed

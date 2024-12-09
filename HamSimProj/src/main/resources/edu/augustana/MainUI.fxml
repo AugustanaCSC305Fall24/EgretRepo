@@ -17,6 +17,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <BorderPane onKeyPressed="#handleKeyPress" onKeyReleased="#handleKeyRelease" style="-fx-background-color: #353538;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.UI.MainUiController">
    <center>
@@ -43,7 +44,6 @@
                                     <Slider fx:id="freqSlider" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="14.0" prefWidth="528.0" translateX="-63.0" translateY="240.0" />
                                     <RadioButton fx:id="muteBtn" accessibleRole="BUTTON" alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="33.0" prefWidth="21.0" scaleX="2.0" scaleY="2.0" translateX="277.0" translateY="230.0" />
                                     <RadioButton fx:id="powerBtn" accessibleRole="BUTTON" alignment="TOP_LEFT" layoutX="418.0" layoutY="321.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="21.0" scaleX="2.0" scaleY="2.0" translateX="330.0" translateY="230.0" />
-                                    <Slider fx:id="frequencyFilterSlider" max="1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="14.0" prefWidth="530.0" translateX="-63.0" translateY="194.0" />
                                     <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="176.0" prefWidth="706.0" translateX="10.0" translateY="55.0">
                                        <children>
                                           <HBox prefHeight="176.0" prefWidth="706.0">
@@ -107,6 +107,11 @@
                                           </HBox>
                                        </children>
                                     </Pane>
+                                    <Text fill="#fffefe" strokeType="OUTSIDE" strokeWidth="0.0" text="ON/OFF" translateX="326.0" translateY="180.0" />
+                                    <Text fill="#fffefe" strokeType="OUTSIDE" strokeWidth="0.0" text="MUTE" translateX="273.0" translateY="180.0" />
+                                    <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="BANDWIDTH FILTER" translateX="-269.0" translateY="186.0" />
+                                    <Slider fx:id="frequencyFilterSlider" max="1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="14.0" prefWidth="530.0" translateX="-63.0" translateY="205.0" />
+                                    <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="TUNING FREQUENCY" translateX="-266.0" translateY="223.0" />
                                  </children>
                               </StackPane>
                            </children>
