@@ -85,6 +85,10 @@ public class SandboxController {
     @FXML
     private TextField serverMessageField;
 
+    @FXML
+    private CheckBox showMorseServer;
+
+
 
     @FXML
     void initialize() throws Exception {
@@ -257,11 +261,10 @@ public class SandboxController {
             }
         });
 
-    }
 
-    public void updateChatLog(){
 
     }
+
 
     public void setMainUIControllerController(MainUiController controller) {
         mainUIController = controller;
