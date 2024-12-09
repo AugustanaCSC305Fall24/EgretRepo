@@ -2,20 +2,18 @@ package edu.augustana.UI;
 
 import edu.augustana.*;
 import edu.augustana.Bots.Bot;
-import edu.augustana.Bots.ContinuousMessageBot;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -73,6 +71,15 @@ public class SandboxController {
     @FXML
     private VBox chatLogVbox;
 
+    @FXML
+    private Button scenarioSendMessageButton;
+
+    @FXML
+    private TextField scenarioSendMessageField;
+
+    @FXML
+    private VBox scenarioChatLog;
+
 
     @FXML
     void initialize() throws Exception {
@@ -91,6 +98,7 @@ public class SandboxController {
                 try {
                     scenarioChoiceBox.getValue().startScenario();
                     startStopScenarioBtn.textProperty().set("Stop");
+                    scenarioChoiceBox.getValue().setParentController(this);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
@@ -224,6 +232,28 @@ public class SandboxController {
             }
         });
 
+        //This checks if the message in the box is either in english or morse, and then adds the morse variation
+        //of the message to the chat log
+        scenarioSendMessageButton.setOnAction(evt -> {
+            if (scenarioChoiceBox.getValue().isPlaying) {
+                if (scenarioSendMessageField.getText() != null) {
+                    String message = scenarioSendMessageField.getText();
+
+                    addMessageToScenarioUI(message);
+                    scenarioSendMessageField.clear();
+
+                    //actually checks if the message is correct
+                    scenarioChoiceBox.getValue().checkMessage(TextToMorseConverter.textToMorse(message));
+
+                }
+            }
+
+
+
+
+
+        });
+
     }
 
     public void updateChatLog(){
@@ -312,13 +342,26 @@ public class SandboxController {
         createServerBtn.setVisible(bool);
     }
 
-    public void addMessageToUI(String message){
+    public void addMessageToServerUI(String message){
 
         Platform.runLater(() -> {
             Label labelMessage = new Label(message);
+            labelMessage.setWrapText(true);
+            labelMessage.setPrefWidth(275);
+            labelMessage.setPrefHeight(Region.USE_COMPUTED_SIZE);
             chatLogVbox.getChildren().add(labelMessage);
         });
+    }
 
+    public void addMessageToScenarioUI(String message){
+
+        Platform.runLater(() -> {
+            Label labelMessage = new Label(message);
+            labelMessage.setWrapText(true);
+            labelMessage.setPrefWidth(380);
+            labelMessage.setPrefHeight(Region.USE_COMPUTED_SIZE);
+            scenarioChatLog.getChildren().add(labelMessage);
+        });
     }
 
     public void setUserName(String name){

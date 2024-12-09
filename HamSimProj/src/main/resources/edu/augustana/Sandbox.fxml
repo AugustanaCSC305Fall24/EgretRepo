@@ -9,6 +9,7 @@
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -49,26 +50,33 @@
                                     </Button>
                                  </children>
                               </HBox>
-                              <Label prefHeight="18.0" prefWidth="413.0" text="Scenario Description" textFill="WHITE">
-                                 <padding>
-                                    <Insets left="20.0" />
-                                 </padding>
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="scenarioDescription" prefHeight="68.0" prefWidth="400.0" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,  aliquip ex ea commodo consequat." textFill="WHITE" textOverrun="CLIP" wrapText="true">
-                                 <padding>
-                                    <Insets left="20.0" />
-                                 </padding>
-                              </Label>
-                              <Label prefHeight="22.0" prefWidth="400.0" text="Agent List" textFill="WHITE">
-                                 <padding>
-                                    <Insets left="20.0" />
-                                 </padding>
-                              </Label>
-                              <ListView fx:id="agentList" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="150.0" prefWidth="366.0" />
                               <HBox />
+                              <VBox>
+                                 <children>
+                                    <Label alignment="CENTER" prefHeight="18.0" prefWidth="399.0" text="Scenario Chat Log" textFill="WHITE" />
+                                    <ScrollPane prefHeight="178.0" prefWidth="390.0">
+                                       <content>
+                                          <VBox fx:id="scenarioChatLog" />
+                                       </content>
+                                       <VBox.margin>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </VBox.margin>
+                                    </ScrollPane>
+                                 </children>
+                              </VBox>
+                              <HBox>
+                                 <children>
+                                    <TextField fx:id="scenarioSendMessageField" prefHeight="26.0" prefWidth="241.0">
+                                       <HBox.margin>
+                                          <Insets left="5.0" right="50.0" />
+                                       </HBox.margin>
+                                    </TextField>
+                                    <Button fx:id="scenarioSendMessageButton" mnemonicParsing="false" text="Button" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets top="5.0" />
+                                 </VBox.margin>
+                              </HBox>
                            </children>
                         </VBox>
                      </children>
@@ -83,7 +91,7 @@
                            <children>
                               <Label text="WPM">
                                  <VBox.margin>
-                                    <Insets top="20.0" />
+                                    <Insets top="10.0" />
                                  </VBox.margin>
                               </Label>
                               <Slider fx:id="wpmSlider" majorTickUnit="1.0" max="25.0" maxHeight="-Infinity" maxWidth="-Infinity" min="10.0" minorTickCount="0" prefHeight="38.0" prefWidth="263.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="10.0">
@@ -91,6 +99,28 @@
                                     <Insets top="10.0" />
                                  </VBox.margin>
                               </Slider>
+                              <Label prefHeight="18.0" prefWidth="413.0" text="Scenario Description" textFill="WHITE">
+                                 <padding>
+                                    <Insets left="20.0" />
+                                 </padding>
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label fx:id="scenarioDescription" prefHeight="68.0" prefWidth="400.0" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,  aliquip ex ea commodo consequat." textFill="WHITE" textOverrun="CLIP" wrapText="true">
+                                 <padding>
+                                    <Insets left="20.0" />
+                                 </padding>
+                              </Label>
+                              <Label prefHeight="22.0" prefWidth="400.0" text="Agent List" textFill="WHITE">
+                                 <padding>
+                                    <Insets left="20.0" />
+                                 </padding>
+                              </Label>
+                              <ListView fx:id="agentList" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="103.0" prefWidth="368.0" />
                            </children></VBox>
                      </children>
                   </AnchorPane>

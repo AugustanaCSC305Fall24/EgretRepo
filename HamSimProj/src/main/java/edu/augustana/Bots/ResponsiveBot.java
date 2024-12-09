@@ -74,14 +74,14 @@ public class ResponsiveBot extends Bot{
         String answerToCompare;
 
         if (stageNumber == 1) {
-            answerToCompare = "RO" + makeStringComparable(getTextCallSign());
+            answerToCompare = makeStringComparable("RO" + getTextCallSign()).toString();
         } else if (stageNumber == 2) {
             answerToCompare = makeStringComparable(expectedAnswer).toString();
         } else {
             return false;  //just doing this so that if the bot is done, then the check message does nothing.
         }
 
-        String userText = TextToMorseConverter.morseToText(userMorseString);
+        String userText = TextToMorseConverter.morseToText(userMorseString.replace(' ', '/'));
         String userTextToCompare = makeStringComparable(userText).toString();
 
         if (userTextToCompare.equals(answerToCompare)) {

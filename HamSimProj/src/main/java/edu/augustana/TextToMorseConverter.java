@@ -45,6 +45,7 @@ public class TextToMorseConverter {
         morseCodeMap.put("9", "----.");
         morseCodeMap.put("0", "-----");
         morseCodeMap.put(".", ".-.-.-");
+        morseCodeMap.put("-", "-....-");
         morseCodeMap.put(" ", "*"); // Space separator in Morse code
     }
 
@@ -143,4 +144,13 @@ public class TextToMorseConverter {
         return morseCodeMap;
     }
 
+    public static boolean containsAlphabetLetter(String string) {
+        char[] characters = string.toCharArray();
+        for (char c : characters) {
+            if (Character.isLetter(c)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
