@@ -41,7 +41,7 @@ public class AIPlaying implements PlayingBehavior{
 
     public void playRandom() {
         new Thread(() -> {
-            
+
             //add an if statement here to see if they had been talked to yet. If not, then make them say cq then call sign. Just use a boolean
 
             String fullPrompt = bot.getSystemPromptText() + "\n" +

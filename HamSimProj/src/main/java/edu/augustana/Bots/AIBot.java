@@ -3,6 +3,7 @@ package edu.augustana.Bots;
 import swiss.ameri.gemini.api.*;
 import swiss.ameri.gemini.spi.JsonParser;
 import swiss.ameri.gemini.gson.GsonJsonParser;
+//import java.lang.Record
 
 
 public class AIBot extends Bot{
@@ -31,6 +32,7 @@ public class AIBot extends Bot{
     public void stopSound() {
 
     }
+
 
     public void talkTo(String userMorseMessage) {
 

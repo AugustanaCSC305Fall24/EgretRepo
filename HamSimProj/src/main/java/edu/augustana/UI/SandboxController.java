@@ -93,6 +93,16 @@ public class SandboxController {
     @FXML
     private TextField serverMessageField;
 
+    @FXML
+    private CheckBox showMorseServer;
+
+    private Tab WPMTab;
+
+    @FXML
+    private Slider morsePlayerSlider;
+
+    @FXML
+    private CheckBox showMorseScenario;
 
     @FXML
     void initialize() throws Exception {
@@ -104,6 +114,11 @@ public class SandboxController {
         agentList.getItems().addAll(scenarioChoiceBox.getValue().getBotCollection().getBots());
 
         updateListOfServer();
+
+        morsePlayerSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+            int wpm = newValue.intValue();
+            MorsePlayer.setWordsPerMinuteMultiplier(wpm);
+        });
 
 
         sendMessageSeverButton.setStyle(
@@ -130,6 +145,7 @@ public class SandboxController {
         startStopScenarioBtn.setOnAction(evt -> {
             if(!scenarioChoiceBox.getValue().isPlaying){
                 try {
+                    scenarioChatLog.getChildren().clear();
                     scenarioChoiceBox.getValue().startScenario();
                     startStopScenarioBtn.textProperty().set("Stop");
                     scenarioChoiceBox.getValue().setParentController(this);
@@ -275,7 +291,7 @@ public class SandboxController {
 
                     scenarioSendMessageField.clear();
 
-                    //actually checks if the message is correct
+                    //actually checks if the message is correct and adds to chat log
                     scenarioChoiceBox.getValue().checkMessage(TextToMorseConverter.textToMorse(message));
 
                 }
@@ -289,9 +305,7 @@ public class SandboxController {
 
     }
 
-    public void updateChatLog(){
 
-    }
 
     public void setMainUIControllerController(MainUiController controller) {
         mainUIController = controller;
@@ -376,7 +390,7 @@ public class SandboxController {
         createServerBtn.setVisible(bool);
     }
 
-    public void addMessageToServerUI(String message){
+    public void addMessageToServerUI(String message, String morseMessage){
 
         Platform.runLater(() -> {
             Label labelMessage = new Label(message);
@@ -384,10 +398,19 @@ public class SandboxController {
             labelMessage.setPrefWidth(275);
             labelMessage.setPrefHeight(Region.USE_COMPUTED_SIZE);
             chatLogVbox.getChildren().add(labelMessage);
+
+            if(showMorseServer.isSelected() && !morseMessage.equals("")){
+                Label labelMessage2 = new Label("Morse: " + morseMessage);
+                labelMessage2.setWrapText(true);
+                labelMessage2.setPrefWidth(275);
+                labelMessage2.setPrefHeight(Region.USE_COMPUTED_SIZE);
+                chatLogVbox.getChildren().add(labelMessage2);
+            }
+
         });
     }
 
-    public void addMessageToScenarioUI(String message){
+    public void addMessageToScenarioUI(String message, String morseMessage){
 
         Platform.runLater(() -> {
             Label labelMessage = new Label(message);
@@ -395,7 +418,19 @@ public class SandboxController {
             labelMessage.setPrefWidth(380);
             labelMessage.setPrefHeight(Region.USE_COMPUTED_SIZE);
             scenarioChatLog.getChildren().add(labelMessage);
+
+            if(showMorseScenario.isSelected() && !morseMessage.equals("")){
+                Label labelMessage2 = new Label("Morse: " + morseMessage);
+                labelMessage2.setWrapText(true);
+                labelMessage2.setPrefWidth(275);
+                labelMessage2.setPrefHeight(Region.USE_COMPUTED_SIZE);
+                scenarioChatLog.getChildren().add(labelMessage2);
+            }
+
+
         });
+
+
     }
 
     public void setUserName(String name){
@@ -411,6 +446,10 @@ public class SandboxController {
 
     public boolean isTextFieldActive() {
         return serverMessageField.isFocused();
+    }
+
+    public void clearServerChat(){
+        chatLogVbox.getChildren().clear();
     }
 
 }
