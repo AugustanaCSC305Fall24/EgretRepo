@@ -74,7 +74,7 @@ public class AIBot extends Bot{
 
     public static void main(String[] args) {
         AIBot aiBot = new AIBot(1, "AI Bot", "AI", "System Prompt");
-        aiBot.requestMessage("What's the best Christmas song?");
+        aiBot.requestMessage("");
         try {
             // Wait for the asynchronous task to complete
             Thread.sleep(5000); // Adjust the duration as needed

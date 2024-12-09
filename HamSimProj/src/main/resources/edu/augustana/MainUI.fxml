@@ -17,7 +17,6 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
 <BorderPane onKeyPressed="#handleKeyPress" onKeyReleased="#handleKeyRelease" style="-fx-background-color: #353538;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.UI.MainUiController">
    <center>
@@ -103,12 +102,7 @@
                                                       </VBox>
                                                    </children>
                                                 </GridPane>
-                                                <VBox fx:id="knobBox111" alignment="CENTER" prefHeight="176.0" prefWidth="303.0">
-                                                   <children>
-                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Server WPM" textAlignment="CENTER" wrappingWidth="310.84027099609375" />
-                                                      <Slider fx:id="morsePlayerSlider" blockIncrement="1.0" majorTickUnit="1.0" max="25.0" min="10.0" minorTickCount="1" prefHeight="38.0" prefWidth="301.0" showTickLabels="true" showTickMarks="true" value="10.0" />
-                                                   </children>
-                                                </VBox>
+                                                <VBox fx:id="knobBox111" alignment="CENTER" prefHeight="176.0" prefWidth="303.0" />
                                              </children>
                                           </HBox>
                                        </children>
