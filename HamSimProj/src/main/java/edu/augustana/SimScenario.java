@@ -11,6 +11,7 @@ import java.io.IOException;
 import com.google.gson.annotations.Expose;
 import edu.augustana.Bots.Bot;
 import edu.augustana.Bots.ResponsiveBot;
+import edu.augustana.UI.SandboxController;
 import javafx.scene.control.Alert;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -36,6 +37,8 @@ public class SimScenario {
     private int scenarioType; //0 = responsive scenario, 1 = AI scenario
 
     public boolean isPlaying;
+
+    private SandboxController parentController;
 
 
     public SimScenario(String name, String description, RadioEnvironment environment, BotCollection botCollection, int type){
@@ -86,6 +89,14 @@ public class SimScenario {
                 bot.stopSound();
             }
         }
+    }
+
+    public void setParentController(SandboxController controller) {
+        this.parentController = controller;
+    }
+
+    public SandboxController getParentController() {
+        return parentController;
     }
 
     public boolean checkUserInput(String userInput){
@@ -208,15 +219,9 @@ public class SimScenario {
 
 
         if (answerCorrect) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setHeaderText("Congrats!");
-            alert.setContentText("You answered correctly. Move onto the next part of the scenario.");
-            alert.show();
+            parentController.addMessageToScenarioUI("**Congrats! You answered correctly. Move onto the next part of the scenario.**");
         } else {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setHeaderText("Uh oh");
-            alert.setContentText("You answered incorrectly. You either messed up your message, are at the wrong frequency, or you waited too long to finish your message. Try again.");
-            alert.show();
+            parentController.addMessageToScenarioUI("**Uh oh. You answered incorrectly. You either messed up your message, are at the wrong frequency, or you waited too long to finish your message. Try again.**");
         }
 
     }

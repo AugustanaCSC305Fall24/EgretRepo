@@ -26,6 +26,7 @@ public class HamRadioServerClient {
     private static final HttpClient httpClient = HttpClient.newHttpClient();
     private static HamRadioWebSocketClient socketClient = new HamRadioWebSocketClient();
     public static boolean isConnected = false;
+    private static String currentServerID = "";
 
     // Method to create a server by sending a POST request
     public static void createServer(String serverId, double noiseLevel) throws Exception {
@@ -89,9 +90,10 @@ public class HamRadioServerClient {
 
     // Method to connect to a server
     public static void connectToServer(String serverId, String userID) throws Exception {
+        currentServerID = serverId;
         isConnected = true;
         socketClient.connect(serverId,userID);
-        uiController.addMessageToUI("Connected to server: " + serverId);
+        uiController.addMessageToServerUI("Connected to server: " + serverId);
         uiController.updateUserList(serverId);
         Radio.setNoiseAmplitude(getServerCondition(serverId));
         uiController.updateListOfServer();
@@ -108,12 +110,17 @@ public class HamRadioServerClient {
 
     // Method to disconnect from the server
     public static void disconnectServer() throws Exception {
+        currentServerID = "";
         isConnected = false;
         socketClient.disconnectWebSocket();
     }
 
     // Method to handle incoming messages
     public static void handleReceivedMessage(String message) throws InterruptedException {
+
+        uiController.updateUserList(currentServerID);
+
+
         String[] messageParts = message.split(",", 4);
         double frequency = Double.valueOf(messageParts[0]);
         double range = Double.valueOf(messageParts[1]);
@@ -123,7 +130,7 @@ public class HamRadioServerClient {
         String formattedMessage = user + ": " + TextToMorseConverter.spacedMorseToText(morseMessage);
         System.out.println(message);
         MorsePlayer.playBotMorseString(morseMessage, frequency, range);
-        uiController.addMessageToUI(formattedMessage);
+        uiController.addMessageToServerUI(formattedMessage);
     }
 
     public static String getServerURL() {
