@@ -10,6 +10,7 @@ import java.io.IOException;
 
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;
+import edu.augustana.Bots.AIBot;
 import edu.augustana.Bots.Bot;
 import edu.augustana.Bots.ResponsiveBot;
 import edu.augustana.UI.SandboxController;
@@ -35,14 +36,14 @@ public class SimScenario {
     private BotCollection botCollection;
 
     @Expose
-    private int scenarioType; //0 = responsive scenario, 1 = AI scenario
+    private String scenarioType; //Either a Responsive scenario or an AI scenario
 
     public boolean isPlaying;
 
     private transient SandboxController parentController;
 
 
-    public SimScenario(String name, String description, RadioEnvironment environment, BotCollection botCollection, int type){
+    public SimScenario(String name, String description, RadioEnvironment environment, BotCollection botCollection, String type){
         this.scenarioName = name;
         this.description = description;
         this.environment = environment;
@@ -55,22 +56,18 @@ public class SimScenario {
 
         String defDescription = "";
 
-        String defexpectedMessage = "";
 
         RadioEnvironment defRadioEnvironment = new RadioEnvironment("DEFAULT",0.1,0.1,0.1,0.1);
         ArrayList<Bot> defBotList = new ArrayList<>();
         BotCollection defBotCollection = new BotCollection(defBotList);
-        SimScenario defaultScenario = new SimScenario("DEFAULT",defDescription, defRadioEnvironment, defBotCollection, 0);
+        SimScenario defaultScenario = new SimScenario("DEFAULT",defDescription, defRadioEnvironment, defBotCollection, "Responsive");
 
         return defaultScenario;
 
     }
 
 
-    /*
-     * For now we just need this method to be able to play the message and call sign of the bots
-     * to have them continously play their message and callsign with the different parameters in the scenario
-     */
+
     public void startScenario() throws InterruptedException {
         Radio.setNoiseAmplitude(environment.getNoiseAmplitude());
         isPlaying = true;
@@ -79,6 +76,8 @@ public class SimScenario {
                 bot.playSound();
             }
         }
+
+
 
     }
 
@@ -116,7 +115,7 @@ public class SimScenario {
         return environment;
     }
 
-    public int getType(){
+    public String getType(){
         return scenarioType;
     }
 
@@ -192,44 +191,70 @@ public class SimScenario {
 
 
 
+    public void checkMessage(String userMorseMessage) {
 
-    public void checkMessage(String userMessage) {
+        //have to add an if else statement here for whether its AI or responsive
 
-        boolean answerCorrect = false;
+        //Add message to the chat log
+        parentController.addMessageToScenarioUI(TextToMorseConverter.morseToText(userMorseMessage.replace(' ', '/')), userMorseMessage.replace(' ', '/'));
 
-        double userFreq = Radio.getSelectedTuneFreq();
+        if (getType().equals("Responsive")) {
+            boolean answerCorrect = false;
 
-        double lowestFreqDistance = (double) Integer.MAX_VALUE;
-        ResponsiveBot closestBot = null;
+            double userFreq = Radio.getSelectedTuneFreq();
 
-        for (Bot bot : botCollection.getBots()) {
-            ResponsiveBot responsiveBot = (ResponsiveBot) bot;
+            double lowestFreqDistance = (double) Integer.MAX_VALUE;
+            ResponsiveBot closestBot = null;
 
-            if (responsiveBot.getStage() == 1) {
-                if (Math.abs(bot.getOutputFrequency() - userFreq) < lowestFreqDistance) {
-                    closestBot = (ResponsiveBot) bot;
-                }
-            } else if (responsiveBot.getStage() == 2) {
-                if (userFreq >= responsiveBot.getAnswerFreq() - 0.05 && userFreq <= responsiveBot.getAnswerFreq() + 0.05) {
-                    if (responsiveBot.checkMessage(userMessage)) {
-                        answerCorrect = true;
+            for (Bot bot : botCollection.getBots()) {
+                ResponsiveBot responsiveBot = (ResponsiveBot) bot;
+
+                if (responsiveBot.getStage() == 1) {
+                    if (Math.abs(bot.getOutputFrequency() - userFreq) < lowestFreqDistance) {
+                        closestBot = (ResponsiveBot) bot;
                     }
+                } else if (responsiveBot.getStage() == 2) {
+                    if (userFreq >= responsiveBot.getAnswerFreq() - 0.05 && userFreq <= responsiveBot.getAnswerFreq() + 0.05) {
+                        if (responsiveBot.checkMessage(userMorseMessage)) {
+                            answerCorrect = true;
+                        }
 
+                    }
                 }
             }
-        }
-        if (closestBot != null) {
-            if (closestBot.checkMessage(userMessage)) {
-                answerCorrect = true;
+            if (closestBot != null) {
+                if (closestBot.checkMessage(userMorseMessage)) {
+                    answerCorrect = true;
+                }
             }
+
+
+            if (answerCorrect) {
+                parentController.addMessageToScenarioUI("**Congrats! You answered correctly. Move onto the next part of the scenario.**","");
+            } else {
+                parentController.addMessageToScenarioUI("**Uh oh. You answered incorrectly. You either messed up your message, are at the wrong frequency, or you waited too long to finish your message. Try again.**", "");
+            }
+
+        } else { //Code if it is an AI Scenario
+
+            double userFreq = Radio.getSelectedTuneFreq();
+
+            double lowestFreqDistance = (double) Integer.MAX_VALUE;
+            AIBot closestBot = null;
+
+            for (Bot bot : botCollection.getBots()) {
+                AIBot aiBot = (AIBot) bot;
+
+                if (Math.abs(bot.getOutputFrequency() - userFreq) < lowestFreqDistance) {
+                    closestBot = (AIBot) bot;
+                }
+            }
+
+            closestBot.talkTo(userMorseMessage);
+
         }
 
 
-        if (answerCorrect) {
-            parentController.addMessageToScenarioUI("**Congrats! You answered correctly. Move onto the next part of the scenario.**","");
-        } else {
-            parentController.addMessageToScenarioUI("**Uh oh. You answered incorrectly. You either messed up your message, are at the wrong frequency, or you waited too long to finish your message. Try again.**","");
-        }
 
     }
 

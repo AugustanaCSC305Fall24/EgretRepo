@@ -289,10 +289,9 @@ public class SandboxController {
                 if (scenarioSendMessageField.getText() != null) {
                     String message = scenarioSendMessageField.getText();
 
-                    addMessageToScenarioUI("(User) " + message, TextToMorseConverter.textToMorse(message));
                     scenarioSendMessageField.clear();
 
-                    //actually checks if the message is correct
+                    //actually checks if the message is correct and adds to chat log
                     scenarioChoiceBox.getValue().checkMessage(TextToMorseConverter.textToMorse(message));
 
                 }
