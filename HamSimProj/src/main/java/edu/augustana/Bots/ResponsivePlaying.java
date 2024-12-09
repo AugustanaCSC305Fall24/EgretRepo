@@ -33,11 +33,12 @@ public class ResponsivePlaying implements PlayingBehavior {
 
                 //testing
                 //System.out.println(bot.getTextCallSign());
-                currentController.addMessageToScenarioUI(bot.getName() + ": " + bot.getTextCallSign());
+
+                currentController.addMessageToScenarioUI(bot.getName() + ": " + "CQ CQ " +bot.getTextCallSign(),bot.getName() + ": " + "-.-. --.- " + bot.getMorseCallSign());
 
 
                 try {
-                    MorsePlayer.playBotMorseString(bot.getMorseCallSign(), bot.getOutputFrequency(), bot.getFrequencyRange());
+                    MorsePlayer.playBotMorseString("-.-. --.- " + bot.getMorseCallSign(), bot.getOutputFrequency(), bot.getFrequencyRange());
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
@@ -56,7 +57,7 @@ public class ResponsivePlaying implements PlayingBehavior {
 
                 //testing
                 //System.out.println(bot.getTextBotPhrase());
-                currentController.addMessageToScenarioUI(bot.getName() + ": " + bot.getTextBotPhrase());
+                currentController.addMessageToScenarioUI(bot.getName() + ": " + bot.getTextBotPhrase(), bot.getName() + ": " + bot.getMorseBotPhrase());
 
                 try {
                     MorsePlayer.playBotMorseString(bot.getMorseBotPhrase(), bot.getOutputFrequency(), bot.getFrequencyRange());

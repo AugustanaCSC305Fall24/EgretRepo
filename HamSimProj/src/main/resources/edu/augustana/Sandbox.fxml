@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="mainVbox" style="-fx-background-color: #353538;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.UI.SandboxController">
+<VBox fx:id="mainVbox" style="-fx-background-color: #353538;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.UI.SandboxController">
    <children>
       <TabPane prefHeight="339.0" prefWidth="400.0" style="-fx-background-color: #353538; -fx-border-color: #353538;" tabClosingPolicy="UNAVAILABLE">
          <tabs>
@@ -78,7 +78,7 @@
                                           <Insets left="5.0" right="50.0" />
                                        </HBox.margin>
                                     </TextField>
-                                    <Button fx:id="scenarioSendMessageButton" mnemonicParsing="false" text="Button" />
+                                    <Button fx:id="scenarioSendMessageButton" mnemonicParsing="false" text="Send" />
                                  </children>
                                  <VBox.margin>
                                     <Insets top="5.0" />

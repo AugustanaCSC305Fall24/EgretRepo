@@ -113,6 +113,7 @@ public class HamRadioServerClient {
         currentServerID = "";
         isConnected = false;
         socketClient.disconnectWebSocket();
+        uiController.clearServerChat();
     }
 
     // Method to handle incoming messages

@@ -104,7 +104,13 @@ public class ScenarioBuildController {
         });
 
         saveFileBtn.setOnAction(event -> {
-            scenario.saveToFile();
+            if(scenario == null){
+                scenario = createScenario();
+                scenario.saveToFile();
+            }else{
+                scenario.saveToFile();
+            }
+
         });
 
         loadBtn.setOnAction(event -> {
@@ -208,7 +214,7 @@ public class ScenarioBuildController {
         botCollection = new BotCollection(new ArrayList<Bot>());
     }
 
-    private void createScenario(){
+    private SimScenario createScenario(){
 
         if(isNewScenario){
 
@@ -223,6 +229,7 @@ public class ScenarioBuildController {
             ScenarioCollection.addScenario(newScenario);
             parentController.updateScenarioChoice();
             parentController.displayBots();
+            return newScenario;
         }else{
 
             environment = new RadioEnvironment("scenarioNameField.getText()",
@@ -236,6 +243,7 @@ public class ScenarioBuildController {
             scenario.setEnvironment(environment);
             parentController.updateScenarioChoice();
             parentController.displayBots();
+            return scenario;
         }
     }
 

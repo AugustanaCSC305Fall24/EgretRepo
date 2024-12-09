@@ -38,7 +38,7 @@ public class SimScenario {
 
     public boolean isPlaying;
 
-    private SandboxController parentController;
+    private transient SandboxController parentController;
 
 
     public SimScenario(String name, String description, RadioEnvironment environment, BotCollection botCollection, int type){
@@ -219,9 +219,9 @@ public class SimScenario {
 
 
         if (answerCorrect) {
-            parentController.addMessageToScenarioUI("**Congrats! You answered correctly. Move onto the next part of the scenario.**");
+            parentController.addMessageToScenarioUI("**Congrats! You answered correctly. Move onto the next part of the scenario.**","");
         } else {
-            parentController.addMessageToScenarioUI("**Uh oh. You answered incorrectly. You either messed up your message, are at the wrong frequency, or you waited too long to finish your message. Try again.**");
+            parentController.addMessageToScenarioUI("**Uh oh. You answered incorrectly. You either messed up your message, are at the wrong frequency, or you waited too long to finish your message. Try again.**","");
         }
 
     }
