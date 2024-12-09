@@ -6,6 +6,7 @@ import edu.augustana.*;
 import edu.augustana.Bots.ContinuousMessageBot;
 import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -15,6 +16,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -26,6 +28,16 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import javax.sound.sampled.LineUnavailableException;
+import edu.augustana.UI.MainUiController;
+import javafx.application.Application;
+import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+
+import javafx.scene.input.MouseEvent;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
@@ -129,6 +141,8 @@ public class MainUiController {
     @FXML
     private HBox rightSpacingHbox;
 
+    private static InstructionsController instructionsController;
+
 
 
 
@@ -141,8 +155,6 @@ public class MainUiController {
 
     @FXML
     void initialize() throws IOException {
-
-
         displayLabel.setText("");
 
         toolBarHbox.setPrefWidth(myToolBar.getWidth());
@@ -455,5 +467,21 @@ public class MainUiController {
         String fullMessage = selectedBot.getMorseCallSign() + "/*//*/" + selectedBot.getMorseBotPhrase();
         addToEnglishBox(fullMessage.replace(' ', '/'));
         addToMorseBox(fullMessage.replace(' ', '/'));
+    }
+
+    public void showInstructions() throws IOException {
+        if (!InstructionsController.isShowing) {
+            Stage mainUIStage = new Stage();
+            FXMLLoader loader = new FXMLLoader(App.class.getResource("Instructions.fxml"));
+
+            mainUIStage.setTitle("Instructions");
+            mainUIStage.setScene(new Scene(loader.load()));
+            mainUIStage.initStyle(StageStyle.UNDECORATED);
+            mainUIStage.show();
+
+            instructionsController = loader.getController();
+            instructionsController.setParentController(this, mainUIStage);
+            InstructionsController.isShowing = true;
+        }
     }
 }

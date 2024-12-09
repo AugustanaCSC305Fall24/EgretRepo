@@ -86,17 +86,23 @@ public class MorsePlayer {
 
                 double freq = Math.abs(botFrequency - getSelectedTuneFreq()) * 1000000 + sideTone;
 
-                freq = logFrequency(botFrequency, getSelectedTuneFreq(), freq);
-               // System.out.println(sideTone);
-                freq = checkIfHigherThanBot(botFrequency, getSelectedTuneFreq(), freq);
+                freq = logFrequency(freq);
 
                 if (freq < 50) {
                     freq = 50;
                 }
 
-                System.out.println("Final freq: " + freq);
+                if (freq > maxToneHz) {
+                    freq = maxToneHz;
+                }
+
+
                 // this is for the tuning slider
                 double freqDiff = Math.abs(getSelectedTuneFreq() -  botFrequency);
+                if (freqDiff < .0028) {
+                    freq = sideTone;
+                }
+                System.out.println("Final freq: " + freq);
                 double filterRange = (frequencyRange * filterVal) / 2;
                 if (freqDiff > filterRange) {
                     freq = 0;
@@ -180,26 +186,12 @@ public class MorsePlayer {
         filterVal = num;
     }
 
-    public static double logFrequency(double botFrequency, double userFrequency, double tone) {
-        if (botFrequency < userFrequency) {
-            tone = 110 * Math.log10(tone);
-            return tone;
-        } else {
+    public static double logFrequency(double tone) {
             tone = 1000 * Math.log10(tone); //if you are about on, it puts out freq of 2500
-            double numFix = sideTone - 3100;
+            double numFix = sideTone - 2900;
             return tone + numFix;
-        }
     }
 
-    public static double checkIfHigherThanBot(double botFrequency, double userFrequency, double tone) {
-        double numFix;
-        if (botFrequency < userFrequency) {
-            double difference = tone - sideTone;
-            numFix = sideTone - 230;
-            tone = sideTone - difference - numFix ; // subtracting by numFix to get tone in correct place.
-        }
-        return tone;
-    }
 
     public static void setSideTone() {
         sideTone = Radio.getCwToneFreq();

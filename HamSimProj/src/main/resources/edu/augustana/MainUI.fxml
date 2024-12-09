@@ -147,6 +147,7 @@
                   </HBox>
                   <HBox fx:id="rightSpacingHbox">
                      <children>
+                        <Button mnemonicParsing="false" onAction="#showInstructions" text="Instructions" />
                         <Button fx:id="configButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="56.0" text="Config" />
                         <Button fx:id="minimizeButton" mnemonicParsing="false" text="-" />
                         <Button fx:id="fullScreenButton" mnemonicParsing="false" text="#" />
