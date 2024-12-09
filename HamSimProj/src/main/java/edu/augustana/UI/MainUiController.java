@@ -392,54 +392,67 @@ public class MainUiController {
 
     public void handleKeyPress(KeyEvent keyEvent) throws InterruptedException {
         if (!isPressed) {
-            if(sandboxController != null && !sandboxController.isTextFieldActive()){
-                isPressed = true;
-                //  System.out.println(System.nanoTime());
-                if (keyEvent.getCode() == KeyCode.J) {
-                    new Thread(() -> {
-                        try {
-                            PaddleHandler.playContinuousDot();
-                        } catch (Exception e) {
-                            throw new RuntimeException(e);
-                        }
-                    }).start();
-
-                } else if (keyEvent.getCode() == KeyCode.K) {
-                    new Thread(() ->{
-                        try {
-                            PaddleHandler.playContinuousDash();
-                        } catch (Exception e) {
-                            throw new RuntimeException(e);
-                        }
-                    }).start();
-                } else if (keyEvent.getCode() == KeyCode.L) {
-                    CWHandler.startTimer();
-                } else if (keyEvent.getCode() == KeyCode.N) {
-                    Radio.toggleNoise();
-                }
+            if(sandboxController == null){
+                handleKeyPressHelper(keyEvent);
+            }else if(!sandboxController.isTextFieldActive()){
+                handleKeyPressHelper(keyEvent);
             }
 
         }
     }
 
-    public void handleKeyRelease(KeyEvent keyEvent) throws Exception {
-        if(sandboxController != null && !sandboxController.isTextFieldActive()){
-            if (keyEvent.getCode() == KeyCode.J || keyEvent.getCode() == KeyCode.K) {
-                CWHandler.sendMessageTimer();
-                PaddleHandler.stopPaddlePress();
-//            addToMorseBox(PaddleHandler.getCwString()); // stops first paddle press on keyRelease of second paddle if both are held simultaneously
-//            addToEnglishBox(PaddleHandler.getCwString());
-                System.out.println(CWHandler.getCwString());
-            } else if (keyEvent.getCode() == KeyCode.L) {
-                CWHandler.stopTimer();
-                CWHandler.sendMessageTimer();
-//            addToMorseBox(CWHandler.getCwString());
-//            addToEnglishBox(CWHandler.getCwString());
-            }
-            isPressed = false;
+    private void handleKeyPressHelper(KeyEvent keyEvent){
+        isPressed = true;
+        //  System.out.println(System.nanoTime());
+        if (keyEvent.getCode() == KeyCode.J) {
+            new Thread(() -> {
+                try {
+                    PaddleHandler.playContinuousDot();
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }).start();
+
+        } else if (keyEvent.getCode() == KeyCode.K) {
+            new Thread(() ->{
+                try {
+                    PaddleHandler.playContinuousDash();
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }).start();
+        } else if (keyEvent.getCode() == KeyCode.L) {
+            CWHandler.startTimer();
+        } else if (keyEvent.getCode() == KeyCode.N) {
+            Radio.toggleNoise();
         }
+    }
+
+    public void handleKeyRelease(KeyEvent keyEvent) throws Exception {
+            if(sandboxController == null){
+                handleKeyReleaseHelper(keyEvent);
+            }else if(!sandboxController.isTextFieldActive()){
+                handleKeyReleaseHelper(keyEvent);
+            }
+
 
        // System.out.println(CWHandler.getCwString());
+    }
+
+    private void handleKeyReleaseHelper(KeyEvent keyEvent) throws Exception {
+        if (keyEvent.getCode() == KeyCode.J || keyEvent.getCode() == KeyCode.K) {
+            CWHandler.sendMessageTimer();
+            PaddleHandler.stopPaddlePress();
+//            addToMorseBox(PaddleHandler.getCwString()); // stops first paddle press on keyRelease of second paddle if both are held simultaneously
+//            addToEnglishBox(PaddleHandler.getCwString());
+            System.out.println(CWHandler.getCwString());
+        } else if (keyEvent.getCode() == KeyCode.L) {
+            CWHandler.stopTimer();
+            CWHandler.sendMessageTimer();
+//            addToMorseBox(CWHandler.getCwString());
+//            addToEnglishBox(CWHandler.getCwString());
+        }
+        isPressed = false;
     }
 
     private void handleFullScreenButtonPress(Stage stage) {
