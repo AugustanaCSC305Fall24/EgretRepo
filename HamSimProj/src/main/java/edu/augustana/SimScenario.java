@@ -7,8 +7,11 @@ import com.google.gson.Gson;
 
 import java.io.FileWriter;
 import java.io.IOException;
+
 import com.google.gson.annotations.Expose;
-import edu.augustana.Bots.ContinuousMessageBot;
+import edu.augustana.Bots.Bot;
+import edu.augustana.Bots.ResponsiveBot;
+import javafx.scene.control.Alert;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -16,9 +19,6 @@ public class SimScenario {
 
     @Expose
     private String description ;
-
-    @Expose
-    private String expectedMesagge ;
 
     @Expose
     private int numBots;
@@ -33,26 +33,17 @@ public class SimScenario {
     private BotCollection botCollection;
 
     @Expose
-    private String winMessage;
-
-    @Expose
-    private String failMessage;
-
-    @Expose
-    private int scenarioType;
+    private int scenarioType; //0 = responsive scenario, 1 = AI scenario
 
     public boolean isPlaying;
 
 
-    public SimScenario(String name, String description, String expectedMesagge, String failMessage, String winMessage, RadioEnvironment environment, BotCollection botCollection, int type){
+    public SimScenario(String name, String description, RadioEnvironment environment, BotCollection botCollection, int type){
         this.scenarioName = name;
-        this.expectedMesagge = expectedMesagge;
         this.description = description;
         this.environment = environment;
         this.botCollection = botCollection;
         scenarioType = type;
-        this.failMessage = failMessage;
-        this.winMessage = winMessage;
         isPlaying = false;
     }
 
@@ -62,14 +53,10 @@ public class SimScenario {
 
         String defexpectedMessage = "";
 
-        String deffailMessagge  = "";
-
-        String defWinMessage= "";
-
         RadioEnvironment defRadioEnvironment = new RadioEnvironment("DEFAULT",0.1,0.1,0.1,0.1);
-        ArrayList<ContinuousMessageBot> defBotList = new ArrayList<>();
+        ArrayList<Bot> defBotList = new ArrayList<>();
         BotCollection defBotCollection = new BotCollection(defBotList);
-        SimScenario defaultScenario = new SimScenario("DEFAULT",defDescription,defexpectedMessage,deffailMessagge, defWinMessage, defRadioEnvironment, defBotCollection, 0);
+        SimScenario defaultScenario = new SimScenario("DEFAULT",defDescription, defRadioEnvironment, defBotCollection, 0);
 
         return defaultScenario;
 
@@ -77,14 +64,14 @@ public class SimScenario {
 
 
     /*
-     *For now we just need this method to be able to play the message and call sign of the bots
-     * to have them continously play their message and and callsign with the different parameters in the scenario
+     * For now we just need this method to be able to play the message and call sign of the bots
+     * to have them continously play their message and callsign with the different parameters in the scenario
      */
     public void startScenario() throws InterruptedException {
-        Radio.setNoiseAmplitud(environment.getNoiseAmplitude());
+        Radio.setNoiseAmplitude(environment.getNoiseAmplitude());
         isPlaying = true;
         if(!botCollection.getBots().isEmpty()){
-            for(ContinuousMessageBot bot: botCollection.getBots()){
+            for(Bot bot: botCollection.getBots()){
                 bot.playSound();
             }
         }
@@ -92,9 +79,10 @@ public class SimScenario {
     }
 
     public void stopScenario(){
+        Radio.setNoiseAmplitude(0);
         isPlaying = false;
         if(!botCollection.getBots().isEmpty()){
-            for(ContinuousMessageBot bot: botCollection.getBots()){
+            for(Bot bot: botCollection.getBots()){
                 bot.stopSound();
             }
         }
@@ -129,10 +117,6 @@ public class SimScenario {
         return this.scenarioName;
     }
 
-    public String getUserMessage(){
-        return expectedMesagge;
-    }
-
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -155,10 +139,6 @@ public class SimScenario {
 
     public void setDescription(String newDescription){
         this.description = newDescription;
-    }
-
-    public void setExpectedMesagge(String newMessage){
-        this.expectedMesagge = newMessage;
     }
 
     public void setScenarioName(String scenarioName) {
@@ -194,41 +174,53 @@ public class SimScenario {
         }
     }
 
-    public int responseCorrectnessLevel(String userMessage){
 
+    public void checkMessage(String userMessage) {
 
+        boolean answerCorrect = false;
 
+        double userFreq = Radio.getSelectedTuneFreq();
 
-        //Turn user message String into an ArrayList to be able to check for existence of individual characters in user message
-        userMessage = userMessage.strip();
-        char[] userCharArray = userMessage.toCharArray();
-        ArrayList<Character> userCharList =  new ArrayList<>();
-        for(char character: userCharArray){
-            userCharList.add(character);
+        double lowestFreqDistance = (double) Integer.MAX_VALUE;
+        ResponsiveBot closestBot = null;
+
+        for (Bot bot : botCollection.getBots()) {
+            ResponsiveBot responsiveBot = (ResponsiveBot) bot;
+
+            if (responsiveBot.getStage() == 1) {
+                if (Math.abs(bot.getOutputFrequency() - userFreq) < lowestFreqDistance) {
+                    closestBot = (ResponsiveBot) bot;
+                }
+            } else if (responsiveBot.getStage() == 2) {
+                if (userFreq >= responsiveBot.getAnswerFreq() - 0.05 && userFreq <= responsiveBot.getAnswerFreq() + 0.05) {
+                    if (responsiveBot.checkMessage(userMessage)) {
+                        answerCorrect = true;
+                    }
+
+                }
+            }
         }
-        //Turn expected message String into an ArrayList to be able to check for existence of individual characters in user message
-        char[] scenarioCharArray = expectedMesagge.toCharArray();
-        ArrayList<Character> scenarioCharList =  new ArrayList<>();
-        for(char character: scenarioCharArray){
-            scenarioCharList.add(character);
-        }
-
-        int level1 = expectedMesagge.length() / 3;
-        int level2 = level1 * 2;
-        int level3 = scenarioCharList.size() - 1;
-        int messageScore = 0;
-
-        //Increments the score by one every time the user had the same character in the right place
-        for(char character: scenarioCharList){
-            if(userCharList.contains(character)){
-                messageScore++;
+        if (closestBot != null) {
+            if (closestBot.checkMessage(userMessage)) {
+                answerCorrect = true;
             }
         }
 
 
-
-        return 0;
-
+        if (answerCorrect) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText("Congrats!");
+            alert.setContentText("You answered correctly. Move onto the next part of the scenario.");
+            alert.show();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText("Uh oh");
+            alert.setContentText("You answered incorrectly. You either messed up your message, are at the wrong frequency, or you waited too long to finish your message. Try again.");
+            alert.show();
+        }
 
     }
+
+
+
 }

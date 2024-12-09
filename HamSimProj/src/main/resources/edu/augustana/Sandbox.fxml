@@ -9,12 +9,13 @@
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox style="-fx-background-color: #353538;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.UI.SandboxController">
+<VBox fx:id="mainVbox" style="-fx-background-color: #353538;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.UI.SandboxController">
    <children>
       <TabPane prefHeight="339.0" prefWidth="400.0" style="-fx-background-color: #353538; -fx-border-color: #353538;" tabClosingPolicy="UNAVAILABLE">
          <tabs>
@@ -67,33 +68,8 @@
                                     <Insets left="20.0" />
                                  </padding>
                               </Label>
-                              <ListView fx:id="agentList" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="86.0" prefWidth="366.0" />
-                              <HBox>
-                                 <children>
-                                    <VBox prefHeight="62.0" prefWidth="282.0">
-                                       <children>
-                                          <Label prefHeight="18.0" prefWidth="366.0" text="Scenario Dialog" textFill="WHITE">
-                                             <VBox.margin>
-                                                <Insets left="20.0" top="5.0" />
-                                             </VBox.margin>
-                                          </Label>
-                                          <Label fx:id="scenarioDialog" prefHeight="42.0" prefWidth="254.0" text="Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet," textFill="WHITE" wrapText="true">
-                                             <VBox.margin>
-                                                <Insets left="20.0" />
-                                             </VBox.margin>
-                                          </Label>
-                                       </children>
-                                    </VBox>
-                                    <Button fx:id="showBotMessageButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="116.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 2px; -fx-border-radius: 20px;" text="Show Bot Message" textFill="WHITE">
-                                       <HBox.margin>
-                                          <Insets left="10.0" right="18.0" top="18.0" />
-                                       </HBox.margin>
-                                       <font>
-                                          <Font size="10.0" />
-                                       </font>
-                                    </Button>
-                                 </children>
-                              </HBox>
+                              <ListView fx:id="agentList" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="150.0" prefWidth="366.0" />
+                              <HBox />
                            </children>
                         </VBox>
                      </children>
@@ -133,22 +109,7 @@
                            <children>
                               <HBox fx:id="serverhbox" prefHeight="38.0" prefWidth="400.0">
                                  <children>
-                                    <Label alignment="CENTER" prefHeight="38.0" prefWidth="115.0" text="Servers(n)" textFill="WHITE">
-                                       <font>
-                                          <Font name="Verdana" size="12.0" />
-                                       </font>
-                                    </Label>
-                                    <Label alignment="CENTER" prefHeight="38.0" prefWidth="115.0" text="Environment" textFill="WHITE">
-                                       <font>
-                                          <Font name="Verdana" size="12.0" />
-                                       </font>
-                                    </Label>
-                                    <Label alignment="CENTER" prefHeight="38.0" prefWidth="115.0" text="Users" textFill="WHITE">
-                                       <font>
-                                          <Font name="Verdana" size="12.0" />
-                                       </font>
-                                    </Label>
-                                    <Label alignment="CENTER" prefHeight="38.0" prefWidth="115.0" text="Rating" textFill="WHITE">
+                                    <Label alignment="CENTER" prefHeight="29.0" prefWidth="406.0" text="Available Servers" textFill="WHITE">
                                        <font>
                                           <Font name="Verdana" size="12.0" />
                                        </font>
@@ -156,9 +117,9 @@
                                  </children>
                               </HBox>
                               <ListView fx:id="serverListView" prefHeight="259.0" prefWidth="400.0" style="-fx-background-color: #cccccc;" />
-                              <HBox alignment="CENTER_LEFT" prefHeight="33.0" prefWidth="400.0" spacing="30.0">
+                              <HBox alignment="CENTER_LEFT" prefHeight="33.0" prefWidth="400.0" spacing="2.0">
                                  <children>
-                                    <Button fx:id="serverJoinLeaveBtn" mnemonicParsing="false" prefHeight="28.0" prefWidth="82.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 2px; -fx-border-radius: 20px;" text="Connect" textFill="WHITE">
+                                    <Button fx:id="serverJoinLeaveBtn" mnemonicParsing="false" prefHeight="28.0" prefWidth="98.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 2px; -fx-border-radius: 20px;" text="Connect" textFill="WHITE">
                                        <font>
                                           <Font name="Verdana" size="12.0" />
                                        </font>
@@ -201,9 +162,23 @@
                                     <Label alignment="CENTER" prefHeight="17.0" prefWidth="284.0" text="Chat Log" textFill="WHITE" />
                                     <ScrollPane prefHeight="293.0" prefWidth="289.0">
                                        <content>
-                                          <VBox fx:id="chatLogVbox" prefHeight="15.0" prefWidth="96.0" />
+                                          <VBox fx:id="chatLogVbox" prefHeight="22.0" prefWidth="287.0" />
                                        </content>
                                     </ScrollPane>
+                                    <HBox alignment="CENTER" prefHeight="75.0" prefWidth="289.0">
+                                       <children>
+                                          <TextField fx:id="serverMessageField" prefHeight="25.0" prefWidth="200.0" promptText="Write message to send in English">
+                                             <HBox.margin>
+                                                <Insets left="10.0" />
+                                             </HBox.margin>
+                                          </TextField>
+                                          <Button fx:id="sendMessageSeverButton" mnemonicParsing="false" text="Send">
+                                             <HBox.margin>
+                                                <Insets left="20.0" />
+                                             </HBox.margin>
+                                          </Button>
+                                       </children>
+                                    </HBox>
                                  </children>
                               </VBox>
                            </children>

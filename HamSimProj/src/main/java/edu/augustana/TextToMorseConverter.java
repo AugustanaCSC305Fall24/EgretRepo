@@ -44,6 +44,7 @@ public class TextToMorseConverter {
         morseCodeMap.put("8", "---..");
         morseCodeMap.put("9", "----.");
         morseCodeMap.put("0", "-----");
+        morseCodeMap.put(".", ".-.-.-");
         morseCodeMap.put(" ", "*"); // Space separator in Morse code
     }
 
@@ -89,6 +90,7 @@ public class TextToMorseConverter {
         morseToTextMap.put("----.", "9");
         morseToTextMap.put("-----", "0");
         morseToTextMap.put("/", " ");// Space between words
+        morseToTextMap.put(" ", " ");// Space between words
         morseToTextMap.put("*", " ");
     }
 
@@ -104,7 +106,7 @@ public class TextToMorseConverter {
                 morseCode.append(morseChar).append(" ");
             } else {
                 // Handle characters not in Morse code map
-                morseCode.append("? ");
+                morseCode.append("");
             }
         }
 
@@ -127,12 +129,36 @@ public class TextToMorseConverter {
             if (letter != null) {
                 result.append(letter);
             } else {
-                result.append("?");  // For invalid Morse code
+                result.append("");  // For invalid Morse code
             }
         }
 
         return result.toString();
     }
+
+    public static String spacedMorseToText(String morseString) {
+        if(Objects.equals(morseString, "")){
+            return morseString;
+        }
+        String[] morseCodeArray = morseString.split(" ");
+        StringBuilder result = new StringBuilder();
+        for (String morseCode : morseCodeArray) {
+            morseCode = morseCode.trim();
+
+            // Get the corresponding letter from the map
+            String letter = morseToTextMap.get(morseCode);
+
+            // If the Morse code is valid, append the letter
+            if (letter != null) {
+                result.append(letter);
+            } else {
+                result.append("");  // For invalid Morse code
+            }
+        }
+
+        return result.toString();
+    }
+
 
     public static HashMap<String, String> getMorseToTextMap() {
         return morseToTextMap;

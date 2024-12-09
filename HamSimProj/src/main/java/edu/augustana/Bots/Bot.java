@@ -4,6 +4,13 @@ import java.util.Random;
 
 public abstract class Bot {
 
+    private String morseBotPhrase;
+    private String morseCallSign;
+
+    private String textBotPhrase;
+    private String textCallSign;
+
+
     private PlayingBehavior behaviorType;
 
     private double outputFrequency;
@@ -22,7 +29,6 @@ public abstract class Bot {
 
         //assigns the random output frequency depending on the band
         generateOutputFreqAndRange(band);
-
 
     }
 
@@ -77,6 +83,10 @@ public abstract class Bot {
         behaviorType.startBehavior();
     }
 
+    public PlayingBehavior getBehaviorType() {
+        return behaviorType;
+    }
+
 
     /**
      * Accessor method for outputFrequency
@@ -109,6 +119,52 @@ public abstract class Bot {
         this.name = name;
     }
 
+
+    /**
+     * Accessor method for botPhrase
+     * @return botPhrase
+     */
+    public String getTextBotPhrase() {
+        return textBotPhrase;
+    }
+
+    public void setTextBotPhrase(String text) {
+        this.textBotPhrase = text;
+    }
+
+    /**
+     * Accessor method for callSign
+     * @return callSign
+     */
+    public String getTextCallSign() {return textCallSign;}
+
+    public void setTextCallSign(String text) {
+        this.textCallSign = text;
+    }
+
+    /**
+     * Accessor method for morseBotPhrase
+     * @return morseBotPhrase
+     */
+    public String getMorseBotPhrase() {return morseBotPhrase;}
+
+    public void setMorseBotPhrase(String text) {
+        this.morseBotPhrase = text;
+    }
+
+    /**
+     * Accessor method for morseCallSign
+     * @return morseCallSign
+     */
+    public String getMorseCallSign() {
+        return morseCallSign;
+    }
+
+    public void setMorseCallSign(String text) {
+        this.morseCallSign = text;
+    }
+
+
     /**
      * makes the bots play their sound. Could make the continuous bot start their playing loop, or it could make the responsive/AI bots respond
      */
@@ -125,7 +181,9 @@ public abstract class Bot {
      * returns a string representation of the bot
      * @return String
      */
-    public abstract String toString();
+    public String toString() {
+        return getName() + ", " + getTextCallSign() + ", " + getOutputFrequency();
+    }
 
 
 

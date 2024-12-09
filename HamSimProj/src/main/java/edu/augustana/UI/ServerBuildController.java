@@ -15,27 +15,15 @@ public class ServerBuildController {
     private Button createServerBtn;
 
     @FXML
-    private TextField humidityField;
-
-    @FXML
     private TextField scenarioNameField;
 
-    @FXML
-    private TextField solarIndex;
-
-    @FXML
-    private TextField tempField;
-
-    @FXML
-    private TextField timeField;
-
-    @FXML
-    private TextArea userMessageField;
-
-    @FXML
-    private TextField windSpeedField;
-
     public SandboxController parentController;
+
+    @FXML
+    private Slider noiseSlider;
+
+    @FXML
+    private TextField userIDField;
 
 
     @FXML
@@ -52,7 +40,9 @@ public class ServerBuildController {
         createServerBtn.setOnAction(event -> {
 
             try {
-                HamRadioServerClient.createServer(scenarioNameField.getText(),Double.valueOf(solarIndex.getText()),Double.valueOf(humidityField.getText()));
+                HamRadioServerClient.createServer(scenarioNameField.getText(),noiseSlider.getValue());
+                HamRadioServerClient.connectToServer(scenarioNameField.getText(),userIDField.getText());
+                HamRadioServerClient.setUserName(userIDField.getText());
                 parentController.setConnected();
                 parentController.updateListOfServer();
                 parentController.setCreateServerVisible(true);
