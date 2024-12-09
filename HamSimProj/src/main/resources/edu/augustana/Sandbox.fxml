@@ -54,7 +54,12 @@
                               <HBox />
                               <VBox>
                                  <children>
-                                    <Label alignment="CENTER" prefHeight="18.0" prefWidth="399.0" text="Scenario Chat Log" textFill="WHITE" />
+                                    <HBox>
+                                       <children>
+                                          <Label alignment="CENTER" prefHeight="18.0" prefWidth="287.0" text="Scenario Chat Log" textFill="WHITE" />
+                                          <CheckBox fx:id="showMorseScenario" mnemonicParsing="false" text="Show Morse" textFill="WHITE" />
+                                       </children>
+                                    </HBox>
                                     <ScrollPane prefHeight="178.0" prefWidth="390.0">
                                        <content>
                                           <VBox fx:id="scenarioChatLog" />

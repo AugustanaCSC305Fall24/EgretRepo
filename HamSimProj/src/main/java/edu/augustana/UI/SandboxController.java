@@ -295,8 +295,6 @@ public class SandboxController {
     }
 
 
-    }
-
 
     public void setMainUIControllerController(MainUiController controller) {
         mainUIController = controller;
@@ -381,7 +379,7 @@ public class SandboxController {
         createServerBtn.setVisible(bool);
     }
 
-    public void addMessageToServerUI(String message){
+    public void addMessageToServerUI(String message, String morseMessage){
 
         Platform.runLater(() -> {
             Label labelMessage = new Label(message);
@@ -389,6 +387,15 @@ public class SandboxController {
             labelMessage.setPrefWidth(275);
             labelMessage.setPrefHeight(Region.USE_COMPUTED_SIZE);
             chatLogVbox.getChildren().add(labelMessage);
+
+            if(showMorseServer.isSelected() && !morseMessage.equals("")){
+                Label labelMessage2 = new Label("Morse: " + morseMessage);
+                labelMessage2.setWrapText(true);
+                labelMessage2.setPrefWidth(275);
+                labelMessage2.setPrefHeight(Region.USE_COMPUTED_SIZE);
+                chatLogVbox.getChildren().add(labelMessage2);
+            }
+
         });
     }
 
