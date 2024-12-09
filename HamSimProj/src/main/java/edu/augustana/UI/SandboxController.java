@@ -96,7 +96,10 @@ public class SandboxController {
     @FXML
     private CheckBox showMorseServer;
 
+    private Tab WPMTab;
 
+    @FXML
+    private Slider morsePlayerSlider;
 
     @FXML
     void initialize() throws Exception {
@@ -108,6 +111,11 @@ public class SandboxController {
         agentList.getItems().addAll(scenarioChoiceBox.getValue().getBotCollection().getBots());
 
         updateListOfServer();
+
+        morsePlayerSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+            int wpm = newValue.intValue();
+            MorsePlayer.setWordsPerMinuteMultiplier(wpm);
+        });
 
 
         sendMessageSeverButton.setStyle(

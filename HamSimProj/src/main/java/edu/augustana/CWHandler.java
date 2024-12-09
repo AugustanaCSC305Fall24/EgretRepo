@@ -114,10 +114,12 @@ public class CWHandler {
      */
     public static void setDynamicDurations(int wpm) {
         // Calculate the durations based on the auto-detected WPM
-        dotDuration = 1200000000L / wpm;  // 1.2 billion nanoseconds = 1200 ms for 1 WPM dot
-        dashDuration = 3 * dotDuration;   // Dash is 3 times a dot
-        letterSpaceDuration = 3 * dotDuration;  // Letter space is 3 dots
-        wordSpaceDuration = 7 * dotDuration;    // Word space is 7 dots
+        if (wpm != 0) {
+            dotDuration = 1200000000L / wpm;  // 1.2 billion nanoseconds = 1200 ms for 1 WPM dot
+            dashDuration = 3 * dotDuration;   // Dash is 3 times a dot
+            letterSpaceDuration = 3 * dotDuration;  // Letter space is 3 dots
+            wordSpaceDuration = 7 * dotDuration;    // Word space is 7 dots
+        }
     }
 
     public static ArrayList<String> getCwArray(){

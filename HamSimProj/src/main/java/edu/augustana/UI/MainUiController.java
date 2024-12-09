@@ -7,13 +7,17 @@ import edu.augustana.Bots.Bot;
 import edu.augustana.Bots.ContinuousMessageBot;
 import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -22,11 +26,9 @@ import javafx.scene.layout.VBox;
 import java.text.DecimalFormat;
 import javafx.beans.value.ChangeListener;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import javax.sound.sampled.LineUnavailableException;
-
-import static java.lang.Math.max;
-import static java.lang.Math.min;
 
 public class MainUiController {
     private boolean isMuted = false;
@@ -123,8 +125,8 @@ public class MainUiController {
     @FXML
     private HBox rightSpacingHbox;
 
-    @FXML
-    private Slider morsePlayerSlider;
+    private static InstructionsController instructionsController;
+
 
 
     KnobControl volumeKnob;
@@ -147,11 +149,6 @@ public class MainUiController {
         midSpacingHbox.setAlignment(Pos.CENTER_LEFT);
 
         midSpacingHbox.setPrefWidth(toolBarHbox.getWidth()/4);
-
-        morsePlayerSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
-            int wpm = newValue.intValue();
-            MorsePlayer.setWordsPerMinuteMultiplier(wpm);
-        });
 
         assert mainHbox != null : "fx:id=\"mainHbox\" was not injected: check your FXML file 'MainUI.fxml'.";
         assert radioImage != null : "fx:id=\"radioImage\" was not injected: check your FXML file 'MainUI.fxml'.";
@@ -432,9 +429,6 @@ public class MainUiController {
             }else if(!sandboxController.isTextFieldActive()){
                 handleKeyReleaseHelper(keyEvent);
             }
-
-
-       // System.out.println(CWHandler.getCwString());
     }
 
     private void handleKeyReleaseHelper(KeyEvent keyEvent) throws Exception {
@@ -463,4 +457,25 @@ public class MainUiController {
 //    }
 
 
+    public void showMessageInTextBox(ContinuousMessageBot selectedBot) {
+        String fullMessage = selectedBot.getMorseCallSign() + "/*//*/" + selectedBot.getMorseBotPhrase();
+        //addToEnglishBox(fullMessage.replace(' ', '/'));
+        //addToMorseBox(fullMessage.replace(' ', '/'));
+    }
+
+    public void showInstructions() throws IOException {
+        if (!InstructionsController.isShowing) {
+            Stage mainUIStage = new Stage();
+            FXMLLoader loader = new FXMLLoader(App.class.getResource("Instructions.fxml"));
+
+            mainUIStage.setTitle("Instructions");
+            mainUIStage.setScene(new Scene(loader.load()));
+            mainUIStage.initStyle(StageStyle.UNDECORATED);
+            mainUIStage.show();
+
+            instructionsController = loader.getController();
+            instructionsController.setParentController(this, mainUIStage);
+            InstructionsController.isShowing = true;
+        }
+    }
 }

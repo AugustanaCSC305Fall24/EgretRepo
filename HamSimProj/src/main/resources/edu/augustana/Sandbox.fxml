@@ -13,10 +13,11 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="mainVbox" style="-fx-background-color: #353538;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.UI.SandboxController">
+<VBox fx:id="mainVbox" style="-fx-background-color: #353538;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.UI.SandboxController">
    <children>
       <TabPane prefHeight="339.0" prefWidth="400.0" style="-fx-background-color: #353538; -fx-border-color: #353538;" tabClosingPolicy="UNAVAILABLE">
          <tabs>
@@ -226,6 +227,19 @@
                      </children>
                   </AnchorPane>
                </content>
+            </Tab>
+            <Tab text="WPM">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Pane layoutX="-3.0" prefHeight="308.0" prefWidth="406.0" style="-fx-background-color: white;">
+                           <children>
+                              <Slider fx:id="morsePlayerSlider" blockIncrement="1.0" layoutX="34.0" layoutY="146.0" majorTickUnit="1.0" max="25.0" min="10.0" minorTickCount="1" prefHeight="15.0" prefWidth="341.0" showTickLabels="true" showTickMarks="true" value="10.0" />
+                           </children>
+                        </Pane>
+                     </children>
+                  </AnchorPane>
+              </content>
             </Tab>
          </tabs>
       </TabPane>

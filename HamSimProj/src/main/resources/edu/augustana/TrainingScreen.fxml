@@ -48,7 +48,7 @@
                                                 <Insets />
                                              </HBox.margin>
                                              <children>
-                                                <Label text="Enter Bot Call Sign:">
+                                                <Label text="Enter Bot Call Sign:" textFill="WHITE">
                                                    <padding>
                                                       <Insets bottom="5.0" />
                                                    </padding>
@@ -65,7 +65,7 @@
                                           </VBox>
                                           <VBox prefHeight="146.0" prefWidth="200.0">
                                              <children>
-                                                <Label text="Enter Bot Message:">
+                                                <Label text="Enter Bot Message:" textFill="WHITE">
                                                    <padding>
                                                       <Insets bottom="5.0" />
                                                    </padding>
@@ -99,24 +99,24 @@
                            <children>
                               <HBox alignment="TOP_CENTER" prefHeight="38.0" prefWidth="399.0">
                                  <children>
-                                    <Label fx:id="trainingTypeLabel" prefHeight="26.0" prefWidth="82.0" text="Training Type: " />
+                                    <Label fx:id="trainingTypeLabel" prefHeight="26.0" prefWidth="82.0" text="Training Type: " textFill="WHITE" />
                                     <ChoiceBox fx:id="trainingTypeChoiceBox" accessibleText="Select Training Type" prefWidth="150.0" />
                                  </children>
                               </HBox>
                               <HBox alignment="TOP_CENTER" prefHeight="27.0" prefWidth="399.0">
                                  <children>
-                                    <Label fx:id="difficultyLabel" text=" Difficulty: " />
-                                    <CheckBox fx:id="lettersCheckBox" mnemonicParsing="false" text="Letters">
+                                    <Label fx:id="difficultyLabel" text=" Difficulty: " textFill="WHITE" />
+                                    <CheckBox fx:id="lettersCheckBox" mnemonicParsing="false" text="Letters" textFill="WHITE">
                                        <HBox.margin>
                                           <Insets left="10.0" right="10.0" />
                                        </HBox.margin>
                                     </CheckBox>
-                                    <CheckBox fx:id="numbersCheckBox" mnemonicParsing="false" text="Numbers">
+                                    <CheckBox fx:id="numbersCheckBox" mnemonicParsing="false" text="Numbers" textFill="WHITE">
                                        <HBox.margin>
                                           <Insets left="10.0" right="10.0" />
                                        </HBox.margin>
                                     </CheckBox>
-                                    <CheckBox fx:id="abbrevCheckBox" mnemonicParsing="false" text="Abbreviations">
+                                    <CheckBox fx:id="abbrevCheckBox" mnemonicParsing="false" text="Abbreviations" textFill="WHITE">
                                        <HBox.margin>
                                           <Insets left="10.0" right="10.0" />
                                        </HBox.margin>
@@ -125,12 +125,12 @@
                               </HBox>
                               <Button fx:id="startTrainingButton" alignment="CENTER" mnemonicParsing="false" text="Start Training" />
                               <HBox prefHeight="23.0" prefWidth="399.0" />
-                              <Label fx:id="correctIncorrectLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="231.0" text="Incorrect/Correct">
+                              <Label fx:id="correctIncorrectLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="231.0" text="Incorrect/Correct" textFill="WHITE">
                                  <VBox.margin>
                                     <Insets bottom="10.0" />
                                  </VBox.margin>
                               </Label>
-                              <Label fx:id="lettersLabel" text="Letter(s): ">
+                              <Label fx:id="lettersLabel" text="Letter(s): " textFill="WHITE">
                                  <padding>
                                     <Insets bottom="10.0" />
                                  </padding>
@@ -138,7 +138,7 @@
                               <Button fx:id="playLetterButton" mnemonicParsing="false" text="Play Letter" />
                               <HBox alignment="CENTER" prefHeight="58.0" prefWidth="399.0">
                                  <children>
-                                    <Label fx:id="guessLabel" prefHeight="26.0" prefWidth="41.0" text="Guess: " />
+                                    <Label fx:id="guessLabel" prefHeight="26.0" prefWidth="41.0" text="Guess: " textFill="WHITE" />
                                     <TextField fx:id="guessTextField" />
                                  </children>
                               </HBox>
@@ -156,13 +156,13 @@
             </Tab>
          </tabs>
       </TabPane>
-      <TabPane maxWidth="-Infinity" prefHeight="330.0" prefWidth="400.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane maxWidth="-Infinity" prefHeight="330.0" prefWidth="400.0" style="-fx-background-color: #606160;" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="Instructions">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: white;">
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #606160;">
                      <children>
-                        <TextArea layoutY="1.0" prefHeight="177.0" prefWidth="393.0" text="1. Turn radio on.&#10;2. Start simulation.&#10;3. Choose number of bots and words per minute. &#10;4. Tune appropriately and listen for bot's call sign and message.&#10;Note: All bots stay on the same bandwidth when starting simulation.&#10;5. Enter bot's call sign and message&#10;6. Click submit.&#10;&#10;" />
+                        <TextArea layoutY="1.0" prefHeight="177.0" prefWidth="393.0" style="-fx-background-color: #606160;" text="1. Turn radio on.&#10;2. Start simulation.&#10;3. Choose number of bots and words per minute. &#10;4. Tune appropriately and listen for bot's call sign and message.&#10;Note: All bots stay on the same bandwidth when starting simulation.&#10;5. Enter bot's call sign and message&#10;6. Click submit.&#10;&#10;" />
                      </children></AnchorPane>
             </content>
           </Tab>
