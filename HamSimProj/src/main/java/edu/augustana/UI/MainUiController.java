@@ -214,23 +214,19 @@ public class MainUiController {
         });
 
         volumeKnob.valueProperty().addListener((observable, oldValue, newValue) -> {
-            System.out.println("Volume knob value changed: " + newValue);
 
             double scaledValue = (newValue.doubleValue() / 100);
-            System.out.println("Volume scale value changed: " + scaledValue);
             Radio.updateGain(scaledValue);
         });
 
 
         filterKnob.valueProperty().addListener((observable, oldValue, newValue) -> {
             int val = (int)((newValue.doubleValue()/100)*6379);
-            System.out.println("Filter value changed: " + val + 10);
             Radio.changeFilterValue(val + 10);
 
         });
 
         bandKnob.valueProperty().addListener((observable, oldValue, newValue) -> {
-            System.out.println("Band value changed: " + newValue);
             double angle = (newValue.doubleValue() / 100)*360;
             Radio.setBand(chooseBand(angle));
             updateRadioFrequency(Radio.getBand(), freqSlider.getValue());
@@ -239,7 +235,6 @@ public class MainUiController {
 
 
         toneKnob.valueProperty().addListener((observable, oldValue, newValue) -> {
-            System.out.println("Tone value changed: " + newValue);
 
             double newFreq = (((newValue.doubleValue() / 100)*400) + 400);
 
@@ -265,7 +260,6 @@ public class MainUiController {
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
-                    System.out.println("RadioButton is selected (toggled on)");
                 } else {
                     System.out.println("RadioButton is deselected (toggled off)");
                 }
