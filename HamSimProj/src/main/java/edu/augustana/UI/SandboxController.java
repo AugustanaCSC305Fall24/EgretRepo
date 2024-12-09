@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -20,6 +21,10 @@ import java.util.List;
 import java.util.Set;
 
 public class SandboxController {
+
+
+    @FXML
+    private VBox mainVbox;
 
     @FXML
     private ListView<Bot> agentList;
@@ -75,6 +80,13 @@ public class SandboxController {
 
 
     @FXML
+    private Button sendMessageSeverButton;
+
+    @FXML
+    private TextField serverMessageField;
+
+
+    @FXML
     void initialize() throws Exception {
 
         ScenarioCollection.addScenario(SimScenario.getDefaultScenario());
@@ -83,8 +95,29 @@ public class SandboxController {
         scenarioDescription.setText(scenarioChoiceBox.getValue().getDescription());
         agentList.getItems().addAll(scenarioChoiceBox.getValue().getBotCollection().getBots());
 
-//        updateListOfServer();
+        updateListOfServer();
 
+
+        sendMessageSeverButton.setStyle(
+                "-fx-border-color: white; " +
+                        "-fx-border-width: 1px; " +
+                        "-fx-background-color: transparent; " +
+                        "-fx-text-fill: white; " +
+                        "-fx-font-weight: bold; " +
+                        "-fx-background-radius: 15px; " +
+                        "-fx-border-radius: 15px;"
+        );
+        sendMessageSeverButton.setOnAction(event -> {
+
+            try {
+
+                HamRadioServerClient.sendMessage(TextToMorseConverter.textToMorse(serverMessageField.getText()));
+                serverMessageField.setText("");
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+
+        });
 
         startStopScenarioBtn.setOnAction(evt -> {
             if(!scenarioChoiceBox.getValue().isPlaying){
@@ -176,7 +209,7 @@ public class SandboxController {
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
-            }else{
+            }else if(serverListView.getSelectionModel().getSelectedItem() !=  null){
                 HamRadioServerClient.setUIController(this);
                 Stage serverConnectStage = new Stage();
                 FXMLLoader loader = new FXMLLoader(App.class.getResource("serverConnect.fxml"));
@@ -289,6 +322,7 @@ public class SandboxController {
 
                 Text noiseLevelText = new Text(HamRadioServerClient.getServerCondition(servId) + " ");
 
+
                 Text boldUserCount = new Text("User Count: ");
                 boldUserCount.setStyle("-fx-font-weight: bold;");
 
@@ -331,4 +365,9 @@ public class SandboxController {
         userList.getItems().clear();
         userList.getItems().addAll(users);
     }
+
+    public boolean isTextFieldActive() {
+        return serverMessageField.isFocused();
+    }
+
 }

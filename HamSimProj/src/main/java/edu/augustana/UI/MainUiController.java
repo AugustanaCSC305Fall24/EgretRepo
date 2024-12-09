@@ -33,6 +33,7 @@ public class MainUiController {
     private double savedVolume = 0.0;
     private boolean isPressed = false;
 
+    private SandboxController sandboxController;
 
     @FXML
     private Label displayLabel;
@@ -208,14 +209,16 @@ public class MainUiController {
         freqSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
            int band = Radio.getBand();
            updateRadioFrequency(Radio.getBand(), newValue.doubleValue());
-           updateDisplayText(Radio.getTime(), Radio.getSelectedTuneFreq(), Radio.getCwToneFreq(), band);
+           updateDisplayText( Radio.getSelectedTuneFreq(), Radio.getCwToneFreq(), band);
 
         });
 
         volumeKnob.valueProperty().addListener((observable, oldValue, newValue) -> {
-            System.out.println("Volume value changed: " + newValue);
-            Radio.updateGain(((newValue.doubleValue()/100) * 4));
+            System.out.println("Volume knob value changed: " + newValue);
 
+            double scaledValue = (newValue.doubleValue() / 100);
+            System.out.println("Volume scale value changed: " + scaledValue);
+            Radio.updateGain(scaledValue);
         });
 
 
@@ -231,7 +234,7 @@ public class MainUiController {
             double angle = (newValue.doubleValue() / 100)*360;
             Radio.setBand(chooseBand(angle));
             updateRadioFrequency(Radio.getBand(), freqSlider.getValue());
-            updateDisplayText(Radio.getTime(), Radio.getSelectedTuneFreq(), Radio.getCwToneFreq(), chooseBand(angle));
+            updateDisplayText( Radio.getSelectedTuneFreq(), Radio.getCwToneFreq(), chooseBand(angle));
         });
 
 
@@ -245,7 +248,7 @@ public class MainUiController {
             Radio.setCwToneFreq(newFreq);
             MorsePlayer.setSideTone();
 
-            updateDisplayText(Radio.getTime(), Radio.getSelectedTuneFreq(), Radio.getCwToneFreq(), Radio.getBand());
+            updateDisplayText( Radio.getSelectedTuneFreq(), Radio.getCwToneFreq(), Radio.getBand());
 
         });
 
@@ -335,6 +338,7 @@ public class MainUiController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/augustana/Sandbox.fxml"));
         VBox trainingVbox = loader.load();
         SandboxController controller = loader.getController();
+        sandboxController = controller;
         controller.setMainUIControllerController(this);
         mainHbox.getChildren().add(trainingVbox);
     }
@@ -357,13 +361,14 @@ public class MainUiController {
         volumeKnob.setValue((Radio.getSoundAmplitud()/4)*100);
     }
 
-    void updateDisplayText(int time, double rFrequency, double tFrequency, int band){
+    void updateDisplayText(double rFrequency, double tFrequency, int band) {
+        DecimalFormat dfRFrequency = new DecimalFormat("#.####"); // Up to four decimal places for rFrequency
+        DecimalFormat dfTFrequency = new DecimalFormat("#"); // No decimal places for tFrequency
 
-        DecimalFormat df = new DecimalFormat("#.####"); // For one decimal place
-        String formattedTFrequency = df.format(tFrequency);
-        String formattedRFrequency = df.format(rFrequency);
+        String formattedTFrequency = dfTFrequency.format(tFrequency);
+        String formattedRFrequency = dfRFrequency.format(rFrequency);
 
-        displayLabel.setText(formattedTFrequency + "Hz  "+ formattedRFrequency + "Mhz  " + time + "  " + band + "m ");
+        displayLabel.setText(formattedTFrequency + "Hz  " + formattedRFrequency + "Mhz  " + band + "m ");
     }
 
     int chooseBand(double angle){
@@ -386,7 +391,7 @@ public class MainUiController {
     }
 
     public void handleKeyPress(KeyEvent keyEvent) throws InterruptedException {
-        if (!isPressed) {
+        if (!isPressed && !sandboxController.isTextFieldActive()) {
             isPressed = true;
           //  System.out.println(System.nanoTime());
             if (keyEvent.getCode() == KeyCode.J) {
@@ -415,19 +420,22 @@ public class MainUiController {
     }
 
     public void handleKeyRelease(KeyEvent keyEvent) throws Exception {
-        if (keyEvent.getCode() == KeyCode.J || keyEvent.getCode() == KeyCode.K) {
-            CWHandler.sendMessageTimer();
-            PaddleHandler.stopPaddlePress();
+        if(!sandboxController.isTextFieldActive()){
+            if (keyEvent.getCode() == KeyCode.J || keyEvent.getCode() == KeyCode.K) {
+                CWHandler.sendMessageTimer();
+                PaddleHandler.stopPaddlePress();
 //            addToMorseBox(PaddleHandler.getCwString()); // stops first paddle press on keyRelease of second paddle if both are held simultaneously
 //            addToEnglishBox(PaddleHandler.getCwString());
-            System.out.println(CWHandler.getCwString());
-        } else if (keyEvent.getCode() == KeyCode.L) {
-            CWHandler.stopTimer();
-            CWHandler.sendMessageTimer();
+                System.out.println(CWHandler.getCwString());
+            } else if (keyEvent.getCode() == KeyCode.L) {
+                CWHandler.stopTimer();
+                CWHandler.sendMessageTimer();
 //            addToMorseBox(CWHandler.getCwString());
 //            addToEnglishBox(CWHandler.getCwString());
+            }
+            isPressed = false;
         }
-        isPressed = false;
+
        // System.out.println(CWHandler.getCwString());
     }
 
