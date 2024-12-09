@@ -1,6 +1,9 @@
 package edu.augustana.Bots;
 
 import edu.augustana.MorsePlayer;
+import edu.augustana.ScenarioCollection;
+import edu.augustana.SimScenario;
+import edu.augustana.UI.SandboxController;
 
 public class ResponsivePlaying implements PlayingBehavior {
 
@@ -17,7 +20,22 @@ public class ResponsivePlaying implements PlayingBehavior {
     public void startBehavior() {
 
         new Thread(() -> { //Need to continuously check "playSound" throughout this loop, and then break out of it if it is false
+
+            SandboxController currentController = null;
+
+            for (SimScenario scenario : ScenarioCollection.getCollection()) {
+                if (scenario.isPlaying) {
+                    currentController = scenario.getParentController();
+                }
+            }
+
             while (stageNumber == 1) {
+
+                //testing
+                //System.out.println(bot.getTextCallSign());
+                currentController.addMessageToScenarioUI(bot.getName() + ": " + bot.getTextCallSign());
+
+
                 try {
                     MorsePlayer.playBotMorseString(bot.getMorseCallSign(), bot.getOutputFrequency(), bot.getFrequencyRange());
                 } catch (InterruptedException e) {
@@ -32,11 +50,14 @@ public class ResponsivePlaying implements PlayingBehavior {
                     throw new RuntimeException(e);
                 }
 
-                //testing
-                System.out.println(bot.getTextCallSign());
             }
 
             while (stageNumber == 2) {
+
+                //testing
+                //System.out.println(bot.getTextBotPhrase());
+                currentController.addMessageToScenarioUI(bot.getName() + ": " + bot.getTextBotPhrase());
+
                 try {
                     MorsePlayer.playBotMorseString(bot.getMorseBotPhrase(), bot.getOutputFrequency(), bot.getFrequencyRange());
                 } catch (InterruptedException e) {
@@ -51,8 +72,6 @@ public class ResponsivePlaying implements PlayingBehavior {
                     throw new RuntimeException(e);
                 }
 
-                //testing
-                System.out.println(bot.getTextBotPhrase());
             }
 
             //note: basically just do the continuous playing but seperate the message and the call sign. And then wait for much longer in between the repeated messages to make time for the users message.

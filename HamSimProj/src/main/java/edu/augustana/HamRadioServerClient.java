@@ -93,7 +93,7 @@ public class HamRadioServerClient {
         currentServerID = serverId;
         isConnected = true;
         socketClient.connect(serverId,userID);
-        uiController.addMessageToUI("Connected to server: " + serverId);
+        uiController.addMessageToServerUI("Connected to server: " + serverId);
         uiController.updateUserList(serverId);
         Radio.setNoiseAmplitude(getServerCondition(serverId));
         uiController.updateListOfServer();
@@ -130,7 +130,7 @@ public class HamRadioServerClient {
         String formattedMessage = user + ": " + TextToMorseConverter.spacedMorseToText(morseMessage);
         System.out.println(message);
         MorsePlayer.playBotMorseString(morseMessage, frequency, range);
-        uiController.addMessageToUI(formattedMessage);
+        uiController.addMessageToServerUI(formattedMessage);
     }
 
     public static String getServerURL() {

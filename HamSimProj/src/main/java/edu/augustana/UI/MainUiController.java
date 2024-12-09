@@ -123,7 +123,8 @@ public class MainUiController {
     @FXML
     private HBox rightSpacingHbox;
 
-
+    @FXML
+    private Slider morsePlayerSlider;
 
 
     KnobControl volumeKnob;
@@ -147,7 +148,10 @@ public class MainUiController {
 
         midSpacingHbox.setPrefWidth(toolBarHbox.getWidth()/4);
 
-
+        morsePlayerSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+            int wpm = newValue.intValue();
+            MorsePlayer.setWordsPerMinuteMultiplier(wpm);
+        });
 
         assert mainHbox != null : "fx:id=\"mainHbox\" was not injected: check your FXML file 'MainUI.fxml'.";
         assert radioImage != null : "fx:id=\"radioImage\" was not injected: check your FXML file 'MainUI.fxml'.";
