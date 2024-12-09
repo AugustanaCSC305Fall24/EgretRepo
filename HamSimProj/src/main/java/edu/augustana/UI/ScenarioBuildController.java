@@ -44,7 +44,7 @@ public class ScenarioBuildController {
     private TextField scenarioNameField;
 
     @FXML
-    private ChoiceBox<Integer> scenarioTypeChoice;
+    private ChoiceBox<String> scenarioTypeChoice;
 
     @FXML
     private TextField solarIndex;
@@ -79,7 +79,9 @@ public class ScenarioBuildController {
     @FXML
     void initialize(){
 
-        scenarioTypeChoice.setValue(0);
+        scenarioTypeChoice.setValue("Responsive");
+        scenarioTypeChoice.getItems().add("Responsive");
+        scenarioTypeChoice.getItems().add("AI");
 
         addBotBtn.setOnAction(event -> {
             try {

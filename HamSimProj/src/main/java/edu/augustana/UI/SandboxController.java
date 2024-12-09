@@ -273,7 +273,6 @@ public class SandboxController {
                 if (scenarioSendMessageField.getText() != null) {
                     String message = scenarioSendMessageField.getText();
 
-                    addMessageToScenarioUI(message);
                     scenarioSendMessageField.clear();
 
                     //actually checks if the message is correct
