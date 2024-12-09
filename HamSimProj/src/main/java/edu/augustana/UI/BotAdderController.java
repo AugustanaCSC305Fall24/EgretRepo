@@ -35,8 +35,6 @@ public class BotAdderController {
 
     private ScenarioBuildController parentController;
 
-    @FXML
-    private Button okBtn;
 
     @FXML
     private TextField answerFreqField;
@@ -50,6 +48,11 @@ public class BotAdderController {
         addBtn.setOnAction( event -> {
             try {
                 addBot();
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+                parentController.updateBotListView();
+
+                stage.close();
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -58,13 +61,6 @@ public class BotAdderController {
 
         });
 
-        okBtn.setOnAction(evt -> {
-            Stage stage = (Stage) ((Node) evt.getSource()).getScene().getWindow();
-
-            parentController.updateBotListView();
-
-            stage.close();
-        });
 
         cancelBtn.setOnAction(evt -> {
             Stage stage = (Stage) ((Node) evt.getSource()).getScene().getWindow();

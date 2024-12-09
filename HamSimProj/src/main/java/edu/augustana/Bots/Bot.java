@@ -11,7 +11,7 @@ public abstract class Bot {
     private String textCallSign;
 
 
-    private PlayingBehavior behaviorType;
+    private transient PlayingBehavior behaviorType;
 
     private double outputFrequency;
     private double frequencyRange;
