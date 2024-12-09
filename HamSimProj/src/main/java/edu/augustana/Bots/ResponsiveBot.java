@@ -105,4 +105,9 @@ public class ResponsiveBot extends Bot{
 
         return userTextToCompare;
     }
+
+
+    public String getExpectedAnswer() {
+        return expectedAnswer;
+    }
 }

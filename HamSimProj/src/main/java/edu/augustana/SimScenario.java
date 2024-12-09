@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;
 import edu.augustana.Bots.Bot;
 import edu.augustana.Bots.ResponsiveBot;
@@ -156,8 +157,12 @@ public class SimScenario {
         this.scenarioName = scenarioName;
     }
 
-    public void saveToFile(){
-        Gson gson = new Gson();
+    public void saveToFile() {
+        // Create a Gson instance with the custom serializer for Bot
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(Bot.class, new BotSerializer())  // Register the custom serializer for Bot
+                .setPrettyPrinting()  // Optional: Makes JSON output more readable
+                .create();
 
         // Initialize the JavaFX FileChooser
         FileChooser fileChooser = new FileChooser();
@@ -177,13 +182,15 @@ public class SimScenario {
 
             // Write JSON to the selected file
             try (FileWriter writer = new FileWriter(fileToSave)) {
-                gson.toJson(this, writer);
+                gson.toJson(this, writer);  // Serialize the current SimScenario object to JSON
                 System.out.println("File saved to: " + fileToSave.getAbsolutePath());
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
+
+
 
 
     public void checkMessage(String userMessage) {
