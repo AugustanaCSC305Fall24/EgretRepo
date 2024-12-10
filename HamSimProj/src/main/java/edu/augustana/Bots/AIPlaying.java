@@ -1,7 +1,10 @@
 package edu.augustana.Bots;
 
 import edu.augustana.MorsePlayer;
+import edu.augustana.ScenarioCollection;
+import edu.augustana.SimScenario;
 import edu.augustana.TextToMorseConverter;
+import edu.augustana.UI.SandboxController;
 import javafx.animation.PauseTransition;
 import javafx.util.Duration;
 import swiss.ameri.gemini.api.*;
@@ -10,6 +13,8 @@ public class AIPlaying implements PlayingBehavior{
 
     private final AIBot bot;
 
+    SandboxController currentController;
+
     public AIPlaying(AIBot bot) {
         this.bot = bot;
     }
@@ -17,13 +22,27 @@ public class AIPlaying implements PlayingBehavior{
     @Override
     public void startBehavior() {
         new Thread(() -> {
+            String message = "Talk to me at " + bot.getOutputFrequency();
             try {
-                MorsePlayer.playBotMorseString(TextToMorseConverter.textToMorse("Talk to me at " + bot.getOutputFrequency()), bot.getOutputFrequency(), bot.getFrequencyRange());
+
+                MorsePlayer.playBotMorseString(TextToMorseConverter.textToMorse(message), bot.getOutputFrequency(), bot.getFrequencyRange());
+
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-        }).start();
 
+            currentController = null;
+
+            for (SimScenario scenario : ScenarioCollection.getCollection()) {
+                if (scenario.isPlaying) {
+                    currentController = scenario.getParentController();
+                }
+            }
+
+            assert currentController != null;
+            currentController.addMessageToScenarioUI(bot.getName() + ": " + message, bot.getName() + ": " + TextToMorseConverter.textToMorse(message));
+
+        }).start();
     }
 
     public void playResponse(String userMessage) {
@@ -53,7 +72,7 @@ public class AIPlaying implements PlayingBehavior{
         }).start();
     }
 
-    public void requestMessage(String fullPrompt){
+    private void requestMessage(String fullPrompt){
 
         var model = createBotModel(fullPrompt);
 
@@ -62,6 +81,13 @@ public class AIPlaying implements PlayingBehavior{
                     String geminiResponse = gcr.text();
                     System.out.println("Debug: AIBot received response: " + geminiResponse);
                     //add message to chatlog and play the message in morse
+                    try {
+                        MorsePlayer.playBotMorseString(TextToMorseConverter.morseToText(geminiResponse), bot.getOutputFrequency(), bot.getFrequencyRange());
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                    currentController.addMessageToScenarioUI(bot.getName() + ": " + geminiResponse, bot.getName() + ": " + TextToMorseConverter.textToMorse(geminiResponse));
+
                 });
 
     }
