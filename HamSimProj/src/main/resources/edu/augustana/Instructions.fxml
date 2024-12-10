@@ -93,7 +93,12 @@
                            <children>
                               <VBox alignment="TOP_CENTER" prefHeight="376.0" prefWidth="600.0" style="-fx-background-color: #606160;">
                                  <children>
-                                    <Label prefHeight="41.0" prefWidth="566.0" text="If you hold the straight key down for a long time as your first straight key input, it messes with how we calculate your words per minute, and makes the straight key unusable. " textFill="WHITE" wrapText="true">
+                                    <Label prefHeight="41.0" prefWidth="566.0" text="If you hold the straight key down for a long time as your first straight key input, it messes with how we calculate your words per minute, and makes the straight key unusable. I" textFill="WHITE" wrapText="true">
+                                       <font>
+                                          <Font name="Sitka Heading" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <Label prefHeight="41.0" prefWidth="566.0" text="When editing a scenario and you change the name, the name would not change on the view of the drop down menu but it will show up if you open the dropdown menu" textFill="WHITE" wrapText="true">
                                        <font>
                                           <Font name="Sitka Heading" size="12.0" />
                                        </font>
