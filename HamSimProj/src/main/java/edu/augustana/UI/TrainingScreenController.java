@@ -3,16 +3,15 @@ package edu.augustana.UI;
 import edu.augustana.CWFlashcards;
 import edu.augustana.CWHandler;
 import edu.augustana.HandleListeningSim;
-import edu.augustana.PaddleHandler;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
-import java.util.List;
 
 
 public class TrainingScreenController {
@@ -95,11 +94,9 @@ public class TrainingScreenController {
 
     private ImageView cheatSheetImage;
 
-    private boolean inTraining = false;
+    public static boolean inTraining = false;
 
-
-
-
+    private MainUiController parentController;
 
 
     @FXML
@@ -124,8 +121,7 @@ public class TrainingScreenController {
         stopSimButton.setOnAction(evt -> HandleListeningSim.stopSim(guessedMessagesVBox));
 
         //CW Flashcards Section
-        cwLabel.setVisible(false);
-        cwPane.setVisible(false);
+
         setDefaultMenu();
         trainingTypeChoiceBox.setItems(FXCollections.observableArrayList(trainingTypeArray));
         submitButton.setOnAction(evt-> {
@@ -223,6 +219,8 @@ public class TrainingScreenController {
             guessTextField.setVisible(false);
             submitButton.setVisible(false);
             endButton.setVisible(false);
+            cwPane.setVisible(false);
+            cwLabel.setVisible(false);
         }
 
         private void setListeningMenu() {
@@ -257,6 +255,21 @@ public class TrainingScreenController {
             numbersCheckBox.setVisible(false);
             abbrevCheckBox.setVisible(false);
             startTrainingButton.setVisible(false);
+        }
+
+
+
+        public void updateCWLabel() {
+            cwLabel.setText(CWHandler.getCwString());
+        }
+
+        public void setCWVisible() {
+            cwPane.setVisible(true);
+            cwLabel.setVisible(true);
+        }
+
+        public void setParentController(MainUiController controller) {
+            this.parentController = controller;
         }
 
 }
