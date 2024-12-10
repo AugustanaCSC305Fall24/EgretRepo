@@ -51,69 +51,6 @@
                         </AnchorPane>
                   </content>
                 </Tab>
-                <Tab text="Flashcards">
-                  <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #606160;">
-                           <children>
-                              <VBox alignment="TOP_CENTER" prefHeight="370.0" prefWidth="600.0" style="-fx-background-color: #606160;">
-                                 <children>
-                                    <Label prefHeight="43.0" prefWidth="579.0" text="The &quot;Flashcards&quot; tab will allow you to practice your CW typing and translating skills in a low stress environment. There are two different training types to choose from, &quot;Listening&quot; and &quot;Typing&quot;." textFill="WHITE" wrapText="true">
-                                       <font>
-                                          <Font name="Sitka Heading" size="12.0" />
-                                       </font>
-                                    </Label>
-                                    <Label prefHeight="58.0" prefWidth="580.0" text="For both of these, you are able to choose between three different sets of possibilities: letters, numbers, and common CW abbreviations/phrases used by HAM radio operators. You can mix and match to your hearts content, so if you only want letters and abbreviations, you can!" textFill="WHITE" wrapText="true">
-                                       <font>
-                                          <Font name="Sitka Heading" size="12.0" />
-                                       </font>
-                                    </Label>
-                                    <Label prefHeight="48.0" prefWidth="578.0" text="&quot;Listening&quot; training will play a something out in morse code and you will be required to translate what was said back into English, and type it in the Guess box." textFill="WHITE" wrapText="true">
-                                       <font>
-                                          <Font name="Sitka Heading" size="12.0" />
-                                       </font>
-                                    </Label>
-                                    <Label prefHeight="18.0" prefWidth="576.0" text="&quot;Typing&quot; training will ask you to type back the given character in morse code." textFill="WHITE">
-                                       <font>
-                                          <Font name="Sitka Heading" size="12.0" />
-                                       </font>
-                                    </Label>
-                                    <Label prefHeight="33.0" prefWidth="574.0" text="Whenever you are tired of your training, hit the end training button, and your done!" textFill="WHITE">
-                                       <font>
-                                          <Font name="Sitka Heading" size="12.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </VBox>
-                           </children></AnchorPane>
-                  </content>
-                </Tab>
-                  <Tab text="Known Bugs/Issues">
-                    <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                           <children>
-                              <VBox alignment="TOP_CENTER" prefHeight="376.0" prefWidth="600.0" style="-fx-background-color: #606160;">
-                                 <children>
-                                    <Label prefHeight="41.0" prefWidth="566.0" text="If you hold the straight key down for a long time as your first straight key input, it messes with how we calculate your words per minute, and makes the straight key unusable." textFill="WHITE" wrapText="true">
-                                       <font>
-                                          <Font name="Sitka Heading" size="12.0" />
-                                       </font>
-                                    </Label>
-                                    <Label prefHeight="41.0" prefWidth="566.0" text="When editing a scenario and you change the name, the name would not change on the view of the drop down menu but it will show up if you open the dropdown menu" textFill="WHITE" wrapText="true">
-                                       <font>
-                                          <Font name="Sitka Heading" size="12.0" />
-                                       </font>
-                                    </Label>
-                                    <Label prefHeight="57.0" prefWidth="566.0" text="When creating a scenario, you cannot create a bot of a certain type, and then change the type of the scenario to create a different bot. This will cause the scenario to crash. The entire scenario has to be of one type." textFill="WHITE" wrapText="true">
-                                       <font>
-                                          <Font name="Sitka Heading" size="12.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </VBox>
-                           </children>
-                        </AnchorPane>
-                    </content>
-                  </Tab>
                   <Tab text="Sandbox">
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
@@ -172,6 +109,69 @@
                                        <padding>
                                           <Insets top="10.0" />
                                        </padding>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </Tab>
+                <Tab text="Flashcards">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #606160;">
+                           <children>
+                              <VBox alignment="TOP_CENTER" prefHeight="370.0" prefWidth="600.0" style="-fx-background-color: #606160;">
+                                 <children>
+                                    <Label prefHeight="43.0" prefWidth="579.0" text="The &quot;Flashcards&quot; tab will allow you to practice your CW typing and translating skills in a low stress environment. There are two different training types to choose from, &quot;Listening&quot; and &quot;Typing&quot;." textFill="WHITE" wrapText="true">
+                                       <font>
+                                          <Font name="Sitka Heading" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <Label prefHeight="58.0" prefWidth="580.0" text="For both of these, you are able to choose between three different sets of possibilities: letters, numbers, and common CW abbreviations/phrases used by HAM radio operators. You can mix and match to your hearts content, so if you only want letters and abbreviations, you can!" textFill="WHITE" wrapText="true">
+                                       <font>
+                                          <Font name="Sitka Heading" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <Label prefHeight="48.0" prefWidth="578.0" text="&quot;Listening&quot; training will play a something out in morse code and you will be required to translate what was said back into English, and type it in the Guess box." textFill="WHITE" wrapText="true">
+                                       <font>
+                                          <Font name="Sitka Heading" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <Label prefHeight="18.0" prefWidth="576.0" text="&quot;Typing&quot; training will ask you to type back the given character in morse code." textFill="WHITE">
+                                       <font>
+                                          <Font name="Sitka Heading" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <Label prefHeight="33.0" prefWidth="574.0" text="Whenever you are tired of your training, hit the end training button, and your done!" textFill="WHITE">
+                                       <font>
+                                          <Font name="Sitka Heading" size="12.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                           </children></AnchorPane>
+                  </content>
+                </Tab>
+                  <Tab text="Known Bugs/Issues">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <VBox alignment="TOP_CENTER" prefHeight="376.0" prefWidth="600.0" style="-fx-background-color: #606160;">
+                                 <children>
+                                    <Label prefHeight="41.0" prefWidth="566.0" text="If you hold the straight key down for a long time as your first straight key input, it messes with how we calculate your words per minute, and makes the straight key unusable." textFill="WHITE" wrapText="true">
+                                       <font>
+                                          <Font name="Sitka Heading" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <Label prefHeight="41.0" prefWidth="566.0" text="When editing a scenario and you change the name, the name would not change on the view of the drop down menu but it will show up if you open the dropdown menu" textFill="WHITE" wrapText="true">
+                                       <font>
+                                          <Font name="Sitka Heading" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <Label prefHeight="57.0" prefWidth="566.0" text="When creating a scenario, you cannot create a bot of a certain type, and then change the type of the scenario to create a different bot. This will cause the scenario to crash. The entire scenario has to be of one type." textFill="WHITE" wrapText="true">
+                                       <font>
+                                          <Font name="Sitka Heading" size="12.0" />
+                                       </font>
                                     </Label>
                                  </children>
                               </VBox>
