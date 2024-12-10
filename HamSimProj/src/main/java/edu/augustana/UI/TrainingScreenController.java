@@ -8,6 +8,7 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
@@ -84,9 +85,19 @@ public class TrainingScreenController {
     @FXML
     private Button endButton;
 
+    @FXML
+    private AnchorPane cwPane;
+
+    @FXML
+    private Label cwLabel;
+
     private String[] trainingTypeArray = {"Listening", "Typing"};
 
     private ImageView cheatSheetImage;
+
+    private boolean inTraining = false;
+
+
 
 
 
@@ -113,6 +124,8 @@ public class TrainingScreenController {
         stopSimButton.setOnAction(evt -> HandleListeningSim.stopSim(guessedMessagesVBox));
 
         //CW Flashcards Section
+        cwLabel.setVisible(false);
+        cwPane.setVisible(false);
         setDefaultMenu();
         trainingTypeChoiceBox.setItems(FXCollections.observableArrayList(trainingTypeArray));
         submitButton.setOnAction(evt-> {
@@ -164,6 +177,7 @@ public class TrainingScreenController {
         });
 
         startTrainingButton.setOnAction(evt -> {
+            inTraining = true;
             if (!lettersCheckBox.isSelected() && !numbersCheckBox.isSelected() && !abbrevCheckBox.isSelected()) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION, "You must select a difficulty type.");
                 alert.showAndWait();
@@ -184,6 +198,7 @@ public class TrainingScreenController {
         });
 
         endButton.setOnAction(evt -> {
+            inTraining = false;
             setDefaultMenu();
             CWFlashcards.resetCurrent();
         });
