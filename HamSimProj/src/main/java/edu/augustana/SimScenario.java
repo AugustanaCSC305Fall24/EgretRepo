@@ -193,8 +193,6 @@ public class SimScenario {
 
     public void checkMessage(String userMorseMessage) {
 
-        //have to add an if else statement here for whether its AI or responsive
-
         //Add message to the chat log
         parentController.addMessageToScenarioUI(TextToMorseConverter.morseToText(userMorseMessage.replace(' ', '/')), userMorseMessage.replace(' ', '/'));
 
@@ -250,7 +248,9 @@ public class SimScenario {
                 }
             }
 
-            closestBot.talkTo(userMorseMessage);
+            if (closestBot != null) {
+                closestBot.talkTo(userMorseMessage);
+            }
 
         }
 
