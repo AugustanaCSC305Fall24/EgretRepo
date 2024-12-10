@@ -36,6 +36,8 @@ The **Ham Radio Simulator** is an engaging educational tool designed for beginne
 ## Why Use This Simulator?  
 - No hardware required—perfect for beginners and educators.  
 - Fun and engaging gameplay mechanics tied to real-world ham radio operations.  
-- Adjustable learning curve, from beginner-friendly modes to advanced challenges.  
+- Adjustable learning curve, from beginner-friendly modes to advanced challenges.
+
+Link to slide presentation: https://docs.google.com/presentation/d/1Lg2Uhg3xfKGuCCFivb9IaLh9t5i4lsTZ7pSAlrgQeS4/edit?usp=sharing  
 
 
