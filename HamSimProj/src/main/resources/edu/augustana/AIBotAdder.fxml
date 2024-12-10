@@ -9,7 +9,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="185.0" prefWidth="474.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.UI.AIBotAdderController">
    <children>
       <VBox layoutX="-2.0">
@@ -74,7 +73,7 @@
                               <Insets left="15.0" />
                            </padding>
                         </Label>
-                        <TextField fx:id="aiBotPromptTextField" prefHeight="112.0" prefWidth="422.0" promptText="say hello at 28.000">
+                        <TextField fx:id="aiBotPromptTextField" prefHeight="112.0" prefWidth="422.0" promptText="You are a helicopter pilot">
                            <HBox.margin>
                               <Insets left="10.0" />
                            </HBox.margin>
