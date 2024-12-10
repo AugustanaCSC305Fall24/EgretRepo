@@ -145,6 +145,7 @@ public class TrainingScreenController {
                     }
                     correctIncorrectLabel.setVisible(true);
                     CWHandler.resetCwString();
+                    setCWInvisible();
                 } catch (Exception e) {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION, "You must type something in.");
                     alert.showAndWait();
@@ -173,6 +174,7 @@ public class TrainingScreenController {
         });
 
         startTrainingButton.setOnAction(evt -> {
+            CWHandler.resetCwString();
             inTraining = true;
             if (!lettersCheckBox.isSelected() && !numbersCheckBox.isSelected() && !abbrevCheckBox.isSelected()) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION, "You must select a difficulty type.");
@@ -197,6 +199,7 @@ public class TrainingScreenController {
             inTraining = false;
             setDefaultMenu();
             CWFlashcards.resetCurrent();
+            setCWInvisible();
         });
 
         //End of CW Flashcards Section
@@ -266,6 +269,11 @@ public class TrainingScreenController {
         public void setCWVisible() {
             cwPane.setVisible(true);
             cwLabel.setVisible(true);
+        }
+
+        public void setCWInvisible() {
+            cwPane.setVisible(false);
+            cwLabel.setVisible(false);
         }
 
         public void setParentController(MainUiController controller) {
