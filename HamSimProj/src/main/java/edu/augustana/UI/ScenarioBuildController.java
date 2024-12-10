@@ -1,6 +1,7 @@
 package edu.augustana.UI;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import edu.augustana.*;
 import edu.augustana.Bots.Bot;
 import edu.augustana.Bots.ContinuousMessageBot;
@@ -44,7 +45,7 @@ public class ScenarioBuildController {
     private TextField scenarioNameField;
 
     @FXML
-    private ChoiceBox<Integer> scenarioTypeChoice;
+    private ChoiceBox<String> scenarioTypeChoice;
 
     @FXML
     private TextField solarIndex;
@@ -79,7 +80,9 @@ public class ScenarioBuildController {
     @FXML
     void initialize(){
 
-        scenarioTypeChoice.setValue(0);
+        scenarioTypeChoice.setValue("Responsive");
+        scenarioTypeChoice.getItems().add("Responsive");
+        scenarioTypeChoice.getItems().add("AI");
 
         addBotBtn.setOnAction(event -> {
             try {
@@ -104,7 +107,15 @@ public class ScenarioBuildController {
         });
 
         saveFileBtn.setOnAction(event -> {
-            scenario.saveToFile();
+            if(scenario == null){
+                scenario = createScenario();
+                scenario.saveToFile();
+            }else{
+                scenario.saveToFile();
+            }
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.close();
+
         });
 
         loadBtn.setOnAction(event -> {
@@ -192,23 +203,28 @@ public class ScenarioBuildController {
     }
 
     public void deserializeJson(File file) {
-        Gson gson = new Gson();
+        // Create a Gson instance with the custom deserializer for Bot
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(Bot.class, new BotDeserializer())  // Register the custom deserializer for Bot
+                .setPrettyPrinting()  // Optional: Makes JSON output more readable
+                .create();
+
         try (FileReader reader = new FileReader(file)) {
-
+            // Deserialize the SimScenario object (which includes BotCollection)
             this.scenario = gson.fromJson(reader, SimScenario.class);
-
-            loadScenario();
-            // Use the simScenario object
+            loadScenario();  // Load the deserialized scenario
+            System.out.println("Deserialization successful.");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+
     public void newScenario(){
         botCollection = new BotCollection(new ArrayList<Bot>());
     }
 
-    private void createScenario(){
+    private SimScenario createScenario(){
 
         if(isNewScenario){
 
@@ -223,6 +239,7 @@ public class ScenarioBuildController {
             ScenarioCollection.addScenario(newScenario);
             parentController.updateScenarioChoice();
             parentController.displayBots();
+            return newScenario;
         }else{
 
             environment = new RadioEnvironment("scenarioNameField.getText()",
@@ -236,6 +253,7 @@ public class ScenarioBuildController {
             scenario.setEnvironment(environment);
             parentController.updateScenarioChoice();
             parentController.displayBots();
+            return scenario;
         }
     }
 
